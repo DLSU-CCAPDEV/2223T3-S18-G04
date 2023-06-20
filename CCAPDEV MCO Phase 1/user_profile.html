@@ -7,14 +7,14 @@
     <title>User</title> <!--Find a way to make this chnage according to the user's name-->
 </head>
 <body>
-    <nav>
-        <h1>Lab Reservation</h1>
-        <form>
-            <input type="search" id="query" name="q" placeholder="">
-            <button id="searchbutton">Search</button>
-         </form>
-        <img src="microscope_round.png">
-
+    <nav class="site_header">
+        <span id="site_name"><h1>Lab Reservation System</h1></span>
+        <span class="site_nav">
+            <span class="user_profile" onclick="location.href='user_profile.html'"> Profile </span>
+            <span class="lab_slots" onclick="location.href='user_profile.html'"> View Lab Slots </span>
+            <span class="logout" onclick="location.href='login.html'"> Log Out </span>
+        </span>
+        
     </nav>
 
     <div class="container">

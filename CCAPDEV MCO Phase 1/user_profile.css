@@ -4,23 +4,53 @@ body{
     background-color: white;
 }
 
-nav{
-    background-color: #025d2a;
+nav.site_header {
+    background-color: #137C13;
     border-radius: 15px;
     position:sticky;
-    width:100%;
     display: flex;
-    min-width: 100%;
-    max-height: 85px;
     flex-direction: row;
     flex-wrap: wrap;
     margin:0;
     padding:0;
     font-family: 'Cairo', sans-serif;
-
 }
-nav > h1{
+
+span.site_name{
     width: 65%;
+    padding: 1rem;
+}
+
+span.site_nav {
+    position: absolute;
+    right: 0%;
+    padding: 1rem;
+    margin: 1rem;
+    font-size:larger;
+}
+
+span.user_profile {
+    padding: 1rem;
+}
+
+span.lab_slots {
+    padding: 1rem;
+}
+
+span.logout {
+    padding: 1rem;
+}
+
+span.user_profile:hover {
+    background-color:aquamarine;
+}
+
+span.lab_slots:hover {
+    background-color:aquamarine;
+}
+
+span.logout:hover {
+    background-color:aquamarine;
 }
 
 #query { 
