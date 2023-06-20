@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <link rel="stylesheet" type="text/css" href="style.css">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
+        <script type="text/javascript">
+
+            var times = [
+                "07:30",
+                "08:00",
+                "08:30",
+                "09:00",
+                "09:30",
+                "10:00",
+                "10:30",
+                "11:00",
+                "11:30",
+                "12:00",
+                "12:30",
+                "13:00",
+                "13:30",
+                "14:00",
+                "14:30",
+                "15:00",
+                "15:30",
+                "16:00",
+                "16:30",
+                "17:00",
+                "17:30",
+                "18:00",
+                "18:30",
+                "19:00",
+                "19:30",
+                "20:00",
+                "20:30",
+                "21:00"
+            ]
+
+            $(document).ready(function() {
+                $("#search").click(function() {
+                    var time = times[$("#times").val()];
+                    var date = $("#date").val();
+                    var dateTime = date.concat("T", time);
+                    var textSent = document.createElement('p');
+
+                    $(textSent).text(dateTime);
+                    document.body.appendChild(textSent);
+                })
+            })
+
+        </script>
+
+    </head>
+    <body>
+
+        <form>
+            <select name="labs" id="labs">
+                <option value="1"> Lab 1 </option>
+                <option value="2"> Lab 2 </option>
+                <option value="3"> Lab 3 </option>
+            </select>
+            <br>
+            <input type="date" id="date" name="date">
+            <br>
+            <select name="times" id="times">
+                <option value="0"> 07:30AM - 09:00AM </option>
+                <option value="1"> 09:00AM - 09:30AM </option>
+                <option value="2"> 09:30AM - 10:00AM </option>
+                <option value="3"> 10:00AM - 10:30AM </option>
+                <option value="4"> 10:30PM - 11:00AM </option>
+                <option value="5"> 11:00AM - 11:30AM </option>
+                <option value="6"> 11:30AM - 12:00PM </option>
+                <option value="7"> 12:00PM - 12:30PM </option>
+                <option value="8"> 12:30PM - 01:00PM </option>
+                <option value="9"> 01:00PM - 01:30PM </option>
+                <option value="10"> 01:30PM - 02:00PM </option>
+                <option value="11"> 02:00PM - 02:30PM </option>
+                <option value="12"> 02:30PM - 03:00PM </option>
+                <option value="13"> 03:00PM - 03:30PM </option>
+                <option value="14"> 03:30PM - 04:00PM </option>
+                <option value="15"> 04:00PM - 04:30PM </option>
+                <option value="16"> 04:30PM - 05:00PM </option>
+                <option value="17"> 05:00PM - 05:30PM </option>
+                <option value="18"> 05:30PM - 06:00PM </option>
+                <option value="19"> 06:00PM - 06:30PM </option>
+                <option value="20"> 06:30PM - 07:00PM </option>
+                <option value="21"> 07:00PM - 07:30PM </option>
+                <option value="22"> 07:30PM - 08:00PM </option>
+                <option value="23"> 08:00PM - 08:30PM </option>
+                <option value="24"> 08:30PM - 09:00PM </option>
+            </select>
+            <br>
+            <input type="button" id="search" value="Search">
+        </form>
+
+    </body>
+</html>
