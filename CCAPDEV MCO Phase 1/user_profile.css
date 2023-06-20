@@ -29,27 +29,11 @@ span.site_nav {
     font-size:larger;
 }
 
-span.user_profile {
+span.user_profile, span.lab_slots, span.logout {
     padding: 1rem;
 }
 
-span.lab_slots {
-    padding: 1rem;
-}
-
-span.logout {
-    padding: 1rem;
-}
-
-span.user_profile:hover {
-    background-color:aquamarine;
-}
-
-span.lab_slots:hover {
-    background-color:aquamarine;
-}
-
-span.logout:hover {
+span.user_profile:hover, span.lab_slots:hover, span.logout:hover {
     background-color:aquamarine;
 }
 
