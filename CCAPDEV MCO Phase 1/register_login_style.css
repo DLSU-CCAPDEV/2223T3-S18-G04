@@ -25,12 +25,10 @@ img {
   
   
 .container {
-    
     border-radius: 25px;
     background-color: #9d9e9d;
     padding: 20px;
     width: 600px;
-    height: 660px;
     margin: auto;
     margin-top: 20px;
 }
