@@ -8,6 +8,7 @@
 		<script src="scripts/date-time-scripts.js"></script>
 		<link rel="stylesheet" type="text/css" media="all" href="navbar.css">
 		<link rel="stylesheet" type="text/css" href="slot_availability.css">
+		<link rel="stylesheet" type="text/css" href="stylebase.css">
 
 		<script type="text/javascript">
 
@@ -23,7 +24,9 @@
 				table.appendChild(tableHeader);
 
 				var reservationIntervals = [
-					"07:30AM - 09:00AM",
+					"07:30AM - 08:00AM",
+					"08:00AM - 08:30AM",
+					"08:30AM - 09:00AM",
 					"09:00AM - 09:30AM",
 					"09:30AM - 10:00AM",
 					"10:00AM - 10:30AM",
@@ -93,7 +96,7 @@
 					}
 				}
 
-				for (var i = 0; i < 25; i++) {
+				for (var i = 0; i < 27; i++) {
 						const tableRow = table.insertRow();
 					for (var j = 0; j < 8; j++) {
 						const tableCell = tableRow.insertCell();
