@@ -13,6 +13,64 @@
 
     <script type="text/javascript">
 
+        var accounts = [
+            {
+                "email": "blaise_corbin@dlsu.edu.ph",
+                "password": "fdfdsgvdgv",
+                "username": "Blaise Corbin",
+                "description": "A fictional DLSU lab technician",
+                "account_type": "tech"
+            }, 
+            {
+                "email": "antonio_veloso@dlsu.edu.ph",
+                "password": "mgvernvpm",
+                "username": "Antonio Veloso",
+                "description": "A DLSU student",
+                "account_type": "student"
+            }, 
+            {
+                "email": "bien_magdamo@dlsu.edu.ph",
+                "password": "r32rfvvrb33",
+                "username": "Bien Magdamo",
+                "description": "A DLSU student",
+                "account_type": "student"
+            }, 
+            {
+                "email": "sandeon_gavan@dlsu.edu.ph",
+                "password": "password12345678",
+                "username": "Sandeon Gavan",
+                "description": "Hello! I am Sandeon Gavan a 119 DLSU student studying BSCS-ST. Feel free to message me if you have any questions regarding computer science!",
+                "account_type": "student"
+            }, 
+            {
+                "email": "karl_asares@dlsu.edu.ph",
+                "password": "ver34_m4wfvmv2w",
+                "username": "Karl Asares",
+                "description": "A DLSU student",
+                "account_type": "student"
+            }
+        ]
+
+        let account = new URLSearchParams(window.location.search);
+
+        parsed_account = {
+            "email": account.get('email'),
+            "password": account.get('password'),
+            "username": account.get('username'),
+            "description": account.get('description'),
+            "account_type": account.get('account_type')
+        }
+
+        let temp_acc = accounts.find(i => i.email === parsed_account.email);
+        let index;
+
+        if(temp_acc === undefined) {
+            accounts.push(parsed_account);
+            index = accounts.lastIndexOf();
+        } else {
+            index = accounts.indexOf(temp_acc);
+        }
+
         var reservations = [
             {
                 "lab": 1,
@@ -29,6 +87,7 @@
         ]
 
         $(document).ready(function() {
+
             for (var i = 0; i < reservations.length; i++) {
                 var reserveNum = "Reservation #".concat(i + 1);
                 var lab = reservations[i].lab;
@@ -121,9 +180,14 @@
         <aside>
             <div class="user_profile">
                 <img src="profile.JPG">
-                <div id="username">Sandeon Gavan</div>
-                <p id="description"> Hello! I am Sandeon Gavan a 119 DLSU student studying BSCS-ST. Feel free to message me if you have any questions regarding computer science!
-                </p>
+                <div id="username"></div>
+                <p id="description"></p>
+                <script>
+                    var name = accounts[index].username;
+                    var desc = accounts[index].description;
+                    document.getElementById("username").innerHTML = name;
+                    document.getElementById("description").innerHTML = desc;
+                </script>
             </div>
         </aside>
         <!--<h1 id="reservations">Reservations</h1>-->
