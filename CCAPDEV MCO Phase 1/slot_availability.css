@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Tsukimi+Rounded:wght@700&display=swap');
+
+.container{
+    background-color: white;
+    width: 100%;
+    margin-top: 10px;
+    height:auto;
+    display: flex;
+    flex-direction:column;
+}
