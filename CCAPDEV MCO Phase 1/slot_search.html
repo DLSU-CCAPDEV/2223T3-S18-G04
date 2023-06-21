@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Slot Search</title>
 
-        <link rel="stylesheet" type="text/css" href="style.css">
         <link rel="stylesheet" type="text/css" href="navbar.css">
+        <link rel="stylesheet" type="text/css" href="stylebase.css">
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 
@@ -39,20 +40,106 @@
                 "20:30",
                 "21:00"
             ]
+            
+            var labOneSlots = new Array(27).fill(new Array(40).fill(0));
+            var labTwoSlots = new Array(27).fill(new Array(40).fill(0));
+            var labThreeSlots = new Array(27).fill(new Array(40).fill(0));
+
+            function showFreeSlots(labNum, dateTime, timeInterval) {
+                debugger;
+                var box = document.createElement('div');
+                var heading = document.createElement('h3');
+                var text = document.createElement('p');
+                var lab;
+                var list = document.createElement('UL');
+                $(list).addClass('seat-list');
+                heading.innerHTML = "Free Slots";
+                text.innerHTML = "The following seats are free: ";
+                
+                $(box).addClass('box');
+                box.appendChild(heading);
+                box.appendChild(document.createElement('hr'));
+                box.appendChild(text);
+
+                switch(parseInt(labNum)){
+                    case 1:
+                        lab = labOneSlots;
+                        break;
+                    case 2:
+                        lab = labTwoSlots;
+                        break;
+                    case 3: 
+                        lab = labThreeSlots;
+                        break;
+                }
+
+                for (i = 0; i < lab[timeInterval].length; i++) {
+                    if (lab[timeInterval] == 0 || lab[timeInterval].dateTime != dateTime) {
+                        var seat = document.createElement('LI');
+                        seat.innerHTML = i + 1;
+                        list.appendChild(seat);
+                    }
+                }
+
+                box.appendChild(list);
+                
+                return box;
+            }
+
+            function getDateTime() {
+                var time = times[$("#times").val()];
+                var date = $("#date").val();
+                var dateTime = date.concat("T", time);
+
+                return dateTime;
+            }
 
             $(document).ready(function() {
                 $("#search").click(function() {
-                    var time = times[$("#times").val()];
-                    var date = $("#date").val();
-                    var dateTime = date.concat("T", time);
-                    var textSent = document.createElement('p');
-
-                    $(textSent).text(dateTime);
-                    document.body.appendChild(textSent);
+                    var lab = $("#labs").val();
+                    var dateTime = getDateTime();
+                    var time = $("#times").val();
+                    $("#centered").append(showFreeSlots(lab, dateTime, time));
                 })
             })
 
         </script>
+
+        <style type="text/css">
+
+            #centered {
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 30px;
+            }
+
+            #form {
+                text-align: center;
+                font-size: 20px;
+            }
+
+            .input-field {
+                font-family: 'Cairo', sans-serif;
+                border-radius: 8px;
+            }
+
+            .box {
+                background-color: #dddddd;
+				border: 1px solid black;
+                width: 500px;
+				padding: 10px;
+				margin: 10px;
+                border-radius: 10px;
+                position: relative;
+				left:50%;
+				transform: translate(-50%, 0);
+            }
+
+            .seat-list {
+                columns: 2;
+            }
+
+        </style>
 
     </head>
     <body>
@@ -66,45 +153,57 @@
             </span>
         </nav>
 
-        <form>
-            <select name="labs" id="labs">
-                <option value="1"> Lab 1 </option>
-                <option value="2"> Lab 2 </option>
-                <option value="3"> Lab 3 </option>
-            </select>
-            <br>
-            <input type="date" id="date" name="date">
-            <br>
-            <select name="times" id="times">
-                <option value="0"> 07:30AM - 09:00AM </option>
-                <option value="1"> 09:00AM - 09:30AM </option>
-                <option value="2"> 09:30AM - 10:00AM </option>
-                <option value="3"> 10:00AM - 10:30AM </option>
-                <option value="4"> 10:30PM - 11:00AM </option>
-                <option value="5"> 11:00AM - 11:30AM </option>
-                <option value="6"> 11:30AM - 12:00PM </option>
-                <option value="7"> 12:00PM - 12:30PM </option>
-                <option value="8"> 12:30PM - 01:00PM </option>
-                <option value="9"> 01:00PM - 01:30PM </option>
-                <option value="10"> 01:30PM - 02:00PM </option>
-                <option value="11"> 02:00PM - 02:30PM </option>
-                <option value="12"> 02:30PM - 03:00PM </option>
-                <option value="13"> 03:00PM - 03:30PM </option>
-                <option value="14"> 03:30PM - 04:00PM </option>
-                <option value="15"> 04:00PM - 04:30PM </option>
-                <option value="16"> 04:30PM - 05:00PM </option>
-                <option value="17"> 05:00PM - 05:30PM </option>
-                <option value="18"> 05:30PM - 06:00PM </option>
-                <option value="19"> 06:00PM - 06:30PM </option>
-                <option value="20"> 06:30PM - 07:00PM </option>
-                <option value="21"> 07:00PM - 07:30PM </option>
-                <option value="22"> 07:30PM - 08:00PM </option>
-                <option value="23"> 08:00PM - 08:30PM </option>
-                <option value="24"> 08:30PM - 09:00PM </option>
-            </select>
-            <br>
-            <input type="button" id="search" value="Search">
-        </form>
+        <div id="centered">
+            
+            <form id="form" class="box">
+                <label for="labs"> <b> Select a Lab: </b> </label>
+                <br>
+                <select name="labs" id="labs" class="input-field">
+                    <option value="1"> Lab 1 </option>
+                    <option value="2"> Lab 2 </option>
+                    <option value="3"> Lab 3 </option>
+                </select>
+                <br>
+                <label for="date"> <b> Select a Date: </b> </label>
+                <br>
+                <input type="date" id="date" name="date" class="input-field">
+                <br>
+                <label for="times"> <b> Select a Time: </b> </label>
+                <br>
+                <select name="times" id="times" class="input-field">
+                    <option value="0"> 07:30AM - 08:00AM </option>
+                    <option value="1"> 08:00AM - 08:30AM </option>
+                    <option value="2"> 08:30AM - 09:00AM </option>
+                    <option value="3"> 09:00AM - 09:30AM </option>
+                    <option value="4"> 09:30AM - 10:00AM </option>
+                    <option value="5"> 10:00AM - 10:30AM </option>
+                    <option value="6"> 10:30PM - 11:00AM </option>
+                    <option value="7"> 11:00AM - 11:30AM </option>
+                    <option value="8"> 11:30AM - 12:00PM </option>
+                    <option value="9"> 12:00PM - 12:30PM </option>
+                    <option value="10"> 12:30PM - 01:00PM </option>
+                    <option value="11"> 01:00PM - 01:30PM </option>
+                    <option value="12"> 01:30PM - 02:00PM </option>
+                    <option value="13"> 02:00PM - 02:30PM </option>
+                    <option value="14"> 02:30PM - 03:00PM </option>
+                    <option value="15"> 03:00PM - 03:30PM </option>
+                    <option value="16"> 03:30PM - 04:00PM </option>
+                    <option value="17"> 04:00PM - 04:30PM </option>
+                    <option value="18"> 04:30PM - 05:00PM </option>
+                    <option value="19"> 05:00PM - 05:30PM </option>
+                    <option value="20"> 05:30PM - 06:00PM </option>
+                    <option value="21"> 06:00PM - 06:30PM </option>
+                    <option value="22"> 06:30PM - 07:00PM </option>
+                    <option value="23"> 07:00PM - 07:30PM </option>
+                    <option value="24"> 07:30PM - 08:00PM </option>
+                    <option value="25"> 08:00PM - 08:30PM </option>
+                    <option value="26"> 08:30PM - 09:00PM </option>
+                </select>
+                <br>
+                <input type="button" id="search" value="Search" class="input-field">
+            </form>
+        </div>
+        
 
     </body>
 </html>
