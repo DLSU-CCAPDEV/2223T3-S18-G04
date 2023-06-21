@@ -7,6 +7,7 @@ h1{
     margin-left: 15px;
     font-family: 'Cairo', sans-serif;
     font-size: 3rem;
+    color: white;
 }
 
 nav.site_header {
@@ -32,6 +33,7 @@ span.site_nav {
     padding: 1rem;
     margin: 1rem;
     font-size:larger;
+    color: white;
 }
 
 span.user_profile, span.search_slots, span.lab_slots, span.logout {
@@ -40,4 +42,5 @@ span.user_profile, span.search_slots, span.lab_slots, span.logout {
 
 span.user_profile:hover, span.search_slots:hover, span.lab_slots:hover, span.logout:hover {
     background-color:aquamarine;
+    color: grey;
 }
