@@ -14,7 +14,7 @@
            <p id="labname">Lab Reservation</p>
            <p id="logintype">Sign-In</p>
         </header>
-        <form action="user_profile.html" method="GET" class="form">
+        <form action="user_profile.html" method="POST" class="form">
           <input type="email" id="email" name="email" class="input" placeholder="Email">
               
               <input type="password" id="password" name="password" class="input" placeholder="Password">
@@ -26,7 +26,23 @@
                 <a href="register.html">Click here</a>
             </div>
         </form>
-            
       </div>
+
+      <script>
+        const form = document.querySelector('form');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const form_data = new FormData(form);
+            const kvpairs = Object.fromEntries(form_data);
+
+            localStorage.setItem('email', kvpairs.email);
+            localStorage.setItem('password', kvpairs.password);
+
+            console.log(kvpairs);
+            
+            window.location.href = "user_profile.html";
+        })
+      </script>
 </body>
 </html>

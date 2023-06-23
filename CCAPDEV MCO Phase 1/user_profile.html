@@ -51,25 +51,34 @@
             }
         ]
 
-        let account = new URLSearchParams(window.location.search);
+        const email = localStorage.getItem('email');
+        const password = localStorage.getItem('password');
 
-        parsed_account = {
-            "email": account.get('email'),
-            "password": account.get('password'),
-            "username": account.get('username'),
-            "description": account.get('description'),
-            "account_type": account.get('account_type')
-        }
-
-        let temp_acc = accounts.find(i => i.email === parsed_account.email);
+        let temp_acc = accounts.find(i => i.email === email);
         let index;
 
-        if(temp_acc === undefined) {
-            accounts.push(parsed_account);
-            index = accounts.lastIndexOf();
+        if(typeof temp_acc === 'undefined') {
+            let username = localStorage.getItem('username');
+            let description = localStorage.getItem('description');
+            let account_type = localStorage.getItem('account_type');
+
+            current_account = {
+                "email": email,
+                "password": password,
+                "username": username,
+                "description": description,
+                "account_type": account_type
+            }
+
+            accounts.push(current_account);
+            index = accounts.lastIndexOf(current_account);
         } else {
             index = accounts.indexOf(temp_acc);
         }
+
+        console.log(index);
+
+        console.log(accounts[index]);
 
         var reservations = [
             {
@@ -182,6 +191,7 @@
                 <img src="profile.JPG">
                 <div id="username"></div>
                 <p id="description"></p>
+                <div id="edit_account" onclick="location.href='edit_account.html'"> Edit Account </div>
                 <script>
                     var name = accounts[index].username;
                     var desc = accounts[index].description;

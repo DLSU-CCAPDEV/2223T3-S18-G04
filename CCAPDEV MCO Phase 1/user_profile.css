@@ -45,6 +45,22 @@ body{
     font-family: 'Cairo', sans-serif;
     margin: 10%;
 }
+
+.user_profile > #edit_account {
+    font-family: 'Cairo', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    text-align: center;
+}
+
+.user_profile > #edit_account:hover {
+    font-family: 'Cairo', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    text-align: center;
+    background-color: white;
+}
+
 .container > aside{
     background-color: rgb(198, 198, 198);
     border-radius: 10px;
