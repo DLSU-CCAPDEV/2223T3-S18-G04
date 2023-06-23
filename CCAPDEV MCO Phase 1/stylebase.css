@@ -4,3 +4,7 @@ body{
     background-color: white;
     font-family: 'Cairo', sans-serif;
 }
+
+.button-font, .input-font {
+    font-family: 'Cairo', sans-serif;
+}
