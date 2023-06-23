@@ -77,6 +77,10 @@
         }
 
         localStorage.setItem('accounts_global', JSON.stringify(accounts));
+        localStorage.setItem('password', accounts[index].password);
+        localStorage.setItem('username', accounts[index].username);
+        localStorage.setItem('description', accounts[index].description);
+        localStorage.setItem('account_type', accounts[index].account_type);
 
         var reservations = [
             {
@@ -192,10 +196,8 @@
                 
                 <div id="edit_account" onclick="location.href='edit_account.html'"> Edit Account </div>
                 <script>
-                    var name = accounts[index].username;
-                    var desc = accounts[index].description;
-                    document.getElementById("username").innerHTML = name;
-                    document.getElementById("description").innerHTML = desc;
+                    document.getElementById("username").innerHTML = localStorage.getItem('username');
+                    document.getElementById("description").innerHTML = localStorage.getItem('description');
                 </script>
             </div>
         </aside>

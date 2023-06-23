@@ -18,27 +18,34 @@
             </span>
         </nav>
 
-        <form action="login.html" method="POST" class="form">
-            <input type="submit" id="submit" value="Delete Account"/>
+        <form action="user_profile.html" method="POST" class="form">
+            <label for="edit_image">Profile picture: </label>
+            <input type="file" id="edit_image" accept="image/png, image/jpeg"/><br>
+            <label for="edit_username">Username: </label>
+            <input type="text" id="edit_username"/><br>
+            <label for="edit_desc">Description: </label>
+            <input type="text" id="edit_desc"/><br>
+            <input type="submit" id="submit" value="Submit Edits"/>
         </form>
 
+        <button onclick="location.href='delete_account.html'"> Delete Account </button>
+
         <script>
+            document.getElementById("edit_username").placeholder = localStorage.getItem('username');
+            document.getElementById("edit_desc").placeholder = localStorage.getItem('description');
+            
             const form = document.querySelector('form');
     
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
-                const accounts = JSON.parse(localStorage.getItem('accounts_global'));
-                const email = localStorage.getItem('email');
-                let temp_acc = accounts.find(i => i.email === email);
-                let index = accounts.indexOf(temp_acc);
+                const form_data = new FormData(form);
+                const kvpairs = Object.fromEntries(form_data);
+                
+                localStorage.setItem('image', kvpairs.edit_image);
+                localStorage.setItem('username', kvpairs.edit_username);
+                localStorage.setItem('description', kvpairs.edit_desc);
 
-                accounts.splice(index, 1);
-
-                localStorage.removeItem('accounts_global');
-
-                localStorage.setItem('accounts_global', JSON.stringify(accounts));
-
-                window.location.href="login.html";
+                window.location.href="user_profile.html";
             })
           </script>
     </body>
