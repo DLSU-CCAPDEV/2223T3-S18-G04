@@ -76,9 +76,7 @@
             index = accounts.indexOf(temp_acc);
         }
 
-        console.log(index);
-
-        console.log(accounts[index]);
+        localStorage.setItem('accounts_global', JSON.stringify(accounts));
 
         var reservations = [
             {
@@ -191,6 +189,7 @@
                 <img src="profile.JPG">
                 <div id="username"></div>
                 <p id="description"></p>
+                
                 <div id="edit_account" onclick="location.href='edit_account.html'"> Edit Account </div>
                 <script>
                     var name = accounts[index].username;

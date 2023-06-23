@@ -18,6 +18,28 @@
             </span>
         </nav>
 
-        
+        <form action="login.html" method="POST" class="form">
+            <input type="submit" id="submit" value="Delete Account"/>
+        </form>
+
+        <script>
+            const form = document.querySelector('form');
+    
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const accounts = JSON.parse(localStorage.getItem('accounts_global'));
+                const email = localStorage.getItem('email');
+                let temp_acc = accounts.find(i => i.email === email);
+                let index = accounts.indexOf(temp_acc);
+
+                accounts.splice(index, 1);
+
+                localStorage.removeItem('accounts_global');
+
+                localStorage.setItem('accounts_global', JSON.stringify(accounts));
+
+                window.location.href="login.html";
+            })
+          </script>
     </body>
 </html>
