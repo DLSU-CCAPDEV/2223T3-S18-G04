@@ -86,6 +86,22 @@
                 return box;
             }
 
+            function showUsers(userName) {
+                var box = document.createElement('div');
+                var heading = document.createElement('h3');
+                var text = document.createElement('p');
+
+                heading.innerHTML = "Users Found:";
+                text.innerHTML = "<a href='user_profile.html'> User </a>";
+
+                $(box).addClass('box');
+                box.appendChild(heading);
+                box.appendChild(document.createElement('hr'));
+                box.appendChild(text);
+
+                return box;
+            }
+
             function getDateTime() {
                 var time = times[$("#times").val()];
                 var date = $("#date").val();
@@ -96,10 +112,18 @@
 
             $(document).ready(function() {
                 $("#search").click(function() {
-                    var lab = $("#labs").val();
-                    var dateTime = getDateTime();
-                    var time = $("#times").val();
-                    $("#centered").append(showFreeSlots(lab, dateTime, time));
+                    debugger;
+                    if (!$("#user").val()) {
+                        var lab = $("#labs").val();
+                        var dateTime = getDateTime();
+                        var time = $("#times").val();
+                        $("#centered").append(showFreeSlots(lab, dateTime, time));
+                    }
+
+                    else {
+                        var name = $("name").val();
+                        $("#centered").append(showUsers(name));
+                    }
                 })
             })
 
@@ -156,6 +180,14 @@
         <div id="centered">
             
             <form id="form" class="box">
+
+                <label for="user"> <b> Input a User: </b> </label>
+                <br>
+                <input type="text" id="user" name="user" class="input-field">
+                <br>
+
+                <p>Or</p>
+
                 <label for="labs"> <b> Select a Lab: </b> </label>
                 <br>
                 <select name="labs" id="labs" class="input-field">
