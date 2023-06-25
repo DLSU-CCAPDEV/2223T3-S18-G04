@@ -51,8 +51,8 @@
             }
         ]
 
-        const email = localStorage.getItem('email');
-        const password = localStorage.getItem('password');
+        let email = localStorage.getItem('email');
+        let password = localStorage.getItem('password');
 
         let temp_acc = accounts.find(i => i.email === email);
         let index;

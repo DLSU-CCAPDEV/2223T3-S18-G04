@@ -34,19 +34,29 @@
             document.getElementById("edit_username").placeholder = localStorage.getItem('username');
             document.getElementById("edit_desc").placeholder = localStorage.getItem('description');
             
-            const form = document.querySelector('form');
-    
-            form.addEventListener('submit', (e) => {
+            const confirmEdits = (e) => {
                 e.preventDefault();
-                const form_data = new FormData(form);
-                const kvpairs = Object.fromEntries(form_data);
-                
-                localStorage.setItem('image', kvpairs.edit_image);
-                localStorage.setItem('username', kvpairs.edit_username);
-                localStorage.setItem('description', kvpairs.edit_desc);
+                let username = document.getElementById('edit_username').value;
+                let description = document.getElementById('edit_desc').value;
+            }
+            
+            localStorage.setItem('username', username);
 
-                window.location.href="user_profile.html";
-            })
+            //const form = document.querySelector('form');
+            
+            //form.addEventListener('submit', (e) => {
+               // e.preventDefault();
+               // const form_data = new FormData(form);
+                //const kvpairs = Object.fromEntries(form_data);
+                
+               // localStorage.setItem('image', kvpairs.edit_image);
+               // localStorage.setItem('username', kvpairs.edit_username);
+               // localStorage.setItem('description', kvpairs.edit_desc);
+
+                //console.log(form_data);
+
+                //window.location.href="user_profile.html";
+            //})
           </script>
     </body>
 </html>
