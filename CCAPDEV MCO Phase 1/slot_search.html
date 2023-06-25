@@ -111,18 +111,23 @@
             }
 
             $(document).ready(function() {
+
+                if ($("#output").child() != null) {
+                    $("#output").child()
+                }
+
                 $("#search").click(function() {
                     debugger;
                     if (!$("#user").val()) {
                         var lab = $("#labs").val();
                         var dateTime = getDateTime();
                         var time = $("#times").val();
-                        $("#centered").append(showFreeSlots(lab, dateTime, time));
+                        $("#output").append(showFreeSlots(lab, dateTime, time));
                     }
 
                     else {
                         var name = $("name").val();
-                        $("#centered").append(showUsers(name));
+                        $("#output").append(showUsers(name));
                     }
                 })
             })
@@ -180,60 +185,66 @@
         <div id="centered">
             
             <form id="form" class="box">
-
-                <label for="user"> <b> Input a User: </b> </label>
+                <div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
+                    <div style="margin: auto;">
+                        <label for="user"> <b> Input a User: </b> </label>
+                        <br>
+                        <input type="text" id="user" name="user" class="input-field">
+                        <br>
+                    </div>
+                    <div style="margin: auto;">  
+                        <label for="labs"> <b> Select a Lab: </b> </label>
+                        <br>
+                        <select name="labs" id="labs" class="input-field">
+                            <option value="1"> Lab 1 </option>
+                            <option value="2"> Lab 2 </option>
+                            <option value="3"> Lab 3 </option>
+                        </select>
+                        <br>
+                        <label for="date"> <b> Select a Date: </b> </label>
+                        <br>
+                        <input type="date" id="date" name="date" class="input-field">
+                        <br>
+                        <label for="times"> <b> Select a Time: </b> </label>
+                        <br>
+                        <select name="times" id="times" class="input-field">
+                            <option value="0"> 07:30AM - 08:00AM </option>
+                            <option value="1"> 08:00AM - 08:30AM </option>
+                            <option value="2"> 08:30AM - 09:00AM </option>
+                            <option value="3"> 09:00AM - 09:30AM </option>
+                            <option value="4"> 09:30AM - 10:00AM </option>
+                            <option value="5"> 10:00AM - 10:30AM </option>
+                            <option value="6"> 10:30PM - 11:00AM </option>
+                            <option value="7"> 11:00AM - 11:30AM </option>
+                            <option value="8"> 11:30AM - 12:00PM </option>
+                            <option value="9"> 12:00PM - 12:30PM </option>
+                            <option value="10"> 12:30PM - 01:00PM </option>
+                            <option value="11"> 01:00PM - 01:30PM </option>
+                            <option value="12"> 01:30PM - 02:00PM </option>
+                            <option value="13"> 02:00PM - 02:30PM </option>
+                            <option value="14"> 02:30PM - 03:00PM </option>
+                            <option value="15"> 03:00PM - 03:30PM </option>
+                            <option value="16"> 03:30PM - 04:00PM </option>
+                            <option value="17"> 04:00PM - 04:30PM </option>
+                            <option value="18"> 04:30PM - 05:00PM </option>
+                            <option value="19"> 05:00PM - 05:30PM </option>
+                            <option value="20"> 05:30PM - 06:00PM </option>
+                            <option value="21"> 06:00PM - 06:30PM </option>
+                            <option value="22"> 06:30PM - 07:00PM </option>
+                            <option value="23"> 07:00PM - 07:30PM </option>
+                            <option value="24"> 07:30PM - 08:00PM </option>
+                            <option value="25"> 08:00PM - 08:30PM </option>
+                            <option value="26"> 08:30PM - 09:00PM </option>
+                        </select>
+                    </div>
+                </div>
                 <br>
-                <input type="text" id="user" name="user" class="input-field">
-                <br>
-
-                <p>Or</p>
-
-                <label for="labs"> <b> Select a Lab: </b> </label>
-                <br>
-                <select name="labs" id="labs" class="input-field">
-                    <option value="1"> Lab 1 </option>
-                    <option value="2"> Lab 2 </option>
-                    <option value="3"> Lab 3 </option>
-                </select>
-                <br>
-                <label for="date"> <b> Select a Date: </b> </label>
-                <br>
-                <input type="date" id="date" name="date" class="input-field">
-                <br>
-                <label for="times"> <b> Select a Time: </b> </label>
-                <br>
-                <select name="times" id="times" class="input-field">
-                    <option value="0"> 07:30AM - 08:00AM </option>
-                    <option value="1"> 08:00AM - 08:30AM </option>
-                    <option value="2"> 08:30AM - 09:00AM </option>
-                    <option value="3"> 09:00AM - 09:30AM </option>
-                    <option value="4"> 09:30AM - 10:00AM </option>
-                    <option value="5"> 10:00AM - 10:30AM </option>
-                    <option value="6"> 10:30PM - 11:00AM </option>
-                    <option value="7"> 11:00AM - 11:30AM </option>
-                    <option value="8"> 11:30AM - 12:00PM </option>
-                    <option value="9"> 12:00PM - 12:30PM </option>
-                    <option value="10"> 12:30PM - 01:00PM </option>
-                    <option value="11"> 01:00PM - 01:30PM </option>
-                    <option value="12"> 01:30PM - 02:00PM </option>
-                    <option value="13"> 02:00PM - 02:30PM </option>
-                    <option value="14"> 02:30PM - 03:00PM </option>
-                    <option value="15"> 03:00PM - 03:30PM </option>
-                    <option value="16"> 03:30PM - 04:00PM </option>
-                    <option value="17"> 04:00PM - 04:30PM </option>
-                    <option value="18"> 04:30PM - 05:00PM </option>
-                    <option value="19"> 05:00PM - 05:30PM </option>
-                    <option value="20"> 05:30PM - 06:00PM </option>
-                    <option value="21"> 06:00PM - 06:30PM </option>
-                    <option value="22"> 06:30PM - 07:00PM </option>
-                    <option value="23"> 07:00PM - 07:30PM </option>
-                    <option value="24"> 07:30PM - 08:00PM </option>
-                    <option value="25"> 08:00PM - 08:30PM </option>
-                    <option value="26"> 08:30PM - 09:00PM </option>
-                </select>
-                <br>
-                <input type="button" id="search" value="Search" class="input-field">
+                <input type="button" id="search" value="Search" class="input-field" style="width: 70px; height: 50px; font-size: 15px;">
             </form>
+        </div>
+
+        <div id="output">
+
         </div>
         
 
