@@ -202,7 +202,8 @@
                 <div id="edit_account" onclick="location.href='edit_account.html'"> Edit Account </div>
                 <script>
                     const url = localStorage.getItem('pfp');
-                    document.getElementById("pfp").src = url;
+                    if(url === null) {document.getElementById("pfp").src = "profile.jpg";}
+                    else {document.getElementById("pfp").src = url;}
                     document.getElementById("username").innerHTML = localStorage.getItem('username');
                     document.getElementById("description").innerHTML = localStorage.getItem('description');
                 </script>
