@@ -45,3 +45,8 @@
     margin-bottom: 10px;
     font-size: 40px;
 }
+
+.view-slots-button {
+    font-family: 'Cairo', sans-serif;
+    border-radius: 8px;
+}
