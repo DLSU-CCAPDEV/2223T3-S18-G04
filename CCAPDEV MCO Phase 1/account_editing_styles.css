@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Tsukimi+Rounded:wght@700&display=swap');
+
+*{
+    font-family: 'Cairo', sans-serif;
+}
+
+html, body {
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+}
+
+.container {
+    border-radius: 25px;
+    outline:auto;
+    background-color: lightgray;
+    padding: 20px;
+    width: 400px;
+    margin: auto;
+    margin-top: 20px;
+    font-weight: 1000;
+}
+
+#submit {
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+input {
+    border-radius: 10px;
+}
+
+button {
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 10px;
+}

@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" media="all" href="navbar.css">
+        <link rel="stylesheet" type="text/css" media="all" href="account_editing_styles.css">
         <title>Edit Profile Picture</title>
 
     </head>
@@ -17,9 +18,10 @@
                 <span class="logout" onclick="location.href='login.html'"> Log Out </span>
             </span>
         </nav>
-
-        <input type="file" id="pfp" accept="image/*"><br>
-        <button id="confirm"> Confirm Changes </button>
+        <div class="container">
+            <input type="file" id="pfp" accept="image/*"><br>
+            <button id="confirm"> Confirm Changes </button>
+        </div>
 
         <script>
             const pfp = document.getElementById('pfp');

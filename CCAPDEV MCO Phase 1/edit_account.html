@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" media="all" href="navbar.css">
+        <link rel="stylesheet" type="text/css" media="all" href="account_editing_styles.css">
         <title>Edit Account</title>
 
     </head>
@@ -20,8 +21,10 @@
 
         <div class="container">
             <form action="user_profile.html" method="POST" class="form">
-                New Username: <input type="text" id="name" name="name" class="input"><br>
-                New Description: <input type="text" id="desc" name="desc" class="input"><br>
+                <label for="name">New Username</label><br>
+                <input type="text" id="name" name="name" class="input"><br>
+                <label for="desc">New Description</label><br>
+                <input type="text" id="desc" name="desc" class="input"><br>
                 <input type="submit" id="submit" value="Confirm Edits">
             </form>
             <button type="pfp" onclick="location.href='edit_pfp.html'"> Edit Profile Picture </button>

@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" media="all" href="navbar.css">
+        <link rel="stylesheet" type="text/css" media="all" href="account_editing_styles.css">
         <title>Edit Account</title>
 
     </head>
@@ -17,10 +18,12 @@
                 <span class="logout" onclick="location.href='login.html'"> Log Out </span>
             </span>
         </nav>
-
-        <form action="login.html" method="POST" class="form">
-            <input type="submit" id="submit" value="Delete Account"/>
-        </form>
+        <div class="container">
+            Account Deletion
+            <form action="login.html" method="POST" class="form">
+                <input type="submit" id="submit" value="Confirm Account Deletion"/>
+            </form>
+        </div>
 
         <script>
             const form = document.querySelector('form');
