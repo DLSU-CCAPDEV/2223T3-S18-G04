@@ -12,23 +12,16 @@
 
 		<script type="text/javascript">
 
-			var labOneContents;
-			var labTwoContents;
-			var labThreeContents;
-
-			var reservations = [
-				{
-					"lab": 1,
-					"seat": 40
-				}
-			]
-
-			function createCalendar() {
-				const table = document.createElement('table');
-				table.style.border = '1px solid black';
-
-				var tableHeader = document.createElement('thead');
-				table.appendChild(tableHeader);
+				var reservations = [
+					{
+						"name" : "John Doe",
+						"link" : "user_profile.html",
+						"lab" : 1,
+						"seat": 24,
+						"datetime" : "2023-06-25T17:30",
+						"isAnonymous" : false
+					}
+				]
 
 				var reservationIntervals = [
 					"07:30AM - 08:00AM",
@@ -91,6 +84,13 @@
 					"21:00"
             	]
 
+			function createCalendar(labNum) {
+				const table = document.createElement('table');
+				table.style.border = '1px solid black';
+
+				var tableHeader = document.createElement('thead');
+				table.appendChild(tableHeader);
+
 				for (var i = 0; i < 8; i++) {
 
 					var tHeadCell = tableHeader.appendChild(document.createElement('th'));
@@ -143,28 +143,86 @@
 						tableCell.style.width = '30px';
 						tableCell.style.height = 'auto';
 						tableCell.style.border = '1px solid black';
+						tableCell.style.padding = '5px';
 						if (j == 0) {
+							tableCell.style.textAlign = 'center';
+							tableCell.style.fontWeight = 'bold';
 							tableCell.append(document.createTextNode(reservationIntervals[i]));
 						}
 						else {
+							debugger;
 							var slotList = document.createElement("p");
+							$(slotList).addClass('slot-list');
+
+							var slotsTaken = 0;
+							var slotsTakenString;
+
+							var time = $(times)[i];
+							var date = moment(dateOffset(new Date(), j - 1)).format();
+							date = date.substring(0, 10);
+							var dateTime = date.concat("T", time);
+							var studentList = null;
+
+							var viewSlotsButton = document.createElement('button');
+							$(viewSlotsButton).addClass('view-slots-button');
+							viewSlotsButton.innerText = "View Slots";
+
+							slotList.innerHTML = "Available: <br>";							
+							for (var k = 0; k < 40; k++) {
+
+								if (reservations.length > 0) {
+									for (var l = 0; l < reservations.length; l++) {
+										var user = reservations[l];
+
+										if (dateTime == user.datetime && labNum == user.lab && k + 1 == user.seat && user.isAnonymous == false) {
+											var studentLink = document.createElement('LI');
+											studentLink.innerHTML = "<a href='" + user.link + "'> " + user.name + " </a>";
+											slotsTaken += 1;
+											
+											if (studentList == null) 
+												studentList = document.createElement('UL');
+											
+											studentList.appendChild(studentLink);
+										}
+
+										else {
+											slotList.innerHTML = slotList.innerHTML.concat(k + 1);
+
+											if (k < 39)
+												slotList.innerHTML = slotList.innerHTML.concat(", ");
+										}
+									}
+								}
+
+								else {
+									slotList.innerHTML = slotList.innerHTML.concat(k + 1);
+
+									if (k < 39)
+										slotList.innerHTML = slotList.innerHTML.concat(", ");
+								}
+							}
 							
-							slotList.innerHTML = "Available: <br>";
+							slotsTakenString = document.createElement('p');
+							slotsTakenString.innerHTML = slotsTaken + " / 40 Slots Taken";
+							
+							tableCell.append(viewSlotsButton);
+							slotList.style.display = 'none';
+							tableCell.append(slotList);
 
-							for (k = 0; k < 40; k++) {
-								slotList.innerHTML = slotList.innerHTML.concat(k + 1);
-
-								if (k < 39)
-									slotList.innerHTML = slotList.innerHTML.concat(", ");
+							if (studentList != null) {
+								var studentHeading = document.createElement('p');
+								studentHeading.innerHTML = "<b> Students Reserved </b>";
+								tableCell.append(studentHeading);
+								tableCell.append(studentList);
 							}
 
-							tableCell.append(slotList);
+							tableCell.append(slotsTakenString);
 						}
 					}
 				}
 
 				return table;
-			}
+			}	
 
 			function makeList() {
 
@@ -185,7 +243,7 @@
 							break;
 					}
 
-					const labTable = lab.appendChild(createCalendar());
+					const labTable = lab.appendChild(createCalendar(i + 1));
 					$(labTable).addClass('calendar-table');
 					labTable.style.display = "none";
 				}
@@ -228,7 +286,22 @@
 					else
 						calendar.style.display = "none";
 				})
+
+				$(".view-slots-button").click(function() {
+					var slotList = $(this).parent().children('.slot-list');
+					if (slotList.css('display') == 'none') {
+						slotList.css('display', 'block');
+						$(this).html("Hide Slots");
+					}
+
+					else {
+						slotList.css('display', 'none');
+						$(this).html("View Slots");
+					}
+				});
 			})
+
+			
 
 		</script>
 
