@@ -10,6 +10,14 @@
 
         <script type="text/javascript">
 
+            var reservations = [
+                {
+                    "lab" : 1,
+                    "seat": 24,
+                    "dateTime" : "2023-06-25T17:30"
+                }
+            ]
+
             var times = [
                 "07:30",
                 "08:00",
@@ -41,11 +49,11 @@
                 "21:00"
             ]
             
-            var labOneSlots = new Array(27).fill(new Array(40).fill(0));
-            var labTwoSlots = new Array(27).fill(new Array(40).fill(0));
-            var labThreeSlots = new Array(27).fill(new Array(40).fill(0));
+            var labOneSlots = new Array();
+            var labTwoSlots = new Array();
+            var labThreeSlots = new Array();
 
-            function showFreeSlots(labNum, dateTime, timeInterval) {
+            function showFreeSlots(labNum, dateTime) {
                 debugger;
                 var box = document.createElement('div');
                 var heading = document.createElement('h3');
@@ -73,11 +81,13 @@
                         break;
                 }
 
-                for (i = 0; i < lab[timeInterval].length; i++) {
-                    if (lab[timeInterval] == 0 || lab[timeInterval].dateTime != dateTime) {
-                        var seat = document.createElement('LI');
-                        seat.innerHTML = i + 1;
-                        list.appendChild(seat);
+                for (i = 0; i < 40; i++) {
+                    for (j = 0; j < lab.length; j++) {
+                        if (lab[j].seat != i + 1 || lab[j].dateTime != dateTime) {
+                            var seat = document.createElement('LI');
+                            seat.innerHTML = i + 1;
+                            list.appendChild(seat);
+                        }
                     }
                 }
 
@@ -110,14 +120,41 @@
                 return dateTime;
             }
 
-            $(document).ready(function() {
+            function addToSlots(reservation) {
+                debugger;
+                var lab;
+                
+                switch(reservation.lab){
+                    case 1:
+                        lab = labOneSlots;
+                        break;
+                    case 2:
+                        lab = labTwoSlots;
+                        break;
+                    case 3: 
+                        lab = labThreeSlots;
+                        break;
+                    default:
+                        lab = null;
+                        break;
+                }
 
-                if ($("#output").child() != null) {
-                    $("#output").child()
+                lab.push(reservation);              
+            }
+
+            $(document).ready(function() {
+                debugger;
+                for (var i = 0; i < reservations.length; i++) {
+                    addToSlots(reservations[i]);
                 }
 
                 $("#search").click(function() {
                     debugger;
+
+                    if ($("#output").children() != null) {
+                        $("#output").empty();
+                    }
+
                     if (!$("#user").val()) {
                         var lab = $("#labs").val();
                         var dateTime = getDateTime();
