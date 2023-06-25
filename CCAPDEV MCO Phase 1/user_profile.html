@@ -51,8 +51,8 @@
             }
         ]
 
-        const email = localStorage.getItem('email');
-        const password = localStorage.getItem('password');
+        let email = localStorage.getItem('email');
+        let password = localStorage.getItem('password');
 
         let temp_acc = accounts.find(i => i.email === email);
         let index;
@@ -76,11 +76,16 @@
             index = accounts.indexOf(temp_acc);
         }
 
+        if(localStorage.getItem('edited') === null) {
+            localStorage.setItem('password', accounts[index].password);
+            localStorage.setItem('username', accounts[index].username);
+            localStorage.setItem('description', accounts[index].description);
+            localStorage.setItem('account_type', accounts[index].account_type);
+        } else {
+            accounts[index].username = localStorage.getItem('username');
+            accounts[index].description = localStorage.getItem('description');
+        }
         localStorage.setItem('accounts_global', JSON.stringify(accounts));
-        localStorage.setItem('password', accounts[index].password);
-        localStorage.setItem('username', accounts[index].username);
-        localStorage.setItem('description', accounts[index].description);
-        localStorage.setItem('account_type', accounts[index].account_type);
 
         var reservations = [
             {
@@ -190,12 +195,14 @@
     <div class="container">
         <aside>
             <div class="user_profile">
-                <img src="profile.JPG">
+                <img id="pfp">
                 <div id="username"></div>
                 <p id="description"></p>
                 
                 <div id="edit_account" onclick="location.href='edit_account.html'"> Edit Account </div>
                 <script>
+                    const url = localStorage.getItem('pfp');
+                    document.getElementById("pfp").src = url;
                     document.getElementById("username").innerHTML = localStorage.getItem('username');
                     document.getElementById("description").innerHTML = localStorage.getItem('description');
                 </script>

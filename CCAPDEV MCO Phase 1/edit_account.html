@@ -18,35 +18,33 @@
             </span>
         </nav>
 
-        <form action="user_profile.html" method="POST" class="form">
-            <label for="edit_image">Profile picture: </label>
-            <input type="file" id="edit_image" accept="image/png, image/jpeg"/><br>
-            <label for="edit_username">Username: </label>
-            <input type="text" id="edit_username"/><br>
-            <label for="edit_desc">Description: </label>
-            <input type="text" id="edit_desc"/><br>
-            <input type="submit" id="submit" value="Submit Edits"/>
-        </form>
-
-        <button onclick="location.href='delete_account.html'"> Delete Account </button>
+        <div class="container">
+            <form action="user_profile.html" method="POST" class="form">
+                New Username: <input type="text" id="name" name="name" class="input"><br>
+                New Description: <input type="text" id="desc" name="desc" class="input"><br>
+                <input type="submit" id="submit" value="Confirm Edits">
+            </form>
+            <button type="pfp" onclick="location.href='edit_pfp.html'"> Edit Profile Picture </button>
+            <button type="delete" onclick="location.href='delete_account.html'">Delete Account</button>
+        </div>
 
         <script>
-            document.getElementById("edit_username").placeholder = localStorage.getItem('username');
-            document.getElementById("edit_desc").placeholder = localStorage.getItem('description');
-            
-            const form = document.querySelector('form');
-    
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const form_data = new FormData(form);
-                const kvpairs = Object.fromEntries(form_data);
-                
-                localStorage.setItem('image', kvpairs.edit_image);
-                localStorage.setItem('username', kvpairs.edit_username);
-                localStorage.setItem('description', kvpairs.edit_desc);
+        document.getElementById("name").placeholder = localStorage.getItem('username');
+        document.getElementById("desc").placeholder = localStorage.getItem('description');
 
-                window.location.href="user_profile.html";
-            })
-          </script>
+        const form = document.querySelector('form');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const form_data = new FormData(form);
+            const kvpairs = Object.fromEntries(form_data);
+
+            localStorage.setItem('username', kvpairs.name);
+            localStorage.setItem('description', kvpairs.desc);
+            localStorage.setItem('edited', 'Y');
+            window.location.href = "user_profile.html";
+        })
+
+        </script>
     </body>
 </html>
