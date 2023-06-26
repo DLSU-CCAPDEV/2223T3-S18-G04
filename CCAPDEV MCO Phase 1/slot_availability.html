@@ -6,305 +6,12 @@
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 		<script type="text/javascript" src="scripts/date-time-scripts.js"></script>
+		<script type="text/javascript" src="scripts/reserve.js" defer></script>
 		<link rel="stylesheet" type="text/css" media="all" href="styles/navbar.css">
 		<link rel="stylesheet" type="text/css" href="styles/slot_availability.css">
 		<link rel="stylesheet" type="text/css" href="styles/stylebase.css">
-		<link rel="icon" type="image/x-icon" href="./images/microscope_round.ico">
-
-		<script type="text/javascript">
-
-				var reservations = [
-					{
-						"name" : "John Doe",
-						"link" : "user_profile.html",
-						"lab" : 1,
-						"seat": 24,
-						"datetime" : "2023-06-25T17:30",
-						"isAnonymous" : false
-					}
-				]
-
-				var reservationIntervals = [
-					"07:30AM - 08:00AM",
-					"08:00AM - 08:30AM",
-					"08:30AM - 09:00AM",
-					"09:00AM - 09:30AM",
-					"09:30AM - 10:00AM",
-					"10:00AM - 10:30AM",
-					"10:30PM - 11:00AM",
-					"11:00AM - 11:30AM",
-					"11:30AM - 12:00PM",
-					"12:00PM - 12:30PM",
-					"12:30PM - 01:00PM",
-					"01:00PM - 01:30PM",
-					"01:30PM - 02:00PM",
-					"02:00PM - 02:30PM",
-					"02:30PM - 03:00PM",
-					"03:00PM - 03:30PM",
-					"03:30PM - 04:00PM",
-					"04:00PM - 04:30PM",
-					"04:30PM - 05:00PM",
-					"05:00PM - 05:30PM",
-					"05:30PM - 06:00PM",
-					"06:00PM - 06:30PM",
-					"06:30PM - 07:00PM",
-					"07:00PM - 07:30PM",
-					"07:30PM - 08:00PM",
-					"08:00PM - 08:30PM",
-					"08:30PM - 09:00PM"
-				]
-
-				var times = [
-					"07:30",
-					"08:00",
-					"08:30",
-					"09:00",
-					"09:30",
-					"10:00",
-					"10:30",
-					"11:00",
-					"11:30",
-					"12:00",
-					"12:30",
-					"13:00",
-					"13:30",
-					"14:00",
-					"14:30",
-					"15:00",
-					"15:30",
-					"16:00",
-					"16:30",
-					"17:00",
-					"17:30",
-					"18:00",
-					"18:30",
-					"19:00",
-					"19:30",
-					"20:00",
-					"20:30",
-					"21:00"
-            	]
-
-			function createCalendar(labNum) {
-				const table = document.createElement('table');
-				table.style.border = '1px solid black';
-
-				var tableHeader = document.createElement('thead');
-				table.appendChild(tableHeader);
-
-				for (var i = 0; i < 8; i++) {
-
-					var tHeadCell = tableHeader.appendChild(document.createElement('th'));
-
-					switch (i) {
-						case 1:
-							tHeadCell.appendChild(document.createTextNode(moment(dateOffset(new Date(), 0)).format('dddd')));
-							tHeadCell.appendChild(document.createElement('br'));
-							tHeadCell.appendChild(document.createTextNode(parseDateToWords(dateOffset(new Date(), 0))));
-							break;
-						case 2:
-							tHeadCell.appendChild(document.createTextNode(moment(dateOffset(new Date(), 1)).format('dddd')));
-							tHeadCell.appendChild(document.createElement('br'));
-							tHeadCell.appendChild(document.createTextNode(parseDateToWords(dateOffset(new Date(), 1))));
-							break;
-						case 3:
-							tHeadCell.appendChild(document.createTextNode(moment(dateOffset(new Date(), 2)).format('dddd')));
-							tHeadCell.appendChild(document.createElement('br'));
-							tHeadCell.appendChild(document.createTextNode(parseDateToWords(dateOffset(new Date(), 2))));
-							break;
-						case 4:
-							tHeadCell.appendChild(document.createTextNode(moment(dateOffset(new Date(), 3)).format('dddd')));
-							tHeadCell.appendChild(document.createElement('br'));
-							tHeadCell.appendChild(document.createTextNode(parseDateToWords(dateOffset(new Date(), 3))));
-							break;
-						case 5:
-							tHeadCell.appendChild(document.createTextNode(moment(dateOffset(new Date(), 4)).format('dddd')));
-							tHeadCell.appendChild(document.createElement('br'));
-							tHeadCell.appendChild(document.createTextNode(parseDateToWords(dateOffset(new Date(), 4))));
-							break;
-						case 6:
-							tHeadCell.appendChild(document.createTextNode(moment(dateOffset(new Date(), 5)).format('dddd')));
-							tHeadCell.appendChild(document.createElement('br'));
-							tHeadCell.appendChild(document.createTextNode(parseDateToWords(dateOffset(new Date(), 5))));
-							break;
-						case 7:
-							tHeadCell.appendChild(document.createTextNode(moment(dateOffset(new Date(), 6)).format('dddd')));
-							tHeadCell.appendChild(document.createElement('br'));
-							tHeadCell.appendChild(document.createTextNode(parseDateToWords(dateOffset(new Date(), 6))));
-							break;
-					}
-				}
-				
-				debugger;
-
-				for (var i = 0; i < 27; i++) {
-						const tableRow = table.insertRow();
-					for (var j = 0; j < 8; j++) {
-						const tableCell = tableRow.insertCell();
-						tableCell.style.width = '30px';
-						tableCell.style.height = 'auto';
-						tableCell.style.border = '1px solid black';
-						tableCell.style.padding = '5px';
-						if (j == 0) {
-							tableCell.style.textAlign = 'center';
-							tableCell.style.fontWeight = 'bold';
-							tableCell.append(document.createTextNode(reservationIntervals[i]));
-						}
-						else {
-							debugger;
-							var slotList = document.createElement("p");
-							$(slotList).addClass('slot-list');
-
-							var slotsTaken = 0;
-							var slotsTakenString;
-
-							var time = $(times)[i];
-							var date = moment(dateOffset(new Date(), j - 1)).format();
-							date = date.substring(0, 10);
-							var dateTime = date.concat("T", time);
-							var studentList = null;
-
-							var viewSlotsButton = document.createElement('button');
-							$(viewSlotsButton).addClass('view-slots-button');
-							viewSlotsButton.innerText = "View Slots";
-
-							slotList.innerHTML = "Available: <br>";							
-							for (var k = 0; k < 40; k++) {
-
-								if (reservations.length > 0) {
-									for (var l = 0; l < reservations.length; l++) {
-										var user = reservations[l];
-
-										if (dateTime == user.datetime && labNum == user.lab && k + 1 == user.seat && user.isAnonymous == false) {
-											var studentLink = document.createElement('LI');
-											studentLink.innerHTML = "<a href='" + user.link + "'> " + user.name + " </a>";
-											slotsTaken += 1;
-											
-											if (studentList == null) 
-												studentList = document.createElement('UL');
-											
-											studentList.appendChild(studentLink);
-										}
-
-										else {
-											slotList.innerHTML = slotList.innerHTML.concat(k + 1);
-
-											if (k < 39)
-												slotList.innerHTML = slotList.innerHTML.concat(", ");
-										}
-									}
-								}
-
-								else {
-									slotList.innerHTML = slotList.innerHTML.concat(k + 1);
-
-									if (k < 39)
-										slotList.innerHTML = slotList.innerHTML.concat(", ");
-								}
-							}
-							
-							slotsTakenString = document.createElement('p');
-							slotsTakenString.innerHTML = slotsTaken + " / 40 Slots Taken";
-							
-							tableCell.append(viewSlotsButton);
-							slotList.style.display = 'none';
-							tableCell.append(slotList);
-
-							if (studentList != null) {
-								var studentHeading = document.createElement('p');
-								studentHeading.innerHTML = "<b> Students Reserved </b>";
-								tableCell.append(studentHeading);
-								tableCell.append(studentList);
-							}
-
-							tableCell.append(slotsTakenString);
-						}
-					}
-				}
-
-				return table;
-			}	
-
-			function makeList() {
-
-			}
-
-			$(document).ready(function() {
-				for (var i = 0; i < 3; i++) {
-					var lab;
-					switch(i) {
-						case 0:
-							lab = document.getElementById("lab-1");
-							break;
-						case 1:
-							lab = document.getElementById("lab-2");
-							break;
-						case 2:
-							lab = document.getElementById("lab-3");
-							break;
-					}
-
-					const labTable = lab.appendChild(createCalendar(i + 1));
-					$(labTable).addClass('calendar-table');
-					labTable.style.display = "none";
-				}
-
-				$("#lab-button-1").click(function() {
-					var calendar = document.querySelector('#lab-1 > .calendar-table')
-					if (document.getElementById("lab-button-1").innerText == '+')
-						document.getElementById("lab-button-1").innerText = '-';
-					else
-						document.getElementById("lab-button-1").innerText = '+';
-
-					if (calendar.style.display == "none")
-						calendar.style.display = "table";
-					else
-						calendar.style.display = "none";
-				})
-
-				$("#lab-button-2").click(function() {
-					var calendar = document.querySelector('#lab-2 > .calendar-table')
-					if (document.getElementById("lab-button-2").innerText == '+')
-						document.getElementById("lab-button-2").innerText = '-';
-					else
-						document.getElementById("lab-button-2").innerText = '+';
-
-					if (calendar.style.display == "none")
-						calendar.style.display = "table";
-					else
-						calendar.style.display = "none";
-				})
-
-				$("#lab-button-3").click(function() {
-					var calendar = document.querySelector('#lab-3 > .calendar-table')
-					if (document.getElementById("lab-button-3").innerText == '+')
-						document.getElementById("lab-button-3").innerText = '-';
-					else
-						document.getElementById("lab-button-3").innerText = '+';
-					
-						if (calendar.style.display == "none")
-						calendar.style.display = "table";
-					else
-						calendar.style.display = "none";
-				})
-
-				$(".view-slots-button").click(function() {
-					var slotList = $(this).parent().children('.slot-list');
-					if (slotList.css('display') == 'none') {
-						slotList.css('display', 'block');
-						$(this).html("Hide Slots");
-					}
-
-					else {
-						slotList.css('display', 'none');
-						$(this).html("View Slots");
-					}
-				});
-			})
-
-			
-
-		</script>
+		<link rel="stylesheet" type="text/css" href="styles/reserve.css">
+    	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
 
 	</head>
 	<body>
@@ -316,30 +23,160 @@
 				<span class="lab_slots" onclick="location.href='slot_availability.html'"> View Lab Slots </span>
 				<span class="logout" onclick="location.href='login.html'"> Log Out </span>
 			</span>
-			
 		</nav>
 
+		<!-- Lab Timeslot Calendar -->
+
 		<div class="container">
-			<div class="lab-dropdown" id="lab-1">
-				<div class="lab-dropdown-row">
-					<h2 style="float: left; font-size: 30px;"> Lab 1 </h2>
-					<button class="lab-button button-font" id="lab-button-1"> + </button>
-				</div>
-			</div>
-	
-			<div class="lab-dropdown" id="lab-2">
-				<div class="lab-dropdown-row">
-					<h2 style="float: left; font-size: 30px;"> Lab 2 </h2>
-					<button class="lab-button button-font" id="lab-button-2"> + </button>
-				</div>
-			</div>
-	
-			<div class="lab-dropdown" id="lab-3">
-				<div class="lab-dropdown-row">
-					<h2 style="float: left; font-size: 30px;"> Lab 3 </h2>
-					<button class="lab-button button-font" id="lab-button-3"> + </button>
-				</div>
-			</div>
+			<div id="roottimeslot"></div>
 		</div>
+
+
+		<!-- Reserve Seat -->
+		<section class="reserve_container">
+			<img src="complab.png" class="labimage" alt="computer lab">
+			<div class="uil uil-times-circle close"></div>
+
+			<!-- Reserve slot -->
+			<div class="reserveinput">
+				<form>
+					<h2>Reserve a seat</h2>
+					<div class="textbox">
+						<input type="text" id="labchosen" name="labchosen" class="inputtext" readonly>
+						<i class="uil uil-desktop"></i>
+					</div>
+					<div class="textbox">
+						<!-- <select class="inputtext" name="datersv" id="datersv" size="1">
+							<option value="#">date</option>
+						</select> -->
+						<input type="date" id="datersv" name="datersv" class="inputtext" required>
+						<i class="uil uil-calendar-alt" title="Add Date"></i>
+					</div>
+					<div class="textbox">
+						<select class="inputtext" name="timersv" id="timersv" size="1">
+							<option value="07:30AM - 08:00AM"> 07:30AM - 08:00AM </option>
+							<option value="08:00AM - 08:30AM"> 08:00AM - 08:30AM </option>
+							<option value="08:30AM - 09:00AM"> 08:30AM - 09:00AM </option>
+							<option value="09:00AM - 09:30AM"> 09:00AM - 09:30AM </option>
+							<option value="09:30AM - 10:00AM"> 09:30AM - 10:00AM </option>
+							<option value="10:00AM - 10:30AM"> 10:00AM - 10:30AM </option>
+							<option value="10:30PM - 11:00AM"> 10:30PM - 11:00AM </option>
+							<option value="11:00AM - 11:30AM"> 11:00AM - 11:30AM </option>
+							<option value="11:30AM - 12:00PM"> 11:30AM - 12:00PM </option>
+							<option value="12:00PM - 12:30PM"> 12:00PM - 12:30PM </option>
+							<option value="12:30PM - 01:00PM"> 12:30PM - 01:00PM </option>
+							<option value="01:00PM - 01:30PM"> 01:00PM - 01:30PM </option>
+							<option value="01:30PM - 02:00PM"> 01:30PM - 02:00PM </option>
+							<option value="02:00PM - 02:30PM"> 02:00PM - 02:30PM </option>
+							<option value="02:30PM - 03:00PM"> 02:30PM - 03:00PM </option>
+							<option value="03:00PM - 03:30PM"> 03:00PM - 03:30PM </option>
+							<option value="03:30PM - 04:00PM"> 03:30PM - 04:00PM </option>
+							<option value="04:00PM - 04:30PM"> 04:00PM - 04:30PM </option>
+							<option value="04:30PM - 05:00PM"> 04:30PM - 05:00PM </option>
+							<option value="05:00PM - 05:30PM"> 05:00PM - 05:30PM </option>
+							<option value="05:30PM - 06:00PM"> 05:30PM - 06:00PM </option>
+							<option value="06:00PM - 06:30PM"> 06:00PM - 06:30PM </option>
+							<option value="06:30PM - 07:00PM"> 06:30PM - 07:00PM </option>
+							<option value="07:00PM - 07:30PM"> 07:00PM - 07:30PM </option>
+							<option value="07:30PM - 08:00PM"> 07:30PM - 08:00PM </option>
+							<option value="08:00PM - 08:30PM"> 08:00PM - 08:30PM </option>
+							<option value="08:30PM - 09:00PM"> 08:30PM - 09:00PM </option>
+						</select>
+						<i class="uil uil-clock" title="Add Timeslot"></i>
+					</div>
+					<div class="textbox">
+						<input class= "inputtext" name="namersv" id="namersv" type="text" placeholder="Reservation Name (Optional)">
+						<i class="uil uil-ticket" title="Add a name for seat reservation."></i>
+					</div>
+					<div class="textbox">
+						<input class= "inputtext" name="seatsrsv" id="seatsrsv" type="number" placeholder="Number of Seats" required>
+						<i class="uil uil-users-alt" title="Specify how many seats will be reserved."></i>
+					</div>
+					<button type="button" class="reservebtn" id="buttonrsv" name="buttonrsv">Add Reservation</button>
+				</form>
+
+				<form action="#">
+					<p class="editrsrv"> Already have a reservation? <span><a href="#" id="showlistrsv">Edit Reservation</a></span></p>
+				</form>
+			</div>
+
+			<div class="listreserve">
+				<h2>My Reservations</h2>
+				<div id="rootlab"></div>
+				<form action="#">
+					<p class="editrsrv"> Want to add a reservation? <span><a href="#" id="addrsv">Add Reservation</a></span></p>
+				</form>
+			</div>
+
+			<!-- <div class="notifbox">
+				<label for="notif"> Thank you for Registering! </label>
+				<button> Ok </button>
+				<form action="#">
+					<p class="editrsrv"> <a href="#" id="addrsv"> Create New Reservation</a></p>
+				</form>
+			</div> -->
+
+			<div class="editdeletereserve">
+				<form action="#">
+					<h2>Edit Reservation</h2>
+					<!-- Lab # -->
+					<!-- Available Seats: -->
+					<!-- Date / Time:  -->
+					<div class="textbox">
+						<input type="text" id="labchosenedit" name="labchosen" class="inputtext" readonly>
+						<i class="uil uil-desktop"></i>
+					</div>
+					<div class="textbox">
+						<!-- <select class="inputtext" name="datersv" id="datersv" size="1">
+							<option value="#">date</option>
+						</select> -->
+						<input type="date" id="datersvedit" name="datersvedit" class="inputtext">
+						<i class="uil uil-calendar-alt" title="Add Date"></i>
+					</div>
+					<div class="textbox">
+						<select class="inputtext" name="timersv" id="timersvedit" size="1">
+							<option value="07:30AM - 08:00AM"> 07:30AM - 08:00AM </option>
+							<option value="08:00AM - 08:30AM"> 08:00AM - 08:30AM </option>
+							<option value="08:30AM - 09:00AM"> 08:30AM - 09:00AM </option>
+							<option value="09:00AM - 09:30AM"> 09:00AM - 09:30AM </option>
+							<option value="09:30AM - 10:00AM"> 09:30AM - 10:00AM </option>
+							<option value="10:00AM - 10:30AM"> 10:00AM - 10:30AM </option>
+							<option value="10:30PM - 11:00AM"> 10:30PM - 11:00AM </option>
+							<option value="11:00AM - 11:30AM"> 11:00AM - 11:30AM </option>
+							<option value="11:30AM - 12:00PM"> 11:30AM - 12:00PM </option>
+							<option value="12:00PM - 12:30PM"> 12:00PM - 12:30PM </option>
+							<option value="12:30PM - 01:00PM"> 12:30PM - 01:00PM </option>
+							<option value="01:00PM - 01:30PM"> 01:00PM - 01:30PM </option>
+							<option value="01:30PM - 02:00PM"> 01:30PM - 02:00PM </option>
+							<option value="02:00PM - 02:30PM"> 02:00PM - 02:30PM </option>
+							<option value="02:30PM - 03:00PM"> 02:30PM - 03:00PM </option>
+							<option value="03:00PM - 03:30PM"> 03:00PM - 03:30PM </option>
+							<option value="03:30PM - 04:00PM"> 03:30PM - 04:00PM </option>
+							<option value="04:00PM - 04:30PM"> 04:00PM - 04:30PM </option>
+							<option value="04:30PM - 05:00PM"> 04:30PM - 05:00PM </option>
+							<option value="05:00PM - 05:30PM"> 05:00PM - 05:30PM </option>
+							<option value="05:30PM - 06:00PM"> 05:30PM - 06:00PM </option>
+							<option value="06:00PM - 06:30PM"> 06:00PM - 06:30PM </option>
+							<option value="06:30PM - 07:00PM"> 06:30PM - 07:00PM </option>
+							<option value="07:00PM - 07:30PM"> 07:00PM - 07:30PM </option>
+							<option value="07:30PM - 08:00PM"> 07:30PM - 08:00PM </option>
+							<option value="08:00PM - 08:30PM"> 08:00PM - 08:30PM </option>
+							<option value="08:30PM - 09:00PM"> 08:30PM - 09:00PM </option>
+						</select>
+						<i class="uil uil-clock" title="Add Timeslot"></i>
+					</div>
+					<div class="textbox">
+						<input class= "inputtext" name="namersv" id="namersvedit" type="text" placeholder="Reservation Name (Optional)">
+						<i class="uil uil-ticket" title="Add a name for seat reservation."></i>
+					</div>
+					<div class="textbox">
+						<input class= "inputtext" name="seatsrsv" id="seatsrsvedit" type="number" placeholder="Number of Seats">
+						<i class="uil uil-users-alt" title="Specify how many seats will be reserved."></i>
+					</div>
+					<button type="button" class="reservebtn" id="editrsv" name="editrsv">Edit Reservation</button>
+					<button type="button" class="editdeletebtn" id="deletersv" name="deletersv">Delete Reservation</button>
+					<button type="button" class="editdeletebtn" id="cancelbutton" name="cancelbutton">Cancel</button>
+				</form>
+		</section>
 	</body>
 </html>
