@@ -12,14 +12,14 @@
 /* Reserve */
 
 .reserve_container {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(1.01);
     max-width: 300px;
     width: 100%;
     background-color:#eeeeee;
-    z-index: 2;
+    z-index: 100;
     padding: 25px;
     border-radius: 10px;
     outline: 10px solid;
