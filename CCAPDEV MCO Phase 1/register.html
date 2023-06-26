@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" media="all" href="register_login_style.css">
+    <link rel="stylesheet" type="text/css" media="all" href="styles/register_login_style.css">
 
     <title>Register</title>
+    <script>
+        localStorage.clear();
+    </script>
 </head>
 <body>
     <div class="container">
-        <img src="microscope_round.png" alt="microscope logo"> <!--Replace this with a logo-->
+        <img src="images/microscope_round.png" alt="microscope logo"> <!--Replace this with a logo-->
         <header>
            <p id="labname">Lab Reservation</p>
            <p id="logintype">Register an Account</p>
@@ -49,8 +52,7 @@
             localStorage.setItem('username', kvpairs.username);
             localStorage.setItem('description', kvpairs.description);
             localStorage.setItem('account_type', kvpairs.account_type);
-
-            console.log(kvpairs);
+            localStorage.setItem('entr_type', 'R');
             
             window.location.href = "user_profile.html";
         })

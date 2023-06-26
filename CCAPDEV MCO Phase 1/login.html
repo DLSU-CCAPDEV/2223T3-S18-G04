@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" media="all" href="register_login_style.css">
+    <link rel="stylesheet" type="text/css" media="all" href="styles/register_login_style.css">
 
     <title>Log-In</title>
     <script>
@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="microscope_round.png" alt="microscope logo"> 
+        <img src="images/microscope_round.png" alt="microscope logo"> 
         <header>
            <p id="labname">Lab Reservation</p>
            <p id="logintype">Sign-In</p>
@@ -41,6 +41,7 @@
 
             localStorage.setItem('email', kvpairs.email);
             localStorage.setItem('password', kvpairs.password);
+            localStorage.setItem('entr_type', 'L');
             
             window.location.href = "user_profile.html";
         })

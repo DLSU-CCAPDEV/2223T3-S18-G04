@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" media="all" href="user_profile.css">
-    <link rel="stylesheet" type="text/css" media="all" href="navbar.css">
+    <link rel="stylesheet" type="text/css" media="all" href="styles/user_profile.css">
+    <link rel="stylesheet" type="text/css" media="all" href="styles/navbar.css">
     <title>User</title> <!--Find a way to make this chnage according to the user's name-->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
@@ -58,6 +58,11 @@
         let index;
 
         if(typeof temp_acc === 'undefined') {
+            if(localStorage.getItem('entr_type') === 'L') {
+                window.alert("Email does not exist. Please choose another email.");
+                window.location.href = "login.html";
+            }
+
             let username = localStorage.getItem('username');
             let description = localStorage.getItem('description');
             let account_type = localStorage.getItem('account_type');
@@ -73,10 +78,20 @@
             accounts.push(current_account);
             index = accounts.lastIndexOf(current_account);
         } else {
-            index = accounts.indexOf(temp_acc);
+            if(localStorage.getItem('entr_type') === 'L') {
+                index = accounts.indexOf(temp_acc);
+                if(password != accounts[index].password) {
+                    window.alert("Wrong password.");
+                    window.location.href = "login.html";
+                }
+            } else {
+                window.alert("Email already exists. Please choose another email.");
+                window.location.href = "register.html";
+            }
         }
 
         if(localStorage.getItem('edited') === null) {
+            localStorage.setItem('email', accounts[index].email);
             localStorage.setItem('password', accounts[index].password);
             localStorage.setItem('username', accounts[index].username);
             localStorage.setItem('description', accounts[index].description);
@@ -85,6 +100,7 @@
             accounts[index].username = localStorage.getItem('username');
             accounts[index].description = localStorage.getItem('description');
         }
+
         localStorage.setItem('accounts_global', JSON.stringify(accounts));
 
         var reservations = [
@@ -98,7 +114,25 @@
                 "lab": 2,
                 "seat": 13,
                 "reservedatetime": "2023-06-18T12:30",
-                "requestdatetime": "2023-06-12T08:30"
+                "requestdatetime": "2023-06-12T08:35"
+            },
+            {
+                "lab": 3,
+                "seat": 15,
+                "reservedatetime": "2023-06-18T12:30",
+                "requestdatetime": "2023-06-12T08:40"
+            },
+            {
+                "lab": 3,
+                "seat": 15,
+                "reservedatetime": "2023-06-18T01:00",
+                "requestdatetime": "2023-06-12T08:45"
+            },
+            {
+                "lab": 3,
+                "seat": 15,
+                "reservedatetime": "2023-06-18T01:30",
+                "requestdatetime": "2023-06-12T08:50"
             }
         ]
 
@@ -202,7 +236,7 @@
                 <div id="edit_account" onclick="location.href='edit_account.html'"> Edit Account </div>
                 <script>
                     const url = localStorage.getItem('pfp');
-                    if(url === null) {document.getElementById("pfp").src = "profile.jpg";}
+                    if(url === null) {document.getElementById("pfp").src = "images/default_profile.png";}
                     else {document.getElementById("pfp").src = url;}
                     document.getElementById("username").innerHTML = localStorage.getItem('username');
                     document.getElementById("description").innerHTML = localStorage.getItem('description');
