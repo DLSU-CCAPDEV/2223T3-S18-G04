@@ -99,15 +99,27 @@
             function showUsers(userName) {
                 var box = document.createElement('div');
                 var heading = document.createElement('h3');
-                var text = document.createElement('p');
+                var text2 = document.createElement('p');
+                var text3 = document.createElement('p');
+                var text4 = document.createElement('p');
+                var text5 = document.createElement('p');
+                var text6 = document.createElement('p');
 
                 heading.innerHTML = "Users Found:";
-                text.innerHTML = "<a href='user_profile.html'> User </a>";
+                text2.innerHTML = "<a href='user_profile2.html'> Blaise Corbin </a>";
+                text3.innerHTML = "<a href='user_profile3.html'> Antonio Veloso </a>";
+                text4.innerHTML = "<a href='user_profile4.html'> Bien Magdamo </a>";
+                text5.innerHTML = "<a href='user_profile5.html'> Sandeon Gavan </a>";
+                text6.innerHTML = "<a href='user_profile6.html'> Karl Asares </a>";
 
                 $(box).addClass('box');
                 box.appendChild(heading);
                 box.appendChild(document.createElement('hr'));
-                box.appendChild(text);
+                box.appendChild(text2);
+                box.appendChild(text3);
+                box.appendChild(text4);
+                box.appendChild(text5);
+                box.appendChild(text6);
 
                 return box;
             }
