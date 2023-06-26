@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" media="all" href="user_profile.css">
-    <link rel="stylesheet" type="text/css" media="all" href="navbar.css">
+    <link rel="stylesheet" type="text/css" media="all" href="styles/user_profile.css">
+    <link rel="stylesheet" type="text/css" media="all" href="styles/navbar.css">
     <title>User</title> <!--Find a way to make this chnage according to the user's name-->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
@@ -12,77 +12,38 @@
     <script src="scripts/date-time-scripts.js"></script>
 
     <script type="text/javascript">
-
-        var accounts = [
-            {
-                "email": "blaise_corbin@dlsu.edu.ph",
-                "password": "fdfdsgvdgv",
-                "username": "Blaise Corbin",
-                "description": "A fictional DLSU lab technician",
-                "account_type": "tech"
-            }, 
-            {
-                "email": "antonio_veloso@dlsu.edu.ph",
-                "password": "mgvernvpm",
-                "username": "Antonio Veloso",
-                "description": "A DLSU student",
-                "account_type": "student"
-            }, 
-            {
-                "email": "bien_magdamo@dlsu.edu.ph",
-                "password": "r32rfvvrb33",
-                "username": "Bien Magdamo",
-                "description": "A DLSU student",
-                "account_type": "student"
-            }, 
-            {
-                "email": "sandeon_gavan@dlsu.edu.ph",
-                "password": "password12345678",
-                "username": "Sandeon Gavan",
-                "description": "Hello! I am Sandeon Gavan a 119 DLSU student studying BSCS-ST. Feel free to message me if you have any questions regarding computer science!",
-                "account_type": "student"
-            }, 
-            {
-                "email": "karl_asares@dlsu.edu.ph",
-                "password": "ver34_m4wfvmv2w",
-                "username": "Karl Asares",
-                "description": "A DLSU student",
-                "account_type": "student"
-            }
-        ]
-
-        let account = new URLSearchParams(window.location.search);
-
-        parsed_account = {
-            "email": account.get('email'),
-            "password": account.get('password'),
-            "username": account.get('username'),
-            "description": account.get('description'),
-            "account_type": account.get('account_type')
-        }
-
-        let temp_acc = accounts.find(i => i.email === parsed_account.email);
-        let index;
-
-        if(temp_acc === undefined) {
-            accounts.push(parsed_account);
-            index = accounts.lastIndexOf();
-        } else {
-            index = accounts.indexOf(temp_acc);
-        }
+        var accounts_global = JSON.parse(localStorage.getItem('accounts_global'));
 
         var reservations = [
             {
                 "lab": 1,
-                "seat": 24,
+                "seat": 27,
                 "reservedatetime": "2023-06-18T12:30",
                 "requestdatetime": "2023-06-12T08:30"
             },
             {
                 "lab": 2,
-                "seat": 13,
+                "seat": 16,
                 "reservedatetime": "2023-06-18T12:30",
-                "requestdatetime": "2023-06-12T08:30"
+                "requestdatetime": "2023-06-12T08:35"
+            },
+            {
+                "lab": 3,
+                "seat": 18,
+                "reservedatetime": "2023-06-18T12:30",
+                "requestdatetime": "2023-06-12T08:40"
+            },
+            {
+                "lab": 3,
+                "seat": 18,
+                "reservedatetime": "2023-06-18T01:00",
+                "requestdatetime": "2023-06-12T08:45"
+            },
+            {
+                "lab": 3,
+                "seat": 18,
+                "reservedatetime": "2023-06-18T01:30",
+                "requestdatetime": "2023-06-12T08:50"
             }
         ]
 
@@ -179,14 +140,16 @@
     <div class="container">
         <aside>
             <div class="user_profile">
-                <img src="profile.JPG">
+                <img id="pfp">
                 <div id="username"></div>
                 <p id="description"></p>
+
                 <script>
-                    var name = accounts[index].username;
-                    var desc = accounts[index].description;
-                    document.getElementById("username").innerHTML = name;
-                    document.getElementById("description").innerHTML = desc;
+                    const url = localStorage.getItem('pfp');
+                    if(url === null) {document.getElementById("pfp").src = "images/profile4.jpg";}
+                    else {document.getElementById("pfp").src = url;}
+                    document.getElementById("username").innerHTML = accounts_global[2].username;
+                    document.getElementById("description").innerHTML = accounts_global[2].description;
                 </script>
             </div>
         </aside>
