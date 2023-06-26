@@ -30,6 +30,10 @@
     align-content: center;
 }
 
+.lab-dropdown-row h2 {
+    align-self: center;
+}
+
 .calendar-table {
     table-layout: fixed;
     width: 100%;
@@ -56,11 +60,12 @@
 .Reservebuttonmain {
     position: relative;
     height: 30%;
-    width: 30%;
+    width: 7%;
     top: 35px;
-    left: 10px;
+    left: 39%;
+    margin-right: 10px;
     color: #eeeeee;
-    font-size: large;
+    font-size: 200;
     background-color: green;
     border-radius: 5px;
 }
