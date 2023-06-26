@@ -122,8 +122,6 @@ for (var i = 0; i < 8; i++) {
     }
 }
 
-debugger;
-
 for (var i = 0; i < 27; i++) {
         const tableRow = table.insertRow();
     for (var j = 0; j < 8; j++) {
@@ -138,7 +136,6 @@ for (var i = 0; i < 27; i++) {
             tableCell.append(document.createTextNode(reservationIntervals[i]));
         }
         else {
-            debugger;
             var slotList = document.createElement("p");
             $(slotList).addClass('slot-list');
 
@@ -333,7 +330,7 @@ $(".view-slots-button").click(function() {
 var labs = [
     {
         reservenumber: 0,
-        labnumber: "Lab 1",
+        labnumber: 1,
         reservename: "John Doe",
         reservedseat: "2",
         reservedate: "2023-06-12",
@@ -341,7 +338,7 @@ var labs = [
     },
     {
         reservenumber: 1,
-        labnumber: "Lab 3",
+        labnumber: 3,
         reservename: "Johnybravo",
         reservedseat: "1",
         reservedate: "2023-06-18",
@@ -349,7 +346,7 @@ var labs = [
     },
     {
         reservenumber: 2,
-        labnumber: "Lab 3",
+        labnumber: 3,
         reservename: "JDoe",
         reservedseat: "4",
         reservedate: "2023-06-18",
@@ -369,7 +366,7 @@ const closereserve = document.querySelector(".close");
 var reserveClickHandler = (index) => {
     return () => {
         console.log("Button clicked. Index:", index);
-        document.getElementById('labchosen').value= 'Lab '+ (index+1);
+        document.getElementById('labchosen').value= index+1;
         reservecont.classList.add("show");
         reserveinput.classList.add("active");
         listreserve.classList.remove("active");
@@ -431,7 +428,7 @@ function displaylabs(labs) {
                     <div class="editablelab" id="labrsv${reservenumber}">
                         <table>
                             <tr colspan="2">
-                                <p><span id="labnum${labnumber}">${labnumber}</span></p>
+                                <p>Lab: <span id="labnum${labnumber}">${labnumber}</span></p>
                             </tr>
                             <tr>
                                 <td>
@@ -455,6 +452,7 @@ function displaylabs(labs) {
 // ADD RESERVATION
 
 var newreserve = {};
+var newreservation = {};
 var reservename;
 var reservecount = 0;
 var reservername;
@@ -481,29 +479,30 @@ document.getElementById("buttonrsv").onclick = function() {
         seatassignn = 1;
     }
 
+    var labnumberr = document.getElementById("labchosen").value;
+    var reserveddatee = document.getElementById("datersv").value;
+    var time = document.getElementById("timersv").value;
+
     // Add new reservation
     newreserve = {
         reservenumber: reservecount += 1,
-        labnumber: document.getElementById("labchosen").value,
+        labnumber: labnumberr,
         reservename: reservername,
         reservedseat: seatassignn,
-        reservedate: document.getElementById("datersv").value,
-        time: document.getElementById("timersv").value,
-
+        reservedate: reserveddatee,
+        time: time,
     };
-    reservations = {
+    newreservation = {
         "username": reservername,
         "link": "(insertprofile)",
         "lab": document.getElementById("labchosen").value,
-        "seat": 1000,
+        "seat": 2,
         "datetime": document.getElementById("datersv").value + "T" + document.getElementById("timersv").value,
         "isAnonymous": isAnonymous,
-
-    }
+    };
     // Add new reservation to the JSON labs array
-    labs.push(newreserve)
-    reservations.push(reservations);
-    console.log(labs);
+    labs.push(newreserve);
+    reservations.push(newreservation);
     displaylabs(labs);
 }
 
