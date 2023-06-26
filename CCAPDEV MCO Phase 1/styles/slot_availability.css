@@ -50,3 +50,26 @@
     font-family: 'Cairo', sans-serif;
     border-radius: 8px;
 }
+
+/* Lab Button */
+
+.Reservebuttonmain {
+    position: relative;
+    height: 30%;
+    width: 30%;
+    top: 35px;
+    left: 10px;
+    color: #eeeeee;
+    font-size: large;
+    background-color: green;
+    border-radius: 5px;
+}
+
+.Reservebuttonmain:hover {
+    filter: brightness(90%);
+}
+
+.Reservebuttonmain:active {
+    transform: scale(0.99);
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.1);
+}
