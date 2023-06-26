@@ -2,11 +2,123 @@
 
 var reservations = [
     {
-        "username" : "John Doe",
-        "link" : "user_profile.html",
+        "username" : "Blaise Corbin",
+        "link" : "user_profile3.html",
         "lab" : 1,
-        "seat": 24,
-        "datetime" : "2023-06-25T17:30",
+        "seat": 25,
+        "datetime" : "2023-07-02T12:30",
+        "isAnonymous" : true
+    }, 
+    {
+        "username" : "Blaise Corbin",
+        "link" : "user_profile3.html",
+        "lab" : 2,
+        "seat": 14,
+        "datetime" : "2023-07-02T12:30",
+        "isAnonymous" : true
+    },
+    {
+        "username" : "Blaise Corbin",
+        "link" : "user_profile3.html",
+        "lab" : 3,
+        "seat": 16,
+        "datetime" : "2023-07-02T12:30",
+        "isAnonymous" : true
+    },
+    {
+        "username" : "Blaise Corbin",
+        "link" : "user_profile3.html",
+        "lab" : 3,
+        "seat": 16,
+        "datetime" : "2023-07-02T13:00",
+        "isAnonymous" : true
+    },
+    {
+        "username" : "Blaise Corbin",
+        "link" : "user_profile3.html",
+        "lab" : 3,
+        "seat": 16,
+        "datetime" : "2023-07-02T13:30",
+        "isAnonymous" : true
+    },
+    {
+        "username" : "Antonio Veloso",
+        "link" : "user_profile3.html",
+        "lab" : 1,
+        "seat": 26,
+        "datetime" : "2023-07-02T12:30",
+        "isAnonymous" : false
+    }, 
+    {
+        "username" : "Antonio Veloso",
+        "link" : "user_profile3.html",
+        "lab" : 2,
+        "seat": 15,
+        "datetime" : "2023-07-02T12:30",
+        "isAnonymous" : false
+    },
+    {
+        "username" : "Antonio Veloso",
+        "link" : "user_profile3.html",
+        "lab" : 3,
+        "seat": 17,
+        "datetime" : "2023-07-02T12:30",
+        "isAnonymous" : false
+    },
+    {
+        "username" : "Antonio Veloso",
+        "link" : "user_profile3.html",
+        "lab" : 3,
+        "seat": 17,
+        "datetime" : "2023-07-02T13:00",
+        "isAnonymous" : false
+    },
+    {
+        "username" : "Antonio Veloso",
+        "link" : "user_profile3.html",
+        "lab" : 3,
+        "seat": 17,
+        "datetime" : "2023-07-02T13:30",
+        "isAnonymous" : false
+    }, 
+    {
+        "username" : "Bien Magdamo",
+        "link" : "user_profile4.html",
+        "lab" : 1,
+        "seat": 27,
+        "datetime" : "2023-07-02T12:30",
+        "isAnonymous" : false
+    }, 
+    {
+        "username" : "Bien Magdamo",
+        "link" : "user_profile3.html",
+        "lab" : 2,
+        "seat": 16,
+        "datetime" : "2023-07-02T12:30",
+        "isAnonymous" : false
+    },
+    {
+        "username" : "Bien Magdamo",
+        "link" : "user_profile3.html",
+        "lab" : 3,
+        "seat": 18,
+        "datetime" : "2023-07-02T12:30",
+        "isAnonymous" : false
+    },
+    {
+        "username" : "Bien Magdamo",
+        "link" : "user_profile3.html",
+        "lab" : 3,
+        "seat": 18,
+        "datetime" : "2023-07-02T13:00",
+        "isAnonymous" : false
+    },
+    {
+        "username" : "Bien Magdamo",
+        "link" : "user_profile3.html",
+        "lab" : 3,
+        "seat": 18,
+        "datetime" : "2023-07-02T13:30",
         "isAnonymous" : false
     }
 ]
@@ -154,7 +266,7 @@ for (var i = 0; i < 27; i++) {
 
             slotList.innerHTML = "Available: <br>";
             for (var k = 0; k < 40; k++) {
-
+                var iterations = 0;
                 if (reservations.length > 0) {
                     for (var l = 0; l < reservations.length; l++) {
                         var user = reservations[l];
@@ -168,22 +280,14 @@ for (var i = 0; i < 27; i++) {
                                 studentList = document.createElement('UL');
 
                             studentList.appendChild(studentLink);
-                        }
-
-                        else {
+                        } else if (iterations === 0) {
+                            iterations = 1;
                             slotList.innerHTML = slotList.innerHTML.concat(k + 1);
 
                             if (k < 39)
                                 slotList.innerHTML = slotList.innerHTML.concat(", ");
                         }
                     }
-                }
-
-                else {
-                    slotList.innerHTML = slotList.innerHTML.concat(k + 1);
-
-                    if (k < 39)
-                        slotList.innerHTML = slotList.innerHTML.concat(", ");
                 }
             }
 
