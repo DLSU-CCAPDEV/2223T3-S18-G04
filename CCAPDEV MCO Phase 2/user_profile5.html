@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" media="all" href="styles/user_profile.css">
+    <link rel="stylesheet" type="text/css" media="all" href="styles/navbar.css">
+    <link rel="icon" type="image/x-icon" href="./images/microscope_round.ico">
+    <title>User Profile</title> <!--Find a way to make this chnage according to the user's name-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="scripts/date-time-scripts.js"></script>
+
+    <script type="text/javascript">
+        var accounts_global = JSON.parse(localStorage.getItem('accounts_global'));
+
+        var reservations = [
+            {
+                "lab": 1,
+                "seat": 28,
+                "reservedatetime": "2023-07-02T12:30",
+                "requestdatetime": "2023-06-12T08:30"
+            },
+            {
+                "lab": 2,
+                "seat": 17,
+                "reservedatetime": "2023-07-02T12:30",
+                "requestdatetime": "2023-06-12T08:35"
+            },
+            {
+                "lab": 3,
+                "seat": 19,
+                "reservedatetime": "2023-07-02T12:30",
+                "requestdatetime": "2023-06-12T08:40"
+            },
+            {
+                "lab": 3,
+                "seat": 19,
+                "reservedatetime": "2023-07-02T01:00",
+                "requestdatetime": "2023-06-12T08:45"
+            },
+            {
+                "lab": 3,
+                "seat": 19,
+                "reservedatetime": "2023-07-02T01:30",
+                "requestdatetime": "2023-06-12T08:50"
+            }
+        ]
+
+        $(document).ready(function() {
+
+            for (var i = 0; i < reservations.length; i++) {
+                var reserveNum = "Reservation #".concat(i + 1);
+                var lab = reservations[i].lab;
+                var seat = reservations[i].seat;
+                var reserveDT;
+                var requestDT;
+                var tempDate;
+                var tempTime;
+                const reservationBox = document.createElement('section');
+                const table = document.createElement('table');
+                const heading = document.createElement('h3');
+                
+                tempDate = parseDateToWords(new Date(reservations[i].reservedatetime));
+                tempTime = parseTimeToAMPM(timezoneOffset(new Date(reservations[i].reservedatetime)));
+
+                reserveDT = tempDate.concat(" / ", tempTime);
+
+                tempDate = parseDateToWords(new Date(reservations[i].requestdatetime));
+                tempTime = parseTimeToAMPM(timezoneOffset(new Date(reservations[i].requestdatetime)));
+
+                requestDT = tempDate.concat(" / ", tempTime);
+
+                heading.innerHTML = reserveNum;
+
+                $(reservationBox).addClass("post");
+                $(reservationBox).append(heading);
+                $(reservationBox).append(document.createElement('hr'));
+                $(reservationBox).append(table);
+
+                for (var j = 0; j < 4; j++) {
+                    var tableRow = table.insertRow();
+                    const bold = document.createElement('strong');
+                    var text;
+                    switch (j) {
+                        case 0:
+                            var tableCell = tableRow.insertCell();
+                            text = document.createTextNode("Lab Number: ");
+                            bold.appendChild(text);
+                            tableCell.appendChild(bold);
+                            text = document.createTextNode(lab);
+                            tableCell.appendChild(text);
+                            break;
+                        case 1:
+                            var tableCell = tableRow.insertCell();
+                            text = document.createTextNode("Seat Number: ");
+                            bold.appendChild(text);
+                            tableCell.appendChild(bold);
+                            text = document.createTextNode(seat);
+                            tableCell.appendChild(text);
+                            break;
+                        case 2:
+                            var tableCell = tableRow.insertCell();
+                            text = document.createTextNode("Reservation Date / Time: ");
+                            bold.appendChild(text);
+                            tableCell.appendChild(bold);
+                            text = document.createTextNode(reserveDT);
+                            tableCell.appendChild(text);
+                            break;
+                        case 3:
+                            var tableCell = tableRow.insertCell();
+                            text = document.createTextNode("Request Date / Time: ");
+                            bold.appendChild(text);
+                            tableCell.appendChild(bold);
+                            text = document.createTextNode(requestDT);
+                            tableCell.appendChild(text);
+                            break;
+                    }
+                }
+
+                $('.posts').append(reservationBox);
+            }
+        })
+
+    </script>
+
+</head>
+<body>
+    <nav class="site_header">
+        <span id="site_name"><h1>Lab Reservation System</h1></span>
+        <span class="site_nav">
+            <span class="user_profile" onclick="location.href='user_profile.html'"> Profile </span>
+            <span class="search_slots" onclick="location.href='slot_search.html'"> Search Lab Slots </span>
+            <span class="lab_slots" onclick="location.href='slot_availability.html'"> View Lab Slots </span>
+            <span class="logout" onclick="location.href='login.html'"> Log Out </span>
+        </span>
+        
+    </nav>
+
+    <div class="container">
+        <aside>
+            <div class="user_profile">
+                <img id="pfp">
+                <div id="username"></div>
+                <p id="description"></p>
+
+                <script>
+                    const url = localStorage.getItem('pfp');
+                    if(url === null) {document.getElementById("pfp").src = "images/profile5.jpg";}
+                    else {document.getElementById("pfp").src = url;}
+                    document.getElementById("username").innerHTML = accounts_global[3].username;
+                    document.getElementById("description").innerHTML = accounts_global[3].description;
+                </script>
+            </div>
+        </aside>
+        <!--<h1 id="reservations">Reservations</h1>-->
+        <div class="posts">
+           
+        </div>
+    </div>
+
+    <footer>
+
+    </footer>
+    
+</body>
+</html>

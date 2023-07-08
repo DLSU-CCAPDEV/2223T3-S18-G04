@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" media="all" href="styles/user_profile.css">
+    <link rel="stylesheet" type="text/css" media="all" href="styles/navbar.css">
+    <link rel="icon" type="image/x-icon" href="./images/microscope_round.ico">
+    <title>User Profile</title> <!--Find a way to make this chnage according to the user's name-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="scripts/date-time-scripts.js"></script>
+
+    <script type="text/javascript">
+
+        var accounts = [
+            {
+                "email": "blaise_corbin@dlsu.edu.ph",
+                "password": "fdfdsgvdgv",
+                "username": "Blaise Corbin",
+                "description": "A fictional DLSU lab technician",
+                "account_type": "tech"
+            }, 
+            {
+                "email": "antonio_veloso@dlsu.edu.ph",
+                "password": "mgvernvpm",
+                "username": "Antonio Veloso",
+                "description": "A DLSU student",
+                "account_type": "student"
+            }, 
+            {
+                "email": "bien_magdamo@dlsu.edu.ph",
+                "password": "r32rfvvrb33",
+                "username": "Bien Magdamo",
+                "description": "A DLSU student",
+                "account_type": "student"
+            }, 
+            {
+                "email": "sandeon_gavan@dlsu.edu.ph",
+                "password": "password12345678",
+                "username": "Sandeon Gavan",
+                "description": "Hello! I am Sandeon Gavan a 119 DLSU student studying BSCS-ST. Feel free to message me if you have any questions regarding computer science!",
+                "account_type": "student"
+            }, 
+            {
+                "email": "karl_asares@dlsu.edu.ph",
+                "password": "ver34_m4wfvmv2w",
+                "username": "Karl Asares",
+                "description": "A DLSU student",
+                "account_type": "student"
+            }
+        ]
+
+        let email = localStorage.getItem('email');
+        let password = localStorage.getItem('password');
+
+        let temp_acc = accounts.find(i => i.email === email);
+        let index;
+
+        if(typeof temp_acc === 'undefined') {
+            if(localStorage.getItem('entr_type') === 'L') {
+                window.alert("Email does not exist. Please choose another email.");
+                window.location.href = "login.html";
+            }
+
+            let username = localStorage.getItem('username');
+            let description = localStorage.getItem('description');
+            let account_type = localStorage.getItem('account_type');
+
+            current_account = {
+                "email": email,
+                "password": password,
+                "username": username,
+                "description": description,
+                "account_type": account_type
+            }
+
+            accounts.push(current_account);
+            index = accounts.lastIndexOf(current_account);
+        } else {
+            if(localStorage.getItem('entr_type') === 'L') {
+                index = accounts.indexOf(temp_acc);
+                if(password != accounts[index].password) {
+                    window.alert("Wrong password.");
+                    window.location.href = "login.html";
+                }
+            } else {
+                window.alert("Email already exists. Please choose another email.");
+                window.location.href = "register.html";
+            }
+        }
+
+        if(localStorage.getItem('edited') === null) {
+            localStorage.setItem('email', accounts[index].email);
+            localStorage.setItem('password', accounts[index].password);
+            localStorage.setItem('username', accounts[index].username);
+            localStorage.setItem('description', accounts[index].description);
+            localStorage.setItem('account_type', accounts[index].account_type);
+        } else {
+            accounts[index].username = localStorage.getItem('username');
+            accounts[index].description = localStorage.getItem('description');
+        }
+
+        localStorage.setItem('accounts_global', JSON.stringify(accounts));
+
+        var reservations = [
+            {
+                "lab": 1,
+                "seat": 24,
+                "reservedatetime": "2023-07-02T12:30",
+                "requestdatetime": "2023-06-12T08:30"
+            },
+            {
+                "lab": 2,
+                "seat": 13,
+                "reservedatetime": "2023-07-02T12:30",
+                "requestdatetime": "2023-06-12T08:35"
+            },
+            {
+                "lab": 3,
+                "seat": 15,
+                "reservedatetime": "2023-07-02T12:30",
+                "requestdatetime": "2023-06-12T08:40"
+            },
+            {
+                "lab": 3,
+                "seat": 15,
+                "reservedatetime": "2023-07-02T01:00",
+                "requestdatetime": "2023-06-12T08:45"
+            },
+            {
+                "lab": 3,
+                "seat": 15,
+                "reservedatetime": "2023-07-02T01:30",
+                "requestdatetime": "2023-06-12T08:50"
+            }
+        ]
+
+        $(document).ready(function() {
+
+            for (var i = 0; i < reservations.length; i++) {
+                var reserveNum = "Reservation #".concat(i + 1);
+                var lab = reservations[i].lab;
+                var seat = reservations[i].seat;
+                var reserveDT;
+                var requestDT;
+                var tempDate;
+                var tempTime;
+                const reservationBox = document.createElement('section');
+                const table = document.createElement('table');
+                const heading = document.createElement('h3');
+                
+                tempDate = parseDateToWords(new Date(reservations[i].reservedatetime));
+                tempTime = parseTimeToAMPM(timezoneOffset(new Date(reservations[i].reservedatetime)));
+
+                reserveDT = tempDate.concat(" / ", tempTime);
+
+                tempDate = parseDateToWords(new Date(reservations[i].requestdatetime));
+                tempTime = parseTimeToAMPM(timezoneOffset(new Date(reservations[i].requestdatetime)));
+
+                requestDT = tempDate.concat(" / ", tempTime);
+
+                heading.innerHTML = reserveNum;
+
+                $(reservationBox).addClass("post");
+                $(reservationBox).append(heading);
+                $(reservationBox).append(document.createElement('hr'));
+                $(reservationBox).append(table);
+
+                for (var j = 0; j < 4; j++) {
+                    var tableRow = table.insertRow();
+                    const bold = document.createElement('strong');
+                    var text;
+                    switch (j) {
+                        case 0:
+                            var tableCell = tableRow.insertCell();
+                            text = document.createTextNode("Lab Number: ");
+                            bold.appendChild(text);
+                            tableCell.appendChild(bold);
+                            text = document.createTextNode(lab);
+                            tableCell.appendChild(text);
+                            break;
+                        case 1:
+                            var tableCell = tableRow.insertCell();
+                            text = document.createTextNode("Seat Number: ");
+                            bold.appendChild(text);
+                            tableCell.appendChild(bold);
+                            text = document.createTextNode(seat);
+                            tableCell.appendChild(text);
+                            break;
+                        case 2:
+                            var tableCell = tableRow.insertCell();
+                            text = document.createTextNode("Reservation Date / Time: ");
+                            bold.appendChild(text);
+                            tableCell.appendChild(bold);
+                            text = document.createTextNode(reserveDT);
+                            tableCell.appendChild(text);
+                            break;
+                        case 3:
+                            var tableCell = tableRow.insertCell();
+                            text = document.createTextNode("Request Date / Time: ");
+                            bold.appendChild(text);
+                            tableCell.appendChild(bold);
+                            text = document.createTextNode(requestDT);
+                            tableCell.appendChild(text);
+                            break;
+                    }
+                }
+
+                $('.posts').append(reservationBox);
+            }
+        })
+
+    </script>
+
+</head>
+<body>
+    <nav class="site_header">
+        <span id="site_name"><h1>Lab Reservation System</h1></span>
+        <span class="site_nav">
+            <span class="user_profile" onclick="location.href='user_profile.html'"> Profile </span>
+            <span class="search_slots" onclick="location.href='slot_search.html'"> Search Lab Slots </span>
+            <span class="lab_slots" onclick="location.href='slot_availability.html'"> View Lab Slots </span>
+            <span class="logout" onclick="location.href='login.html'"> Log Out </span>
+        </span>
+        
+    </nav>
+
+    <div class="container">
+        <aside>
+            <div class="user_profile">
+                <img id="pfp">
+                <div id="username"></div>
+                <p id="description"></p>
+                
+                <div id="edit_account" onclick="location.href='edit_account.html'"> Edit Account </div>
+                <script>
+                    const url = localStorage.getItem('pfp');
+                    if(url === null) {document.getElementById("pfp").src = "images/default_profile.png";}
+                    else {document.getElementById("pfp").src = url;}
+                    document.getElementById("username").innerHTML = localStorage.getItem('username');
+                    document.getElementById("description").innerHTML = localStorage.getItem('description');
+                </script>
+            </div>
+        </aside>
+        <!--<h1 id="reservations">Reservations</h1>-->
+        <div class="posts">
+           
+        </div>
+    </div>
+
+    <footer>
+
+    </footer>
+    
+</body>
+</html>

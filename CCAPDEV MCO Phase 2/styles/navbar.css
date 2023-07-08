@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Tsukimi+Rounded:wght@700&display=swap');
+
+h1{
+    width: 100%;
+    height: 5%;
+    margin: 0;
+    margin-left: 15px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 3rem;
+    color: white;
+}
+
+nav.site_header {
+    background-color: #137C13;
+    border-radius: 15px;
+    position:sticky;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin:0;
+    padding:0;
+    font-family: 'Cairo', sans-serif;
+}
+
+span.site_name{
+    width: 65%;
+    padding: 1rem;
+}
+
+span.site_nav {
+    position: absolute;
+    right: 0%;
+    padding: 1rem;
+    margin: 1rem;
+    font-size:larger;
+    color: white;
+}
+
+span.user_profile, span.search_slots, span.lab_slots, span.logout {
+    padding: 1rem;
+}
+
+span.user_profile:hover, span.search_slots:hover, span.lab_slots:hover, span.logout:hover {
+    background-color:aquamarine;
+    color: grey;
+}
