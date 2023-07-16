@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" media="all" href="styles/register_login_style.css">
+    <link rel="icon" type="image/x-icon" href="./images/microscope_round.ico">
+
+    <title>Register</title>
+    <script>
+        localStorage.clear();
+    </script>
+</head>
+<body>
+    <div class="container">
+        <img src="images/microscope_round.png" alt="microscope logo"> <!--Replace this with a logo-->
+        <header>
+           <p id="labname">Lab Reservation</p>
+           <p id="logintype">Register an Account</p>
+        </header>
+        <form action="user_profile.html" method="POST" class="form">
+            <input type="email" id="email" name="email" class="input" placeholder="Email">
+            <br>
+            <input type="password" id="password" name="password" class="input" placeholder="Password">
+            <br>
+            <input type="username" id="username" name="username" class="input" placeholder="Username">
+            <br>
+            <input type="description" id="description" name="description" class="input" placeholder="User Description">
+            <br>
+            <select id="account_type" name="account_type" required>
+                <option value="student" selected="selected">Student</option>
+                <option value="tech">Lab Technician</option>
+            </select>
+            <br>
+            <input type="submit" id="submit" value="Register" id="submit" />
+            <div class="login">
+                <p>Already have an account?</p>
+                <a href="login.html">Click here</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const form = document.querySelector('form');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const form_data = new FormData(form);
+            const kvpairs = Object.fromEntries(form_data);
+
+            localStorage.setItem('email', kvpairs.email);
+            localStorage.setItem('password', kvpairs.password);
+            localStorage.setItem('username', kvpairs.username);
+            localStorage.setItem('description', kvpairs.description);
+            localStorage.setItem('account_type', kvpairs.account_type);
+            localStorage.setItem('entr_type', 'R');
+            
+            window.location.href = "user_profile.html";
+        })
+      </script>
+</body>
+</html>

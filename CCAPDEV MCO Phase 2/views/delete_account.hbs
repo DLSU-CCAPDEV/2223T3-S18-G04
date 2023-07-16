@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" media="all" href="styles/navbar.css">
+        <link rel="stylesheet" type="text/css" media="all" href="styles/account_editing_styles.css">
+        <link rel="icon" type="image/x-icon" href="./images/microscope_round.ico">
+        <title>Delete Account</title>
+
+    </head>
+    <body>
+        <nav class="site_header">
+            <span id="site_name"><h1>Lab Reservation System</h1></span>
+            <span class="site_nav">
+                <span class="user_profile" onclick="location.href='/user_profile'"> Profile </span>
+                <span class="search_slots" onclick="location.href='/slot_search'"> Search Lab Slots </span>
+                <span class="lab_slots" onclick="location.href='/slot_availability'"> View Lab Slots </span>
+                <span class="logout" onclick="location.href='/login'"> Log Out </span>
+            </span>
+        </nav>
+        <div class="container">
+            Account Deletion
+            <form action="/login" method="POST" class="form">
+                <input type="submit" id="submit" value="Confirm Account Deletion"/>
+            </form>
+        </div>
+
+        <script>
+            const form = document.querySelector('form');
+    
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const accounts = JSON.parse(localStorage.getItem('accounts_global'));
+                const email = localStorage.getItem('email');
+                let temp_acc = accounts.find(i => i.email === email);
+                let index = accounts.indexOf(temp_acc);
+
+                accounts.splice(index, 1);
+
+                localStorage.removeItem('accounts_global');
+
+                localStorage.setItem('accounts_global', JSON.stringify(accounts));
+
+                window.location.href="/login";
+            })
+          </script>
+    </body>
+</html>

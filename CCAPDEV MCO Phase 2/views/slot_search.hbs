@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Slot Search</title>
+
+        <link rel="stylesheet" type="text/css" href="styles/navbar.css">
+        <link rel="stylesheet" type="text/css" href="styles/stylebase.css">
+        <link rel="icon" type="image/x-icon" href="./images/microscope_round.ico">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
+        <script type="text/javascript">
+
+            var reservations = [
+                {
+                    "lab" : 1,
+                    "seat": 24,
+                    "dateTime" : "2023-06-25T17:30"
+                }
+            ]
+
+            var times = [
+                "07:30",
+                "08:00",
+                "08:30",
+                "09:00",
+                "09:30",
+                "10:00",
+                "10:30",
+                "11:00",
+                "11:30",
+                "12:00",
+                "12:30",
+                "13:00",
+                "13:30",
+                "14:00",
+                "14:30",
+                "15:00",
+                "15:30",
+                "16:00",
+                "16:30",
+                "17:00",
+                "17:30",
+                "18:00",
+                "18:30",
+                "19:00",
+                "19:30",
+                "20:00",
+                "20:30",
+                "21:00"
+            ]
+            
+            var labOneSlots = new Array();
+            var labTwoSlots = new Array();
+            var labThreeSlots = new Array();
+
+            function showFreeSlots(labNum, dateTime) {
+                debugger;
+                var box = document.createElement('div');
+                var heading = document.createElement('h3');
+                var text = document.createElement('p');
+                var lab;
+                var list = document.createElement('UL');
+                $(list).addClass('seat-list');
+                heading.innerHTML = "Free Slots";
+                text.innerHTML = "The following seats are free: ";
+                
+                $(box).addClass('box');
+                box.appendChild(heading);
+                box.appendChild(document.createElement('hr'));
+                box.appendChild(text);
+
+                switch(parseInt(labNum)){
+                    case 1:
+                        lab = labOneSlots;
+                        break;
+                    case 2:
+                        lab = labTwoSlots;
+                        break;
+                    case 3: 
+                        lab = labThreeSlots;
+                        break;
+                }
+
+                for (i = 0; i < 40; i++) {
+                    for (j = 0; j < lab.length; j++) {
+                        if (lab[j].seat != i + 1 || lab[j].dateTime != dateTime) {
+                            var seat = document.createElement('LI');
+                            seat.innerHTML = i + 1;
+                            list.appendChild(seat);
+                        }
+                    }
+                }
+
+                box.appendChild(list);
+                
+                return box;
+            }
+
+            function showUsers(userName) {
+                var box = document.createElement('div');
+                var heading = document.createElement('h3');
+                var text2 = document.createElement('p');
+                var text3 = document.createElement('p');
+                var text4 = document.createElement('p');
+                var text5 = document.createElement('p');
+                var text6 = document.createElement('p');
+
+                heading.innerHTML = "Users Found:";
+                text2.innerHTML = "<a href='user_profile2.html'> Blaise Corbin </a>";
+                text3.innerHTML = "<a href='user_profile3.html'> Antonio Veloso </a>";
+                text4.innerHTML = "<a href='user_profile4.html'> Bien Magdamo </a>";
+                text5.innerHTML = "<a href='user_profile5.html'> Sandeon Gavan </a>";
+                text6.innerHTML = "<a href='user_profile6.html'> Karl Asares </a>";
+
+                $(box).addClass('box');
+                box.appendChild(heading);
+                box.appendChild(document.createElement('hr'));
+                box.appendChild(text2);
+                box.appendChild(text3);
+                box.appendChild(text4);
+                box.appendChild(text5);
+                box.appendChild(text6);
+
+                return box;
+            }
+
+            function getDateTime() {
+                var time = times[$("#times").val()];
+                var date = $("#date").val();
+                var dateTime = date.concat("T", time);
+
+                return dateTime;
+            }
+
+            function addToSlots(reservation) {
+                debugger;
+                var lab;
+                
+                switch(reservation.lab){
+                    case 1:
+                        lab = labOneSlots;
+                        break;
+                    case 2:
+                        lab = labTwoSlots;
+                        break;
+                    case 3: 
+                        lab = labThreeSlots;
+                        break;
+                    default:
+                        lab = null;
+                        break;
+                }
+
+                lab.push(reservation);              
+            }
+
+            $(document).ready(function() {
+                debugger;
+                for (var i = 0; i < reservations.length; i++) {
+                    addToSlots(reservations[i]);
+                }
+
+                $("#search").click(function() {
+                    debugger;
+
+                    if ($("#output").children() != null) {
+                        $("#output").empty();
+                    }
+
+                    if (!$("#user").val()) {
+                        var lab = $("#labs").val();
+                        var dateTime = getDateTime();
+                        var time = $("#times").val();
+                        $("#output").append(showFreeSlots(lab, dateTime, time));
+                    }
+
+                    else {
+                        var name = $("name").val();
+                        $("#output").append(showUsers(name));
+                    }
+                })
+            })
+
+        </script>
+
+        <style type="text/css">
+
+            #centered {
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 30px;
+            }
+
+            #form {
+                text-align: center;
+                font-size: 20px;
+            }
+
+            .input-field {
+                font-family: 'Cairo', sans-serif;
+                border-radius: 8px;
+            }
+
+            .box {
+                background-color: #dddddd;
+				border: 1px solid black;
+                width: 500px;
+				padding: 10px;
+				margin: 10px;
+                border-radius: 10px;
+                position: relative;
+				left:50%;
+				transform: translate(-50%, 0);
+            }
+
+            .seat-list {
+                columns: 2;
+            }
+
+        </style>
+
+    </head>
+    <body>
+        <nav class="site_header">
+            <span id="site_name"><h1>Lab Reservation System</h1></span>
+            <span class="site_nav">
+                <span class="user_profile" onclick="location.href='/user_profile'"> Profile </span>
+                <span class="search_slots" onclick="location.href='/slot_search'"> Search Lab Slots </span>
+                <span class="lab_slots" onclick="location.href='/slot_availability'"> View Lab Slots </span>
+                <span class="logout" onclick="location.href='/login'"> Log Out </span>
+            </span>
+        </nav>
+
+        <div id="centered">
+            
+            <form id="form" class="box">
+                <div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
+                    <div style="margin: auto;">
+                        <label for="user"> <b> Input a User: </b> </label>
+                        <br>
+                        <input type="text" id="user" name="user" class="input-field">
+                        <br>
+                    </div>
+                    <div style="margin: auto;">  
+                        <label for="labs"> <b> Select a Lab: </b> </label>
+                        <br>
+                        <select name="labs" id="labs" class="input-field">
+                            <option value="1"> Lab 1 </option>
+                            <option value="2"> Lab 2 </option>
+                            <option value="3"> Lab 3 </option>
+                        </select>
+                        <br>
+                        <label for="date"> <b> Select a Date: </b> </label>
+                        <br>
+                        <input type="date" id="date" name="date" class="input-field">
+                        <br>
+                        <label for="times"> <b> Select a Time: </b> </label>
+                        <br>
+                        <select name="times" id="times" class="input-field">
+                            <option value="0"> 07:30AM - 08:00AM </option>
+                            <option value="1"> 08:00AM - 08:30AM </option>
+                            <option value="2"> 08:30AM - 09:00AM </option>
+                            <option value="3"> 09:00AM - 09:30AM </option>
+                            <option value="4"> 09:30AM - 10:00AM </option>
+                            <option value="5"> 10:00AM - 10:30AM </option>
+                            <option value="6"> 10:30PM - 11:00AM </option>
+                            <option value="7"> 11:00AM - 11:30AM </option>
+                            <option value="8"> 11:30AM - 12:00PM </option>
+                            <option value="9"> 12:00PM - 12:30PM </option>
+                            <option value="10"> 12:30PM - 01:00PM </option>
+                            <option value="11"> 01:00PM - 01:30PM </option>
+                            <option value="12"> 01:30PM - 02:00PM </option>
+                            <option value="13"> 02:00PM - 02:30PM </option>
+                            <option value="14"> 02:30PM - 03:00PM </option>
+                            <option value="15"> 03:00PM - 03:30PM </option>
+                            <option value="16"> 03:30PM - 04:00PM </option>
+                            <option value="17"> 04:00PM - 04:30PM </option>
+                            <option value="18"> 04:30PM - 05:00PM </option>
+                            <option value="19"> 05:00PM - 05:30PM </option>
+                            <option value="20"> 05:30PM - 06:00PM </option>
+                            <option value="21"> 06:00PM - 06:30PM </option>
+                            <option value="22"> 06:30PM - 07:00PM </option>
+                            <option value="23"> 07:00PM - 07:30PM </option>
+                            <option value="24"> 07:30PM - 08:00PM </option>
+                            <option value="25"> 08:00PM - 08:30PM </option>
+                            <option value="26"> 08:30PM - 09:00PM </option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <input type="button" id="search" value="Search" class="input-field" style="width: 70px; height: 50px; font-size: 15px;">
+            </form>
+        </div>
+
+        <div id="output">
+
+        </div>
+        
+
+    </body>
+</html>

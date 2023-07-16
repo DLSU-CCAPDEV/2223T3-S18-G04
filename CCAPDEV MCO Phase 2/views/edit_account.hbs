@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" media="all" href="styles/navbar.css">
+        <link rel="stylesheet" type="text/css" media="all" href="styles/account_editing_styles.css">
+        <link rel="icon" type="image/x-icon" href="./images/microscope_round.ico">
+        <title>Edit Account</title>
+
+    </head>
+    <body>
+        <nav class="site_header">
+            <span id="site_name"><h1>Lab Reservation System</h1></span>
+            <span class="site_nav">
+                <span class="user_profile" onclick="location.href='/user_profile'"> Profile </span>
+                <span class="search_slots" onclick="location.href='/slot_search'"> Search Lab Slots </span>
+                <span class="lab_slots" onclick="location.href='/slot_availability'"> View Lab Slots </span>
+                <span class="logout" onclick="location.href='/login'"> Log Out </span>
+            </span>
+        </nav>
+
+        <div class="container">
+            <form action="/user_profile" method="POST" class="form">
+                <label for="name">New Username</label><br>
+                <input type="text" id="name" name="name" class="input"><br>
+                <label for="desc">New Description</label><br>
+                <input type="text" id="desc" name="desc" class="input"><br>
+                <input type="submit" id="submit" value="Confirm Edits">
+            </form>
+            <button type="pfp" onclick="location.href='/edit_pfp'"> Edit Profile Picture </button>
+            <button type="delete" onclick="location.href='/delete_account'">Delete Account</button>
+        </div>
+
+        <script>
+        document.getElementById("name").placeholder = localStorage.getItem('username');
+        document.getElementById("desc").placeholder = localStorage.getItem('description');
+
+        const form = document.querySelector('form');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const form_data = new FormData(form);
+            const kvpairs = Object.fromEntries(form_data);
+
+            localStorage.setItem('username', kvpairs.name);
+            localStorage.setItem('description', kvpairs.desc);
+            localStorage.setItem('edited', 'Y');
+            window.location.href = "/user_profile";
+        })
+
+        </script>
+    </body>
+</html>
