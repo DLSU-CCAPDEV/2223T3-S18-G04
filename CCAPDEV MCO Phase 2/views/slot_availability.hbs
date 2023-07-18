@@ -7,10 +7,10 @@
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 		<script type="text/javascript" src="../public/scripts/date-time-scripts.js"></script>
 		<script type="text/javascript" src="../public/scripts/reserve.js" defer></script>
-		<link rel="stylesheet" type="text/css" media="all" href="../public/styles/navbar.css">
-		<link rel="stylesheet" type="text/css" href="../public/styles/slot_availability.css">
-		<link rel="stylesheet" type="text/css" href="../public/styles/stylebase.css">
-		<link rel="stylesheet" type="text/css" href="../public/styles/reserve.css">
+		<link rel="stylesheet" type="text/css" media="all" href="/styles/navbar.css">
+		<link rel="stylesheet" type="text/css" href="/styles/slot_availability.css">
+		<link rel="stylesheet" type="text/css" href="/styles/stylebase.css">
+		<link rel="stylesheet" type="text/css" href="/styles/reserve.css">
     	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
 
 	</head>
@@ -18,10 +18,10 @@
 		<nav class="site_header">
 			<span id="site_name"><h1>Lab Reservation System</h1></span>
 			<span class="site_nav">
-				<span class="user_profile" onclick="location.href='user_profile.html'"> Profile </span>
+				<span class="user_profile" onclick="location.href='/user_profile'"> Profile </span>
 				<span class="search_slots" onclick="location.href='/slot_search'"> Search Lab Slots </span>
-				<span class="lab_slots" onclick="location.href='/slot_search'"> View Lab Slots </span>
-				<span class="logout" onclick="location.href='login.html'"> Log Out </span>
+				<span class="lab_slots" onclick="location.href='/slot_availability'"> View Lab Slots </span>
+				<span class="logout" onclick="location.href='/login'"> Log Out </span>
 			</span>
 		</nav>
 
@@ -34,7 +34,7 @@
 
 		<!-- Reserve Seat -->
 		<section class="reserve_container">
-			<img src="../public/scripts/images/complab.png" class="labimage" alt="computer lab">
+			<img src="/images/complab.png" class="labimage" alt="computer lab">
 			<div class="uil uil-times-circle close"></div>
 
 			<!-- Reserve slot -->

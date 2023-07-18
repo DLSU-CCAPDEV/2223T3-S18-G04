@@ -13,7 +13,7 @@ var currentUser;
 app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, '/public')));
 
-app.get('/', function(req, res) {
+app.get(['/', '/login'], function(req, res) {
     res.render('login');
 });
 
