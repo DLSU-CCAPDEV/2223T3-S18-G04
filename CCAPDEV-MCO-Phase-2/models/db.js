@@ -1,13 +1,19 @@
+// import module `mongodb`
 const mongodb = require('mongodb');
 
+// MongoDB client
 const client = mongodb.MongoClient;
 const url = 'mongodb://127.0.0.1:27017';
 
+// name of the database
 const dbName = 'database';
 
-const options = {useUnifiedTopology: true};
+// additional connection options
+const options = { useUnifiedTopology: true };
 
+// defines an object which contains necessary database functions
 const database = {
+
     /*
         creates database
     */
@@ -18,11 +24,10 @@ const database = {
             db.close();
         });
     },
-    
+
     /*
         creates collection `collection`
     */
-
     createCollection: function(collection) {
         client.connect(url, options, function(err, db) {
             if(err) throw err;
