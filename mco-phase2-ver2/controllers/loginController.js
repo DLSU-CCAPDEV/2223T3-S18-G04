@@ -4,10 +4,14 @@ const db = require('../models/db.js');
 // import module `User` from `../models/UserModel.js`
 const User = require('../models/user.js');
 
-
+if (typeof localStorage === "undefined" || localStorage === null) {
+    var LocalStorage = require('node-localstorage').LocalStorage;
+    localStorage = new LocalStorage('./scratch');
+  }
 
 const loginController = {
     getLogin: function (req, res) {
+        localStorage.clear();
         res.render('login');
     },
 
@@ -24,7 +28,8 @@ const loginController = {
         console.log(response);
 
         if(response != null) {
-            res.redirect('/user_profile?email=' + req.body.email);
+            localStorage.setItem('email', req.body.email);
+            res.redirect('/user_profile');
 
         } else {res.render('error');}
     }

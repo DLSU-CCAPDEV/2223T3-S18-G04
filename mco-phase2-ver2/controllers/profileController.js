@@ -4,11 +4,14 @@ const db = require('../models/db.js');
 // import module `User` from `../models/UserModel.js`
 const User = require('../models/user.js');
 
-
+if (typeof localStorage === "undefined" || localStorage === null) {
+    var LocalStorage = require('node-localstorage').LocalStorage;
+    localStorage = new LocalStorage('./scratch');
+  }
 
 const profileController = {
     getProfile: async function (req, res) {
-        var query = {email: req.query.email}
+        var query = {email: localStorage.getItem('email')};
         var projection = 'email username description account_type';
 
         var result = await db.findOne(User, query, projection);
