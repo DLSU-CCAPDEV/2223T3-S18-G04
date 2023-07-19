@@ -26,9 +26,7 @@ const loginController = {
         if(response != null) {
             res.redirect('/user_profile?email=' + req.body.email);
 
-        } else {
-            res.render('error');
-        }
+        } else {res.render('error');}
     }
 }
 

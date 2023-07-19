@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 const controller = require('../controllers/controller.js');
 const registerController = require('../controllers/registerController.js');
 const loginController = require('../controllers/loginController.js');
+const profileController = require('../controllers/profileController.js');
 
 const app = express();
 
@@ -18,12 +19,9 @@ app.get(['/', '/login'], loginController.getLogin);
 app.post(['/', '/login'], urlencodedParser, loginController.postLogin);
 
 app.get('/register', registerController.getRegister);
-
 app.post('/register', urlencodedParser, registerController.postRegister);
 
-app.get('/user_profile', function(req, res) {
-    res.render('user_profile');
-});
+app.get('/user_profile', profileController.getProfile);
 
 app.get('/slot_availability', function(req, res) {
     res.render('slot_availability');

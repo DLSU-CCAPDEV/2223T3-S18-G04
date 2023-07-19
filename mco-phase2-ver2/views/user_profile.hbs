@@ -13,97 +13,6 @@
     <script src="/scripts/date-time-scripts.js"></script>
 
     <script type="text/javascript">
-
-        var accounts = [
-            {
-                "email": "blaise_corbin@dlsu.edu.ph",
-                "password": "fdfdsgvdgv",
-                "username": "Blaise Corbin",
-                "description": "A fictional DLSU lab technician",
-                "account_type": "tech"
-            }, 
-            {
-                "email": "antonio_veloso@dlsu.edu.ph",
-                "password": "mgvernvpm",
-                "username": "Antonio Veloso",
-                "description": "A DLSU student",
-                "account_type": "student"
-            }, 
-            {
-                "email": "bien_magdamo@dlsu.edu.ph",
-                "password": "r32rfvvrb33",
-                "username": "Bien Magdamo",
-                "description": "A DLSU student",
-                "account_type": "student"
-            }, 
-            {
-                "email": "sandeon_gavan@dlsu.edu.ph",
-                "password": "password12345678",
-                "username": "Sandeon Gavan",
-                "description": "Hello! I am Sandeon Gavan a 119 DLSU student studying BSCS-ST. Feel free to message me if you have any questions regarding computer science!",
-                "account_type": "student"
-            }, 
-            {
-                "email": "karl_asares@dlsu.edu.ph",
-                "password": "ver34_m4wfvmv2w",
-                "username": "Karl Asares",
-                "description": "A DLSU student",
-                "account_type": "student"
-            }
-        ]
-
-        let email = localStorage.getItem('email');
-        let password = localStorage.getItem('password');
-
-        let temp_acc = accounts.find(i => i.email === email);
-        let index;
-
-        if(typeof temp_acc === 'undefined') {
-            if(localStorage.getItem('entr_type') === 'L') {
-                window.alert("Email does not exist. Please choose another email.");
-                window.location.href = "/login";
-            }
-
-            let username = localStorage.getItem('username');
-            let description = localStorage.getItem('description');
-            let account_type = localStorage.getItem('account_type');
-
-            current_account = {
-                "email": email,
-                "password": password,
-                "username": username,
-                "description": description,
-                "account_type": account_type
-            }
-
-            accounts.push(current_account);
-            index = accounts.lastIndexOf(current_account);
-        } else {
-            if(localStorage.getItem('entr_type') === 'L') {
-                index = accounts.indexOf(temp_acc);
-                if(password != accounts[index].password) {
-                    window.alert("Wrong password.");
-                    window.location.href = "/login";
-                }
-            } else {
-                window.alert("Email already exists. Please choose another email.");
-                window.location.href = "/register";
-            }
-        }
-
-        if(localStorage.getItem('edited') === null) {
-            localStorage.setItem('email', accounts[index].email);
-            localStorage.setItem('password', accounts[index].password);
-            localStorage.setItem('username', accounts[index].username);
-            localStorage.setItem('description', accounts[index].description);
-            localStorage.setItem('account_type', accounts[index].account_type);
-        } else {
-            accounts[index].username = localStorage.getItem('username');
-            accounts[index].description = localStorage.getItem('description');
-        }
-
-        localStorage.setItem('accounts_global', JSON.stringify(accounts));
-
         var reservations = [
             {
                 "lab": 1,
@@ -231,16 +140,15 @@
         <aside>
             <div class="user_profile">
                 <img id="pfp">
-                <div id="username"></div>
-                <p id="description"></p>
+                <div id="username">{{details.username}}</div>
+                <p id="description">{{details.description}}</p>
                 
                 <div id="edit_account" onclick="location.href='/edit_account'"> Edit Account </div>
                 <script>
                     const url = localStorage.getItem('pfp');
                     if(url === null) {document.getElementById("pfp").src = "images/default_profile.png";}
                     else {document.getElementById("pfp").src = url;}
-                    document.getElementById("username").innerHTML = localStorage.getItem('username');
-                    document.getElementById("description").innerHTML = localStorage.getItem('description');
+
                 </script>
             </div>
         </aside>

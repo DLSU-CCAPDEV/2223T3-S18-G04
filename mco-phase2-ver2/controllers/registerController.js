@@ -26,16 +26,22 @@ const registerController = {
             account_type: type
         }
 
-        var response = await db.insertOne(User, user);
+        console.log(user);
 
-        console.log(response);
+        var query = {email: user.email};
+        var projection = 'email'
 
-        if(response != null) {
-            res.redirect('/user_profile?email=' + req.body.email);
+        var duplicate = await db.findOne(User, query, projection);
 
-        } else {
-            res.render('error');
-        }
+        console.log(duplicate); 
+        
+        if(duplicate == null) {
+            var response = await db.insertOne(User, user);
+            if(response != null) {
+                res.redirect('/user_profile?email=' + req.body.email);
+            } else {res.render('error');}
+
+        } else {res.render('error');}
     }
 }
 
