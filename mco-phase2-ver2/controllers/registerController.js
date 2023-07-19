@@ -28,8 +28,11 @@ const registerController = {
 
         var response = await db.insertOne(User, user);
 
+        console.log(response);
+
         if(response != null) {
-            res.redirect('/user_profile');
+            res.redirect('/user_profile?email=' + req.body.email);
+
         } else {
             res.render('error');
         }
