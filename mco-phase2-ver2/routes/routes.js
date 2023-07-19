@@ -8,6 +8,7 @@ const controller = require('../controllers/controller.js');
 const registerController = require('../controllers/registerController.js');
 const loginController = require('../controllers/loginController.js');
 const profileController = require('../controllers/profileController.js');
+const editAccountController = require('../controllers/editAccountController.js');
 
 const app = express();
 
@@ -31,9 +32,8 @@ app.get('/slot_search', function(req, res) {
     res.render('slot_search');
 });
 
-app.get('/edit_account', function(req, res) {
-    res.render('edit_account');
-});
+app.get('/edit_account', editAccountController.getEditAccount);
+app.post('/edit_account', urlencodedParser, editAccountController.postEditAccount);
 
 app.get('/edit_pfp', function(req, res) {
     res.render('edit_pfp');
