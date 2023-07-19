@@ -1,6 +1,8 @@
 const dotenv = require('dotenv');
 const express = require('express');
 const path = require('path');
+const hbs = require('hbs');
+const db = require('./models/db.js');
 
 const app = express();
 
@@ -40,6 +42,8 @@ app.get('/edit_pfp', function(req, res) {
 app.get('/delete_account', function(req, res) {
     res.render('delete_account');
 });
+
+db.createDatabase();
 
 app.listen(port, hostName, function() {
     console.log('Server running at: ');
