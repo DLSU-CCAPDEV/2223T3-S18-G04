@@ -4,8 +4,9 @@ const express = require('express');
 var bodyParser = require('body-parser');
 
 // import module `controller` from `../controllers/controller.js`
-const controller = require('../controllers/controller.js')
-const registerController = require('../controllers/registerController.js')
+const controller = require('../controllers/controller.js');
+const registerController = require('../controllers/registerController.js');
+const loginController = require('../controllers/loginController.js');
 
 const app = express();
 
@@ -13,9 +14,8 @@ var jsonParser = bodyParser.json();
 
 var urlencodedParser = bodyParser.urlencoded({extended: true});
 
-app.get(['/', '/login'], function(req, res) {
-    res.render('login');
-});
+app.get(['/', '/login'], loginController.getLogin);
+app.post(['/', '/login'], urlencodedParser, loginController.postLogin);
 
 app.get('/register', registerController.getRegister);
 
