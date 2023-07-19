@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" media="all" href="styles/navbar.css">
+        <link rel="stylesheet" type="text/css" media="all" href="styles/account_editing_styles.css">
+        <link rel="icon" type="image/x-icon" href="./images/microscope_round.ico">
+        <title>Edit Profile Picture</title>
+
+    </head>
+    <body>
+        <nav class="site_header">
+            <span id="site_name"><h1>Lab Reservation System</h1></span>
+            <span class="site_nav">
+                <span class="user_profile" onclick="location.href='user_profile.html'"> Profile </span>
+                <span class="search_slots" onclick="location.href='slot_search.html'"> Search Lab Slots </span>
+                <span class="lab_slots" onclick="location.href='slot_availability.html'"> View Lab Slots </span>
+                <span class="logout" onclick="location.href='login.html'"> Log Out </span>
+            </span>
+        </nav>
+        <div class="container">
+            <input type="file" id="pfp" accept="image/*"><br>
+            <button id="confirm"> Confirm Changes </button>
+        </div>
+
+        <script>
+            const pfp = document.getElementById('pfp');
+            const conf_changes = document.getElementById('confirm');
+
+            conf_changes.addEventListener('click', () => {
+                window.location.href = "user_profile.html";
+            })
+
+            pfp.addEventListener('change', () => {
+                const reader = new FileReader();
+                reader.readAsDataURL(pfp.files[0]);
+
+                reader.addEventListener('load', () => {
+                    const url = reader.result;
+                    localStorage.setItem('pfp', url);
+                });
+            })
+        </script>
+    </body>
+</html>

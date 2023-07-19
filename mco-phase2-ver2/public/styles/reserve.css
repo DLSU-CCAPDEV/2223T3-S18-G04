@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Tsukimi+Rounded:wght@700&display=swap');
+
+/* Reserve */
+
+.reserve_container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.01);
+    max-width: 300px;
+    width: 100%;
+    background-color:#eeeeee;
+    z-index: 100;
+    padding: 25px;
+    border-radius: 10px;
+    outline: 10px solid;
+    outline-color: green;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.1s ease-out;
+}
+
+.reserve_container.show {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.labimage {
+    width: 352px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    z-index: -1;
+    position: relative;
+    margin-top: -26px;
+    margin-right: -26px;
+    margin-left: -26px;
+}
+
+.close {
+    position: absolute;
+    top: 0.1px;
+    right: 10px;
+    color: snow;
+    font-size: 20px;
+    opacity: 1;
+    cursor: pointer;
+    filter: brightness(100%);
+    z-index: 1;
+}
+
+.close:hover {
+    filter: brightness(90%);
+}
+
+.close:active {
+    transform: scale(0.90);
+}
+
+.reserveinput {
+    max-width: 300px;
+    font-weight: 200;
+    display: none;
+}
+
+.reserveinput h2 {
+    font-size: 20px;
+    color: black;
+    text-align: left;
+    font-weight: 500;
+    border-bottom: 1px solid;
+    border-color: green;
+}
+
+.textbox {
+    position: relative;
+    margin-top: 10px;
+    width: 100%;
+    height: 30px;
+}
+
+.textbox select {
+    background-color: snow;
+    height: 100%;
+    width: 90%;
+    border-radius: 5px;
+    outline: none;
+    align-self: center;
+}
+
+.textbox input {
+    background-color: snow;
+    height: 100%;
+    width: 85%;
+    border-radius: 5px;
+    outline: none;
+    align-self: center;
+}
+
+.textbox input.inputtext {
+    position: relative;
+    padding-left: 10px;
+}
+
+.textbox i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    right: 5px;
+    color: green;
+    opacity: 0.7;
+}
+
+.editdeletebtn,
+.reservebtn {
+    margin-top: 20px;
+    position: relative;
+    width: 100%;
+    background-color: green;
+    color: white;
+    outline: none;
+    cursor: pointer;
+    filter: brightness(100%);
+}
+
+.editdeletebtn {
+    margin-top: 5px;
+}
+
+.editdeletebtn:hover,
+.reservebtn:hover {
+    filter: brightness(90%);
+}
+
+.editdeletebtn:active,
+.reservebtn:active {
+    transform: scale(0.99);
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.1);
+}
+
+.editrsrv {
+    font-size: small;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* List of Reservations */
+
+.listreserve {
+    display: none;
+}
+
+#rootlab {
+    overflow: auto;
+    height: 250px;
+}
+
+.listreserve.active {
+    max-width: 300px;
+    font-weight: 200;
+    display: block;
+}
+
+.reserveinput.active {
+    display: block;
+}
+
+.listreserve h2 {
+    font-size: 20px;
+    color: black;
+    text-align: left;
+    font-weight: 500;
+    border-bottom: 1px solid;
+    border-color: green;
+}
+
+.editablelab {
+    position: relative;
+    background-color: snow;
+    border: green solid;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.tablelist {
+    text-decoration: none;
+    color: black;
+}
+
+.editablelab p {
+    padding-left: 10px;
+    font-size: 10px;
+}
+
+.editablelab:hover {
+    filter: brightness(90%);
+}
+
+.editablelab:active {
+    transform: scale(0.99);
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.1);
+}
+
+/* Edit Reserve */
+
+.editdeletereserve {
+    display: none;
+}
+
+.editdeletereserve.active {
+    display: block;
+}

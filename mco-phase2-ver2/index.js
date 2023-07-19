@@ -43,6 +43,8 @@ app.get('/delete_account', function(req, res) {
     res.render('delete_account');
 });
 
+db.createDatabase();
+
 app.listen(port, hostName, function() {
     console.log('Server running at: ');
     console.log('http://' + hostName + ':' + port);
