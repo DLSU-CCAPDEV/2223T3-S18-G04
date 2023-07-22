@@ -8,6 +8,9 @@ const mongoose = require('mongoose');
 // import module `User` from `../models/user.js`
 const User = require('./user.js');
 
+// import module `Reservation` from `../models/user.js`
+const Reservation = require('./reservation.js');
+
 // MongoDB client
 const url = 'mongodb://127.0.0.1:27017/mco';
 
