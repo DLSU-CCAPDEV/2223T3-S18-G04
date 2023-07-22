@@ -31,7 +31,7 @@ const profileController = {
             }
 
             res.render('user_profile', details);
-        } else {res.render('error');}
+        } else {res.render('user_profile', {error: "Could not find user in database."});}
     },
 
     getEditAccount: async function (req, res) {
@@ -47,7 +47,7 @@ const profileController = {
             }
 
             res.render('edit_account', details);
-        } else {res.render('error');}
+        } else {res.render('edit_account', {error: "Could not find user in database."});}
     },
 
     postEditAccount: async function (req, res) {
@@ -58,7 +58,7 @@ const profileController = {
 
         if(result != null) {
             res.redirect('/user_profile');
-        } else {res.render('error');}
+        } else {res.render('edit_account', {error: "Could not update the database"});}
     },
 
     getEditPfp: async function (req, res) {
@@ -79,7 +79,7 @@ const profileController = {
         if(result != null) {
             fs.unlinkSync(dest + '/' + name);
             res.redirect('/user_profile');
-        } else {res.render('error');}
+        } else {res.render('edit_pfp', {error: "Could not update the database."});}
     },
 
     getDeleteAccount: async function (req, res) {
@@ -92,14 +92,7 @@ const profileController = {
         var result = await db.deleteOne(User, conditions);
         if(result != null) {
             res.redirect('/login');
-        } else {res.render('error');}
-    },
-
-    getSearchAccount: async function (req, res) {
-        var username = req.body.user;
-
-        var result = await db.findMany(User, username, 'username');
-        res.send(result);
+        } else {res.render('delete_account', {error: "Could not update the database."});}
     }
 }
 

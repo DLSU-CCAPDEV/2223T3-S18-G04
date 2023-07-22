@@ -87,7 +87,13 @@ header > #logintype {
     cursor: pointer;
     background-color: #025d2a;
 }
-  
+
+#error {
+    font-weight: 1000;
+    font-style: italic;
+    color: red;
+}
+
 .form a.create {
     font-family: 'Cairo', sans-serif;
     font-weight: 300;
