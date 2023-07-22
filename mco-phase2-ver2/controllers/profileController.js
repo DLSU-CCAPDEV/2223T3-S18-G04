@@ -13,7 +13,10 @@ if (typeof localStorage === "undefined" || localStorage === null) {
 
 const profileController = {
     getProfile: async function (req, res) {
-        var query = {email: localStorage.getItem('email')};
+        if(req.query.email != null) {
+            var query = {email: req.query.email};
+        } else {var query = {email: localStorage.getItem('email')};}
+
         var projection = 'email username description account_type profile_pic';
 
         var result = await db.findOne(User, query, projection);
@@ -76,7 +79,20 @@ const profileController = {
         if(result != null) {
             fs.unlinkSync(dest + '/' + name);
             res.redirect('/user_profile');
-        } else {res.render('error')};
+        } else {res.render('error');}
+    },
+
+    getDeleteAccount: async function (req, res) {
+        res.render('delete_account');
+    },
+
+    postDeleteAccount: async function (req, res) {
+        var conditions = {email: localStorage.getItem('email')};
+
+        var result = await db.deleteOne(User, conditions);
+        if(result != null) {
+            res.redirect('/login');
+        } else {res.render('error');}
     }
 }
 

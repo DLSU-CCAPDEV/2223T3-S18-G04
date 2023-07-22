@@ -9,7 +9,29 @@ if (typeof localStorage === "undefined" || localStorage === null) {
     localStorage = new LocalStorage('./scratch');
   }
 
-const registerController = {
+const securityController = {
+    getLogin: function (req, res) {
+        localStorage.clear();
+        res.render('login');
+    },
+
+    postLogin: async function (req, res) {
+        var email = req.body.email;
+        var pw = req.body.password;
+
+        var query = {email: email, password: pw};
+
+        var projection = 'email password username description account_type';
+
+        var response = await db.findOne(User, query, projection);
+
+        if(response != null) {
+            localStorage.setItem('email', req.body.email);
+            res.redirect('/user_profile');
+
+        } else {res.render('error');}
+    },
+    
     getRegister: function (req, res) {
         localStorage.clear();
         res.render('register');
@@ -30,14 +52,10 @@ const registerController = {
             account_type: type
         }
 
-        console.log(user);
-
         var query = {email: user.email};
         var projection = 'email'
 
         var duplicate = await db.findOne(User, query, projection);
-
-        console.log(duplicate); 
         
         if(duplicate == null) {
             var response = await db.insertOne(User, user);
@@ -50,4 +68,4 @@ const registerController = {
     }
 }
 
-module.exports = registerController;
+module.exports = securityController;

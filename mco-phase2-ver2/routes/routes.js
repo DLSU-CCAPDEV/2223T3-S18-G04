@@ -13,8 +13,7 @@ const storage = multer.diskStorage({
     }
 })
 
-const registerController = require('../controllers/registerController.js');
-const loginController = require('../controllers/loginController.js');
+const securityController = require('../controllers/securityController.js');
 const profileController = require('../controllers/profileController.js');
 
 const app = express();
@@ -23,11 +22,11 @@ var urlencodedParser = bodyParser.urlencoded({extended: true});
 
 const upload = multer({storage: storage});
 
-app.get(['/', '/login'], loginController.getLogin);
-app.post(['/', '/login'], urlencodedParser, loginController.postLogin);
+app.get(['/', '/login'], securityController.getLogin);
+app.post(['/', '/login'], urlencodedParser, securityController.postLogin);
 
-app.get('/register', registerController.getRegister);
-app.post('/register', urlencodedParser, registerController.postRegister);
+app.get('/register', securityController.getRegister);
+app.post('/register', urlencodedParser, securityController.postRegister);
 
 app.get('/user_profile', profileController.getProfile);
 
@@ -37,9 +36,8 @@ app.post('/edit_account', urlencodedParser, profileController.postEditAccount);
 app.get('/edit_pfp', profileController.getEditPfp);
 app.post('/edit_pfp', upload.single("pfp"), profileController.postEditPfp);
 
-app.get('/delete_account', function(req, res) {
-    res.render('delete_account');
-});
+app.get('/delete_account', profileController.getDeleteAccount);
+app.post('/delete_account', urlencodedParser, profileController.postDeleteAccount);
 
 app.get('/slot_search', function(req, res) {
     res.render('slot_search');
