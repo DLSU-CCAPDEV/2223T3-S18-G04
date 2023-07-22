@@ -4,6 +4,11 @@ const Schema =  mongoose.Schema;
 
 const registerSchema = new Schema({
 
+    email: {
+        type: String,
+        required: [true, "email is required"]
+    },
+    
     username: {
         type: String,
         required: [true, "username is required"]
@@ -28,4 +33,6 @@ const registerSchema = new Schema({
         type: Date,
         required: [true, "reservation date and time is required"]
     },
-})
+});
+
+module.exports = mongoose.model('Reservation', registerSchema);
