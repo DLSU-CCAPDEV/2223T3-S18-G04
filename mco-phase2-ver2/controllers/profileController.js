@@ -76,7 +76,20 @@ const profileController = {
         if(result != null) {
             fs.unlinkSync(dest + '/' + name);
             res.redirect('/user_profile');
-        } else {res.render('error')};
+        } else {res.render('error');}
+    },
+
+    getDeleteAccount: async function (req, res) {
+        res.render('delete_account');
+    },
+
+    postDeleteAccount: async function (req, res) {
+        var conditions = {email: localStorage.getItem('email')};
+
+        var result = await db.deleteOne(User, conditions);
+        if(result != null) {
+            res.redirect('/login');
+        } else {res.render('error');}
     }
 }
 

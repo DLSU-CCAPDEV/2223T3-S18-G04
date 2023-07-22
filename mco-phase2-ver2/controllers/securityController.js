@@ -25,8 +25,6 @@ const securityController = {
 
         var response = await db.findOne(User, query, projection);
 
-        console.log(response);
-
         if(response != null) {
             localStorage.setItem('email', req.body.email);
             res.redirect('/user_profile');
@@ -54,14 +52,10 @@ const securityController = {
             account_type: type
         }
 
-        console.log(user);
-
         var query = {email: user.email};
         var projection = 'email'
 
         var duplicate = await db.findOne(User, query, projection);
-
-        console.log(duplicate); 
         
         if(duplicate == null) {
             var response = await db.insertOne(User, user);

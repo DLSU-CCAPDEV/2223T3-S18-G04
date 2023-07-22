@@ -36,9 +36,8 @@ app.post('/edit_account', urlencodedParser, profileController.postEditAccount);
 app.get('/edit_pfp', profileController.getEditPfp);
 app.post('/edit_pfp', upload.single("pfp"), profileController.postEditPfp);
 
-app.get('/delete_account', function(req, res) {
-    res.render('delete_account');
-});
+app.get('/delete_account', profileController.getDeleteAccount);
+app.post('/delete_account', urlencodedParser, profileController.postDeleteAccount);
 
 app.get('/slot_search', function(req, res) {
     res.render('slot_search');
