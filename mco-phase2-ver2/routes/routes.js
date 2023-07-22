@@ -13,8 +13,6 @@ const storage = multer.diskStorage({
     }
 })
 
-// import module `controller` from `../controllers/controller.js`
-const controller = require('../controllers/controller.js');
 const registerController = require('../controllers/registerController.js');
 const loginController = require('../controllers/loginController.js');
 const profileController = require('../controllers/profileController.js');
@@ -33,14 +31,6 @@ app.post('/register', urlencodedParser, registerController.postRegister);
 
 app.get('/user_profile', profileController.getProfile);
 
-app.get('/slot_availability', function(req, res) {
-    res.render('slot_availability');
-});
-
-app.get('/slot_search', function(req, res) {
-    res.render('slot_search');
-});
-
 app.get('/edit_account', profileController.getEditAccount);
 app.post('/edit_account', urlencodedParser, profileController.postEditAccount);
 
@@ -49,6 +39,14 @@ app.post('/edit_pfp', upload.single("pfp"), profileController.postEditPfp);
 
 app.get('/delete_account', function(req, res) {
     res.render('delete_account');
+});
+
+app.get('/slot_search', function(req, res) {
+    res.render('slot_search');
+});
+
+app.get('/slot_availability', function(req, res) {
+    res.render('slot_availability');
 });
 
 module.exports = app;
