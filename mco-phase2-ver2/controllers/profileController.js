@@ -93,6 +93,13 @@ const profileController = {
         if(result != null) {
             res.redirect('/login');
         } else {res.render('error');}
+    },
+
+    getSearchAccount: async function (req, res) {
+        var username = req.body.user;
+
+        var result = await db.findMany(User, username, 'username');
+        res.send(result);
     }
 }
 

@@ -43,6 +43,8 @@ app.get('/slot_search', function(req, res) {
     res.render('slot_search');
 });
 
+app.get('/getSearchUsers', profileController.getSearchAccount);
+
 app.get('/slot_availability', function(req, res) {
     res.render('slot_availability');
 });

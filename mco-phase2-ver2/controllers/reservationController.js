@@ -14,6 +14,10 @@ const reservationController = {
         getReservation: function(req, res) {
             localStorage.clear();
             res.render('')
+        },
+
+        getSearchSlots: function(req, res) {
+            localStorage
         }
 
 }
