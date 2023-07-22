@@ -93,6 +93,15 @@ const profileController = {
         if(result != null) {
             res.redirect('/login');
         } else {res.render('delete_account', {error: "Could not update the database."});}
+    },
+
+    getSearchAccount: async function (req, res) {
+        debugger;
+        var query = {username: req.query.username};
+        var projection = 'username email'
+
+        var result = await db.findMany(User, query, projection);
+        res.send(result);
     }
 }
 

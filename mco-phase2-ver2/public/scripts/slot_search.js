@@ -85,14 +85,23 @@ function showFreeSlots(labNum, dateTime) {
     return box;
 }
 
-function setUserList(input) {
+function searchUsers() {
     debugger;
-    $.get('/getSearchUsers', {username: input}, function (result) {
-        users = result;
+
+    var name = $("#user").val();
+
+    $.get('/getSearchUsers', {username: name}, function (result) {
+        debugger;
+        users = new Array();
+        for (i = 0; i < result.length; i++) {
+            users.push(result[i]);
+        }
+        $("#output").append(showUsers());
     });
 }
 
 function showUsers() {
+    debugger;
     var box = document.createElement('div');
     var heading = document.createElement('h3');
 
@@ -104,7 +113,7 @@ function showUsers() {
 
     for (i = 0; i < users.length; i++) {
         var user = document.createElement('p');
-        user.innerHTML = user[i].username;
+        user.innerHTML = users[i].username;
         box.appendChild(user);
     }
 
@@ -163,9 +172,7 @@ $(document).ready(function() {
         }
 
         else {
-            var name = $("#user").val();
-            setUserList(name);
-            $("#output").append(showUsers());
+            searchUsers();
         }
     })
 })
