@@ -20,27 +20,10 @@
             </span>
         </nav>
         <div class="container">
-            <input type="file" id="pfp" accept="image/*"><br>
-            <button id="confirm"> Confirm Changes </button>
+            <form method="POST" class="form" id="edit_pfp" enctype="multipart/form-data">
+                <input type="file" name="pfp" accept="image/*"><br>
+                <input type="submit" id="submit" value="Confirm Changes">
+            </form>
         </div>
-
-        <script>
-            const pfp = document.getElementById('pfp');
-            const conf_changes = document.getElementById('confirm');
-
-            conf_changes.addEventListener('click', () => {
-                window.location.href = "/user_profile";
-            })
-
-            pfp.addEventListener('change', () => {
-                const reader = new FileReader();
-                reader.readAsDataURL(pfp.files[0]);
-
-                reader.addEventListener('load', () => {
-                    const url = reader.result;
-                    localStorage.setItem('pfp', url);
-                });
-            })
-        </script>
     </body>
 </html>

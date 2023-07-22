@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
+const fs = require('fs');
+
 const UserSchema = new Schema({
     email: {
         type: String,
@@ -22,6 +24,10 @@ const UserSchema = new Schema({
     account_type: {
         type: String,
         required: [true, "account type is required"]
+    },
+    profile_pic: {
+        type: String, 
+        default: fs.readFileSync('./public/images/default_profile.png').toString('base64')
     }
 });
 

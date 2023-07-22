@@ -139,17 +139,13 @@
     <div class="container">
         <aside>
             <div class="user_profile">
-                <img id="pfp">
+                {{#if profile_pic}}
+                    <img id="pfp" src="data:image;base64, {{{profile_pic}}}" alt="/">
+                {{/if}}
                 <div id="username">{{username}}</div>
                 <p id="description">{{description}}</p>
                 
                 <div id="edit_account" onclick="location.href='/edit_account'"> Edit Account </div>
-                <script>
-                    const url = localStorage.getItem('pfp');
-                    if(url === null) {document.getElementById("pfp").src = "images/default_profile.png";}
-                    else {document.getElementById("pfp").src = url;}
-
-                </script>
             </div>
         </aside>
         <!--<h1 id="reservations">Reservations</h1>-->
@@ -161,6 +157,5 @@
     <footer>
 
     </footer>
-    
 </body>
 </html>
