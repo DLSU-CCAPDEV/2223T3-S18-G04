@@ -8,7 +8,7 @@ Veloso, Antonio
 
 Instructions
 - Open cmd and make sure the path is the mco-phase2-ver2 folder
-- Open mongodb compass and connect to localhose:27017
+- Open mongodb compass and connect to localhost:27017
 - In the command line, perform the following npm install commands:
         -npm install mongoose
         -npm install multer
