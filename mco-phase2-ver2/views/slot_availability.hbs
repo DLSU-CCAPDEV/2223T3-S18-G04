@@ -34,7 +34,7 @@
 
 		<!-- Reserve Seat -->
 		<section class="reserve_container">
-			<img src="/images/complab.png" class="labimage" alt="computer lab">
+			<img src="images/complab.png" class="labimage" alt="computer lab">
 			<div class="uil uil-times-circle close"></div>
 
 			<!-- Reserve slot -->
@@ -53,7 +53,8 @@
 						<i class="uil uil-calendar-alt" title="Add Date"></i>
 					</div>
 					<div class="textbox">
-						<select class="inputtext" name="timersv" id="timersv" size="1">
+						<select class="inputtext" name="timersv" id="timersv" size="1" placeholder="">
+							<option value="" disabled selected> Select reservation time</option>
 							<option value="07:30AM - 08:00AM"> 07:30AM - 08:00AM </option>
 							<option value="08:00AM - 08:30AM"> 08:00AM - 08:30AM </option>
 							<option value="08:30AM - 09:00AM"> 08:30AM - 09:00AM </option>
@@ -89,7 +90,7 @@
 						<i class="uil uil-ticket" title="Add a name for seat reservation."></i>
 					</div>
 					<div class="textbox">
-						<input class= "inputtext" name="seatsrsv" id="seatsrsv" type="number" placeholder="Number of Seats" required>
+						<input class= "inputtextseat" name="seatsrsv" id="seatsrsv" type="number" placeholder="Select Seats" readonly>
 						<i class="uil uil-users-alt" title="Specify how many seats will be reserved."></i>
 					</div>
 					<button type="button" class="reservebtn" id="buttonrsv" name="buttonrsv">Add Reservation</button>
@@ -106,6 +107,20 @@
 				<form action="#">
 					<p class="editrsrv"> Want to add a reservation? <span><a href="#" id="addrsv">Add Reservation</a></span></p>
 				</form>
+			</div>
+
+			<div class="seatcontainer">
+				<h2>Select a seat</h2>
+				<div id="rootseats"></div>
+				<div class="seatschosencontainer">
+					<p>Seats Remaining: </p>
+					<input type="text" id="seatsremaining" name="seatsremaining" class="inputtext" readonly>
+				</div>
+				<div class="seatschosencontainer">
+					<p>Seats Chosen: </p>
+					<input type="text" id="seatschosen" name="seatschosen" class="inputtext" readonly>
+				</div>
+				<button type="button" class="reservebtn" id="seatselectbutton" name="seatselectbutton">Select</button>
 			</div>
 
 			<!-- <div class="notifbox">
@@ -127,14 +142,11 @@
 						<i class="uil uil-desktop"></i>
 					</div>
 					<div class="textbox">
-						<!-- <select class="inputtext" name="datersv" id="datersv" size="1">
-							<option value="#">date</option>
-						</select> -->
 						<input type="date" id="datersvedit" name="datersvedit" class="inputtext">
 						<i class="uil uil-calendar-alt" title="Add Date"></i>
 					</div>
 					<div class="textbox">
-						<select class="inputtext" name="timersv" id="timersvedit" size="1">
+						<select class="inputtext" name="timersvedit" id="timersvedit" size="1">
 							<option value="07:30AM - 08:00AM"> 07:30AM - 08:00AM </option>
 							<option value="08:00AM - 08:30AM"> 08:00AM - 08:30AM </option>
 							<option value="08:30AM - 09:00AM"> 08:30AM - 09:00AM </option>
@@ -170,7 +182,7 @@
 						<i class="uil uil-ticket" title="Add a name for seat reservation."></i>
 					</div>
 					<div class="textbox">
-						<input class= "inputtext" name="seatsrsv" id="seatsrsvedit" type="number" placeholder="Number of Seats">
+						<input class="inputtextseat" name="seatsrsvedit" id="seatsrsvedit" type="number" placeholder="Number of Seats" readonly>
 						<i class="uil uil-users-alt" title="Specify how many seats will be reserved."></i>
 					</div>
 					<button type="button" class="reservebtn" id="editrsv" name="editrsv">Edit Reservation</button>
