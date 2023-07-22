@@ -10,9 +10,7 @@ if (typeof localStorage === "undefined" || localStorage === null) {
   }
 
 const reservationController = {
-
         getReservation: function(req, res) {
-            localStorage.clear();
             res.render('')
         }
 
