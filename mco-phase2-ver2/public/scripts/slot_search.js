@@ -113,7 +113,7 @@ function showUsers() {
 
     for (i = 0; i < users.length; i++) {
         var user = document.createElement('p');
-        user.innerHTML = users[i].username;
+        user.innerHTML = "<a href= '/user_profile?email=" + users[i].email + "'> " + users[i].username + " </a>";
         box.appendChild(user);
     }
 
