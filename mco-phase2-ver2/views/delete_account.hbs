@@ -21,9 +21,13 @@
         </nav>
         <div class="container">
             Account Deletion
+        {{#if error}}
+            <div id="error">{{error}}</div>
+        {{else}}
             <form method="POST" class="form" id="delete_account">
                 <input type="submit" id="submit" value="Confirm Account Deletion"/>
             </form>
+        {{/if}}
         </div>
     </body>
 </html>

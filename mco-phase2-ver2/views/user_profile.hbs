@@ -136,26 +136,29 @@
         
     </nav>
 
-    <div class="container">
-        <aside>
-            <div class="user_profile">
-                {{#if profile_pic}}
-                    <img id="pfp" src="data:image;base64, {{{profile_pic}}}" alt="/">
-                {{/if}}
-                <div id="username">{{username}}</div>
-                <p id="description">{{description}}</p>
-                
-                <div id="edit_account" onclick="location.href='/edit_account'"> Edit Account </div>
+    {{#if error}}
+        <div id="error">{{error}}</div>
+    {{else}}
+        <div class="container">
+            <aside>
+                <div class="user_profile">
+                    {{#if profile_pic}}
+                        <img id="pfp" src="data:image;base64, {{{profile_pic}}}" alt="/">
+                    {{/if}}
+                    <div id="username">{{username}}</div>
+                    <p id="description">{{description}}</p>
+                    
+                    <div id="edit_account" onclick="location.href='/edit_account'"> Edit Account </div>
+                </div>
+            </aside>
+            <!--<h1 id="reservations">Reservations</h1>-->
+            <div class="posts">
+            
             </div>
-        </aside>
-        <!--<h1 id="reservations">Reservations</h1>-->
-        <div class="posts">
-           
         </div>
-    </div>
 
-    <footer>
-
-    </footer>
+        <footer>
+        </footer>
+    {{/if}}
 </body>
 </html>
