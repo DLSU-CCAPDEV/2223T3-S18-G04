@@ -13,7 +13,10 @@ if (typeof localStorage === "undefined" || localStorage === null) {
 
 const profileController = {
     getProfile: async function (req, res) {
-        var query = {email: localStorage.getItem('email')};
+        if(req.query.email != null) {
+            var query = {email: req.query.email};
+        } else {var query = {email: localStorage.getItem('email')};}
+
         var projection = 'email username description account_type profile_pic';
 
         var result = await db.findOne(User, query, projection);
