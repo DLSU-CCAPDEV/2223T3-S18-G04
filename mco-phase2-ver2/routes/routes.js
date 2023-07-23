@@ -52,6 +52,8 @@ app.get('/slot_availability', function(req, res) {
 
 app.get('/seeReservations', reservationController.seeReservations);
 
+app.get('/searchSlots', reservationController.searchSlots);
+
 //app.post('/slot_availability', urlencodedParser, reservationController.postNewreserve);
 //app.get('/slot_availability', reservationController.getExistingreserve);
 //app.delete('/slot_availability/:id', reservationController.deleteReserve);

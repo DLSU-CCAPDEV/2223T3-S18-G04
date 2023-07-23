@@ -1,10 +1,3 @@
-var reservations = [
-    {
-        "lab" : 1,
-        "seat": 24,
-        "dateTime" : "2023-06-25T17:30"
-    }
-];
 var users;
 
 var times = [
@@ -41,49 +34,6 @@ var times = [
 var labOneSlots = new Array();
 var labTwoSlots = new Array();
 var labThreeSlots = new Array();
-
-function showFreeSlots(labNum, dateTime) {
-    debugger;
-    var box = document.createElement('div');
-    var heading = document.createElement('h3');
-    var text = document.createElement('p');
-    var lab;
-    var list = document.createElement('UL');
-    $(list).addClass('seat-list');
-    heading.innerHTML = "Free Slots";
-    text.innerHTML = "The following seats are free: ";
-    
-    $(box).addClass('box');
-    box.appendChild(heading);
-    box.appendChild(document.createElement('hr'));
-    box.appendChild(text);
-
-    switch(parseInt(labNum)){
-        case 1:
-            lab = labOneSlots;
-            break;
-        case 2:
-            lab = labTwoSlots;
-            break;
-        case 3: 
-            lab = labThreeSlots;
-            break;
-    }
-
-    for (i = 0; i < 40; i++) {
-        for (j = 0; j < lab.length; j++) {
-            if (lab[j].seat != i + 1 || lab[j].dateTime != dateTime) {
-                var seat = document.createElement('LI');
-                seat.innerHTML = i + 1;
-                list.appendChild(seat);
-            }
-        }
-    }
-
-    box.appendChild(list);
-    
-    return box;
-}
 
 function searchUsers() {
     debugger;
@@ -132,7 +82,7 @@ function addToSlots(reservation) {
     debugger;
     var lab;
     
-    switch(reservation.lab){
+    switch(reservation.labnum){
         case 1:
             lab = labOneSlots;
             break;
@@ -150,11 +100,51 @@ function addToSlots(reservation) {
     lab.push(reservation);              
 }
 
+function showFreeSlots(labNum, dateTime) {
+    debugger;
+    var box = document.createElement('div');
+    var heading = document.createElement('h3');
+    var text = document.createElement('p');
+    var lab;
+    var list = document.createElement('UL');
+    $(list).addClass('seat-list');
+    heading.innerHTML = "Free Slots";
+    text.innerHTML = "The following seats are free: ";
+    
+    $(box).addClass('box');
+    box.appendChild(heading);
+    box.appendChild(document.createElement('hr'));
+    box.appendChild(text);
+
+    switch(parseInt(labNum)){
+        case 1:
+            lab = labOneSlots;
+            break;
+        case 2:
+            lab = labTwoSlots;
+            break;
+        case 3: 
+            lab = labThreeSlots;
+            break;
+    }
+
+    for (i = 0; i < 40; i++) {
+        for (j = 0; j < lab.length; j++) {
+            if (lab[j].seatnum != i + 1 || lab[j].reserveDateTime != dateTime) {
+                var seat = document.createElement('LI');
+                seat.innerHTML = i + 1;
+                list.appendChild(seat);
+            }
+        }
+    }
+
+    box.appendChild(list);
+    
+    return box;
+}
+
 $(document).ready(function() {
     debugger;
-    for (var i = 0; i < reservations.length; i++) {
-        addToSlots(reservations[i]);
-    }
 
     $("#search").click(function() {
         debugger;
@@ -166,9 +156,14 @@ $(document).ready(function() {
         if (!$("#user").val()) {
             var lab = $("#labs").val();
             var dateTime = getDateTime();
-            var time = $("#times").val();
 
-            $("#output").append(showFreeSlots(lab, dateTime, time));
+            $.get('/searchSlots', {labnum: lab, reserveDateTime: dateTime}, function (result) {
+                debugger;
+                for(i = 0; i < result.length; i++) {
+                    addToSlots(result[i]);
+                }
+                $("#output").append(showFreeSlots(lab, dateTime));
+            });
         }
 
         else {

@@ -27,6 +27,15 @@ const reservationController = {
             var result = await db.findMany(Reservation, query, projection);
             console.log(result);
             res.send(result);
+        },
+
+        searchSlots: async function (req, res) {
+            var labnum = req.query.labnum;
+            var reserveDateTime = req.query.reserveDateTime;
+            var projection = 'labnum seatnum reserveDateTime';
+
+            var result = await db.findMany(Reservation, {labnum: labnum, reserveDateTime: reserveDateTime}, projection);
+            res.send(result);
         }
 }
 
