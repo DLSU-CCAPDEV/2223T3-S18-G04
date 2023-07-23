@@ -54,8 +54,10 @@ app.get('/seeReservations', reservationController.seeReservations);
 
 app.get('/searchSlots', reservationController.searchSlots);
 
-//app.post('/slot_availability', urlencodedParser, reservationController.postNewreserve);
-//app.get('/slot_availability', reservationController.getExistingreserve);
-//app.delete('/slot_availability/:id', reservationController.deleteReserve);
+app.use(express.json());
+app.post('/slot_availability/add_reserve', reservationController.postNewreserve);
+app.get('/slot_availability/get_reservations', reservationController.getExistingreserve);
+app.post('/slot_availability/edit_reserve', reservationController.postEditreserve);
+app.delete('/slot_availability/:id', reservationController.deleteReserve);
 
 module.exports = app;
