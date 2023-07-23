@@ -15,14 +15,14 @@ if (typeof localStorage === "undefined" || localStorage === null) {
 const reservationController = {
         postNewreserve: async function(req, res) {
             try {
-                var email = localStorage.getItem('email').email;
+                var email = localStorage.getItem('email');
                 var {reservenumber, username, lab, seat, requestdatetime, reservedate, time, isAnonymous} = req.body
-                // console.log({reservenumber, username, lab, seat, requestdatetime, reservedate, time, isAnonymous});
                 if (!seat || reservedate === '' || time === '') {
                     res.status(400).json({ message: 'Error: Incomplete entries'});
                 } else {
                     var reservedatetime = reservedate + "T" + time;
                     const newreserve = {email, reservenumber, username, lab, seat, requestdatetime, reservedatetime, isAnonymous};
+                    console.log(newreserve);
                     var res = await db.insertOne(Reservation, newreserve)
                         .then(result => res.json(result))
                         .catch(error => res.json(error));
@@ -35,7 +35,7 @@ const reservationController = {
     
         postEditreserve: async function (req, res) {
             try {
-                var email = localStorage.getItem('email').email;
+                var email = localStorage.getItem('email');
                 var {reservenumber, username, lab, seat, requestdatetime, reservedate, time, isAnonymous} = req.body
                 var reservedatetime = reservedate + "T" + time;
                 var filter = { reservenumber: reservenumber };
@@ -52,7 +52,8 @@ const reservationController = {
         getExistingreserve: async function (req, res) {
             try {
                 var query = {email: localStorage.getItem('email')};
-                const specificlabs = await db.findMany(Reservation, query, null);
+                var projection = 'email reservenumber username lab seat requestdatetime reservedatetime isAnonymous'
+                const specificlabs = await db.findMany(Reservation, query, projection);
                 res.json(specificlabs);
             } catch (error) {
                 console.error('Error:', error);
