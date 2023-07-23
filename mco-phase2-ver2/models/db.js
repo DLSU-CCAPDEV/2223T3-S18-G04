@@ -51,7 +51,11 @@ const database = {
             callback function is called after the execution of findOne() function
     */
     findOne: async function(model, query, projection) {
-        return await model.find(query, projection);
+        if (projection === null) {
+            return await model.find(query);
+        } else {
+            return await model.find(query, projection);
+        }
     },
 
         /*
@@ -61,7 +65,11 @@ const database = {
             callback function is called after the execution of findMany() function
         */
     findMany: async function(model, query, projection) {
-        return await model.find(query, projection);
+        if (projection === null) {
+            return await model.find(query);
+        } else {
+            return await model.find(query, projection);
+        }
     },
 
         /*
