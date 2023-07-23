@@ -558,11 +558,11 @@ closereserve.addEventListener("click", (e) => {
 
 // ADD RESERVATION
 var newreserve = {};
-var reservecount = 0;
-// fetch('/slot_availability/get_size')
-//         .then(res => res.json())
-//         .then(reservecount => parseInt(reservecount))
-//         .catch(err => console.log(err));
+var reservecount;
+fetch('/slot_availability/get_size')
+        .then(res => res.json())
+        .then(reservecount => parseInt(reservecount))
+        .catch(err => console.log(err));
 var reservername, seatassignn;
 var num = 0;
 
