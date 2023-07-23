@@ -1,10 +1,12 @@
 var reservations;
 
 function getReservations() {
+    debugger;
     const urlParams = new URLSearchParams(window.location.search);
     var email = urlParams.get('email');
     
     $.get('/seeReservations', {email: email}, function (result) {
+        debugger;
         reservations = new Array();
         for (i = 0; i < result.length; i++) {
             reservations.push(result[i]);
@@ -19,8 +21,8 @@ function displayReservations() {
     debugger;
     for (var i = 0; i < reservations.length; i++) {
         var reserveNum = "Reservation #".concat(i + 1);
-        var lab = reservations[i].lab;
-        var seat = reservations[i].seat;
+        var lab = reservations[i].labnum;
+        var seat = reservations[i].seatnum;
         var reserveDT;
         var requestDT;
         var tempDate;
@@ -29,13 +31,13 @@ function displayReservations() {
         const table = document.createElement('table');
         const heading = document.createElement('h3');
         
-        tempDate = parseDateToWords(new Date(reservations[i].reservedatetime));
-        tempTime = parseTimeToAMPM(timezoneOffset(new Date(reservations[i].reservedatetime)));
+        tempDate = parseDateToWords(new Date(reservations[i].reserveDateTime));
+        tempTime = parseTimeToAMPM(timezoneOffset(new Date(reservations[i].reserveDateTime)));
 
         reserveDT = tempDate.concat(" / ", tempTime);
 
-        tempDate = parseDateToWords(new Date(reservations[i].requestdatetime));
-        tempTime = parseTimeToAMPM(timezoneOffset(new Date(reservations[i].requestdatetime)));
+        tempDate = parseDateToWords(new Date(reservations[i].requestDateTime));
+        tempTime = parseTimeToAMPM(timezoneOffset(new Date(reservations[i].requestDateTime)));
 
         requestDT = tempDate.concat(" / ", tempTime);
 
