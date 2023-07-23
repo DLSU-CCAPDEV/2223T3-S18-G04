@@ -1,27 +1,16 @@
-if (typeof localStorage === "undefined" || localStorage === null) {
-    var LocalStorage = require('node-localstorage').LocalStorage;
-    localStorage = new LocalStorage('./scratch');
-}
-
 var reservations;
 
 function getReservations() {
-    debugger;
     const urlParams = new URLSearchParams(window.location.search);
     var email = urlParams.get('email');
-
-    console.log(email);
-
-    if (email == null)
-        email = localStorage.getItem('email');
-
-    console.log(email);
-
+    
     $.get('/seeReservations', {email: email}, function (result) {
         reservations = new Array();
         for (i = 0; i < result.length; i++) {
             reservations.push(result[i]);
         }
+
+        console.log(reservations);
         displayReservations();
     })
 }

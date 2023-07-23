@@ -25,12 +25,12 @@ const registerSchema = new Schema({
     },
 
     requestDateTime: {
-        type: Date,
+        type: String,
         required: [true, "request date and time is required"]
     },
 
     reserveDateTime: {
-        type: Date,
+        type: String,
         required: [true, "reservation date and time is required"]
     },
 

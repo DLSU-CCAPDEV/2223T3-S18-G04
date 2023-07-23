@@ -17,12 +17,15 @@ const reservationController = {
             res.render('')
         },
 
-
         seeReservations: async function (req, res) {
-            var query = {email: req.query.email};
+            if(req.query.email != '') {
+                var query = {email: req.query.email};
+            } else {var query = {email: localStorage.getItem('email')};}
+            console.log(query);
             var projection = 'labnum seatnum requestDateTime reserveDateTime'
 
             var result = await db.findMany(Reservation, query, projection);
+            console.log(result);
             res.send(result);
         }
 }
