@@ -19,7 +19,7 @@ const registerSchema = new Schema({
         required: [true, "lab number is required"]
     },
 
-    seatnum: {
+    seat: {
         type: Array,
         required: [true, "seat number is required"]
     },
