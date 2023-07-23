@@ -8,7 +8,7 @@ const registerSchema = new Schema({
         type: String,
         required: [true, "email is required"]
     },
-    
+
     username: {
         type: String,
         required: [true, "username is required"]
@@ -20,7 +20,7 @@ const registerSchema = new Schema({
     },
 
     seatnum: {
-        type: Number,
+        type: Array,
         required: [true, "seat nummber is required"]
     },
 
