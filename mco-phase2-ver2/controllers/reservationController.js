@@ -73,15 +73,15 @@ const reservationController = {
             }
         },
     
-        getGetSize: async function (req, res) {
-            try {
-                const size = await Reservation.countDocuments();
-                res.json({ size });
-            } catch (error) {
-                console.error('Error:', error);
-                res.status(500).json({ error: 'An error occurred while fetching data.' });
-            }
-        }
+        // getGetSize: async function (req, res) {
+        //     try {
+        //         const size = await Reservation.countDocuments();
+        //         res.json({ size });
+        //     } catch (error) {
+        //         console.error('Error:', error);
+        //         res.status(500).json({ error: 'An error occurred while fetching data.' });
+        //     }
+        // }
 
         seeReservations: async function (req, res) {
             if(req.query.email != '') {
