@@ -9,11 +9,6 @@ const registerSchema = new Schema({
         required: [true, "email is required"]
     },
 
-    reservenumber: {
-        type: Number,
-        required: [true, "reservenumber is required"]
-    },
-
     username: {
         type: String,
         required: [true, "username is required"]
