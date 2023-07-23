@@ -7,7 +7,7 @@
     <link rel="icon" type="image/x-icon" href="/images/microscope_round.ico">
 
     <title>Log-In</title>
-    <script>
+    <script type="text/javascript">
       localStorage.clear();
     </script>
 </head>
@@ -29,6 +29,8 @@
             <p>Don't have an account yet?</p>
             <a href="/register">Click here</a>
           </div>
+
+          <div id="error">{{error}}</div>
         </form>
       </div>
 </body>

@@ -29,7 +29,9 @@ const securityController = {
             localStorage.setItem('email', req.body.email);
             res.redirect('/user_profile');
 
-        } else {res.render('error');}
+        } else {
+            res.render('login', {error: "Email does not exist or password does not match."});
+        }
     },
     
     getRegister: function (req, res) {
@@ -62,9 +64,8 @@ const securityController = {
             if(response != null) {
                 localStorage.setItem('email', req.body.email);
                 res.redirect('/user_profile');
-            } else {res.render('error');}
-
-        } else {res.render('error');}
+            } else {res.render('register', {error: "Could not insert email into database."});}
+        } else {res.render('register', {error: "Email already exists."});}
     }
 }
 

@@ -33,6 +33,11 @@ const registerSchema = new Schema({
         type: Date,
         required: [true, "reservation date and time is required"]
     },
+
+    isAnonymous: {
+        type: Boolean,
+        required: [true, "anonymity setting is required"]
+    }
 });
 
 module.exports = mongoose.model('Reservation', registerSchema);

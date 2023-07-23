@@ -44,3 +44,10 @@ span.user_profile:hover, span.search_slots:hover, span.lab_slots:hover, span.log
     background-color:aquamarine;
     color: grey;
 }
+
+#error {
+    font-weight: 1000;
+    font-style: italic;
+    color: red;
+    text-align: center;
+}

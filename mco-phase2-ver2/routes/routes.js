@@ -15,6 +15,7 @@ const storage = multer.diskStorage({
 
 const securityController = require('../controllers/securityController.js');
 const profileController = require('../controllers/profileController.js');
+const reservationController = require('../controllers/reservationController.js');
 
 const app = express();
 
@@ -43,8 +44,16 @@ app.get('/slot_search', function(req, res) {
     res.render('slot_search');
 });
 
+app.get('/getSearchUsers', profileController.getSearchAccount);
+
 app.get('/slot_availability', function(req, res) {
     res.render('slot_availability');
 });
+
+app.get('/seeReservations', reservationController.seeReservations);
+
+app.post('/slot_availability', urlencodedParser, reservationController.postNewreserve);
+app.get('/slot_availability', reservationController.getExistingreserve);
+app.delete('/slot_availability/:id', reservationController.deleteReserve);
 
 module.exports = app;
