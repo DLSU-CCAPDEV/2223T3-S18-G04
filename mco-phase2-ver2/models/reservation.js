@@ -8,7 +8,12 @@ const registerSchema = new Schema({
         type: String,
         required: [true, "email is required"]
     },
-    
+
+    reservenumber: {
+        type: Number,
+        required: [true, "reservenumber is required"]
+    },
+
     username: {
         type: String,
         required: [true, "username is required"]
@@ -20,8 +25,8 @@ const registerSchema = new Schema({
     },
 
     seatnum: {
-        type: Number,
-        required: [true, "seat nummber is required"]
+        type: Array,
+        required: [true, "seat number is required"]
     },
 
     requestDateTime: {
