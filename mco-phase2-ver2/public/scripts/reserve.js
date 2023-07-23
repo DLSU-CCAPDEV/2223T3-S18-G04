@@ -587,7 +587,7 @@ document.getElementById("buttonrsv").onclick = function() {
     reservername = document.getElementById("namersv").value;
     var Anonymous = false;
     if (reservername.length==0) {
-        num = reservecount + 1;
+        num++;
         reservername = "reserver" + num;
         Anonymous = true;
     }
