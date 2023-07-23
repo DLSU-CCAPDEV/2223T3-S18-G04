@@ -50,8 +50,12 @@ app.get('/slot_availability', function(req, res) {
     res.render('slot_availability');
 });
 
+app.get('/seeReservations', reservationController.seeReservations);
+
+/*
 app.post('/reservations', urlencodedParser, reservationController.postnewreserve);
 app.get('/reservations', reservationController.getexistingreserve);
 app.delete('/reservations/:id', reservationController.deletereserve);
+*/
 
 module.exports = app;
