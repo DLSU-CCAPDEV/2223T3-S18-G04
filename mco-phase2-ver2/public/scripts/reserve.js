@@ -582,7 +582,9 @@ function SeatLayout() {
             </div>
         </div>`;;
 
+    console.log(document.querySelectorAll('.seat:not(.occupied)'));
     for (const sseat of document.querySelectorAll('.seat:not(.occupied)')) {
+        console.log(sseat.id);
         if (occupiedseats.includes(sseat.id)) {
             console.log(sseat.id);
             sseat.classList.add("occupied");
@@ -593,10 +595,10 @@ function SeatLayout() {
         }
     }
     console.log(occupiedseats);
-    seatsremaining = document.querySelectorAll('.seat:not(.occupied)').length - occupiedseats.length;
+    seatsremaining = document.querySelectorAll('.seat').length - occupiedseats.length;
 }
 
-var numberofselectedseats = 0
+var numberofselectedseats = 0;
 var seatsremaining;
 var seatElements;
 const seatcontainer = document.querySelector(".seatcontainer");
