@@ -1,6 +1,6 @@
 // Lab Timeslot Calendar
 
-var reservations = []
+var reservations;
 
 var reservationIntervals = [
     "07:30AM - 08:00AM",
@@ -63,133 +63,143 @@ var times = [
     "21:00"
 ]
 
-function createCalendar(labNum) {
-const table = document.createElement('table');
-table.style.border = '1px solid black';
+function seatChecker(targetSeat, seats) {
+    debugger;
+    var returnValue = 0;
 
-var tableHeader = document.createElement('thead');
-table.appendChild(tableHeader);
-
-for (var i = 0; i < 8; i++) {
-
-    var tHeadCell = tableHeader.appendChild(document.createElement('th'));
-
-    switch (i) {
-        case 1:
-            tHeadCell.appendChild(document.createTextNode(moment(dateOffset(new Date(), 0)).format('dddd')));
-            tHeadCell.appendChild(document.createElement('br'));
-            tHeadCell.appendChild(document.createTextNode(parseDateToWords(dateOffset(new Date(), 0))));
-            break;
-        case 2:
-            tHeadCell.appendChild(document.createTextNode(moment(dateOffset(new Date(), 1)).format('dddd')));
-            tHeadCell.appendChild(document.createElement('br'));
-            tHeadCell.appendChild(document.createTextNode(parseDateToWords(dateOffset(new Date(), 1))));
-            break;
-        case 3:
-            tHeadCell.appendChild(document.createTextNode(moment(dateOffset(new Date(), 2)).format('dddd')));
-            tHeadCell.appendChild(document.createElement('br'));
-            tHeadCell.appendChild(document.createTextNode(parseDateToWords(dateOffset(new Date(), 2))));
-            break;
-        case 4:
-            tHeadCell.appendChild(document.createTextNode(moment(dateOffset(new Date(), 3)).format('dddd')));
-            tHeadCell.appendChild(document.createElement('br'));
-            tHeadCell.appendChild(document.createTextNode(parseDateToWords(dateOffset(new Date(), 3))));
-            break;
-        case 5:
-            tHeadCell.appendChild(document.createTextNode(moment(dateOffset(new Date(), 4)).format('dddd')));
-            tHeadCell.appendChild(document.createElement('br'));
-            tHeadCell.appendChild(document.createTextNode(parseDateToWords(dateOffset(new Date(), 4))));
-            break;
-        case 6:
-            tHeadCell.appendChild(document.createTextNode(moment(dateOffset(new Date(), 5)).format('dddd')));
-            tHeadCell.appendChild(document.createElement('br'));
-            tHeadCell.appendChild(document.createTextNode(parseDateToWords(dateOffset(new Date(), 5))));
-            break;
-        case 7:
-            tHeadCell.appendChild(document.createTextNode(moment(dateOffset(new Date(), 6)).format('dddd')));
-            tHeadCell.appendChild(document.createElement('br'));
-            tHeadCell.appendChild(document.createTextNode(parseDateToWords(dateOffset(new Date(), 6))));
-            break;
+    for (i = 0; i < seats.length; i++) {
+        if (targetSeat == seats[i])
+            returnValue = 1;
     }
+    return returnValue;
 }
 
-for (var i = 0; i < 27; i++) {
-        const tableRow = table.insertRow();
-    for (var j = 0; j < 8; j++) {
-        const tableCell = tableRow.insertCell();
-        tableCell.style.width = '30px';
-        tableCell.style.height = 'auto';
-        tableCell.style.border = '1px solid black';
-        tableCell.style.padding = '5px';
-        if (j == 0) {
-            tableCell.style.textAlign = 'center';
-            tableCell.style.fontWeight = 'bold';
-            tableCell.append(document.createTextNode(reservationIntervals[i]));
+function createCalendar(labNum) {
+    const table = document.createElement('table');
+    table.style.border = '1px solid black';
+
+    var tableHeader = document.createElement('thead');
+    table.appendChild(tableHeader);
+    for (var i = 0; i < 8; i++) {
+
+        var tHeadCell = tableHeader.appendChild(document.createElement('th'));
+
+        switch (i) {
+            case 1:
+                tHeadCell.appendChild(document.createTextNode(moment(dateOffset(new Date(), 0)).format('dddd')));
+                tHeadCell.appendChild(document.createElement('br'));
+                tHeadCell.appendChild(document.createTextNode(parseDateToWords(dateOffset(new Date(), 0))));
+                break;
+            case 2:
+                tHeadCell.appendChild(document.createTextNode(moment(dateOffset(new Date(), 1)).format('dddd')));
+                tHeadCell.appendChild(document.createElement('br'));
+                tHeadCell.appendChild(document.createTextNode(parseDateToWords(dateOffset(new Date(), 1))));
+                break;
+            case 3:
+                tHeadCell.appendChild(document.createTextNode(moment(dateOffset(new Date(), 2)).format('dddd')));
+                tHeadCell.appendChild(document.createElement('br'));
+                tHeadCell.appendChild(document.createTextNode(parseDateToWords(dateOffset(new Date(), 2))));
+                break;
+            case 4:
+                tHeadCell.appendChild(document.createTextNode(moment(dateOffset(new Date(), 3)).format('dddd')));
+                tHeadCell.appendChild(document.createElement('br'));
+                tHeadCell.appendChild(document.createTextNode(parseDateToWords(dateOffset(new Date(), 3))));
+                break;
+            case 5:
+                tHeadCell.appendChild(document.createTextNode(moment(dateOffset(new Date(), 4)).format('dddd')));
+                tHeadCell.appendChild(document.createElement('br'));
+                tHeadCell.appendChild(document.createTextNode(parseDateToWords(dateOffset(new Date(), 4))));
+                break;
+            case 6:
+                tHeadCell.appendChild(document.createTextNode(moment(dateOffset(new Date(), 5)).format('dddd')));
+                tHeadCell.appendChild(document.createElement('br'));
+                tHeadCell.appendChild(document.createTextNode(parseDateToWords(dateOffset(new Date(), 5))));
+                break;
+            case 7:
+                tHeadCell.appendChild(document.createTextNode(moment(dateOffset(new Date(), 6)).format('dddd')));
+                tHeadCell.appendChild(document.createElement('br'));
+                tHeadCell.appendChild(document.createTextNode(parseDateToWords(dateOffset(new Date(), 6))));
+                break;
         }
-        else {
-            var slotList = document.createElement("p");
-            $(slotList).addClass('slot-list');
+    }
 
-            var slotsTaken = 0;
-            var slotsTakenString;
+    for (var i = 0; i < 27; i++) {
+            const tableRow = table.insertRow();
+        for (var j = 0; j < 8; j++) {
+            const tableCell = tableRow.insertCell();
+            tableCell.style.width = '30px';
+            tableCell.style.height = 'auto';
+            tableCell.style.border = '1px solid black';
+            tableCell.style.padding = '5px';
+            if (j == 0) {
+                tableCell.style.textAlign = 'center';
+                tableCell.style.fontWeight = 'bold';
+                tableCell.append(document.createTextNode(reservationIntervals[i]));
+            }
+            else {
+                var slotList = document.createElement("p");
+                $(slotList).addClass('slot-list');
 
-            var time = $(times)[i];
-            var date = moment(dateOffset(new Date(), j - 1)).format();
-            date = date.substring(0, 10);
-            var dateTime = date.concat("T", time);
-            var studentList = null;
+                var slotsTaken = 0;
+                var slotsTakenString;
 
-            var viewSlotsButton = document.createElement('button');
-            $(viewSlotsButton).addClass('view-slots-button');
-            viewSlotsButton.innerText = "View Slots";
+                var time = $(times)[i];
+                var date = moment(dateOffset(new Date(), j - 1)).format();
+                date = date.substring(0, 10);
+                var dateTime = date.concat("T", time);
+                var studentList = null;
 
-            slotList.innerHTML = "Available: <br>";
-            for (var k = 0; k < 40; k++) {
-                var iterations = 0;
-                if (reservations.length > 0) {
-                    for (var l = 0; l < reservations.length; l++) {
-                        var user = reservations[l];
+                var viewSlotsButton = document.createElement('button');
+                $(viewSlotsButton).addClass('view-slots-button');
+                viewSlotsButton.innerText = "View Slots";
 
-                        if (dateTime == user.datetime && labNum == user.lab && k + 1 == user.seat && user.isAnonymous == false) {
-                            var studentLink = document.createElement('LI');
-                            studentLink.innerHTML = "<a href='" + user.link + "'> " + user.username + " </a>";
-                            slotsTaken += 1;
+                slotList.innerHTML = "Available: <br>";
+                for (var k = 0; k < 40; k++) {
+                    var iterations = 0;
+                    if (reservations.length > 0) {
+                        for (var l = 0; l < reservations.length; l++) {
+                            var user = reservations[l];
 
-                            if (studentList == null)
-                                studentList = document.createElement('UL');
+                            if (dateTime == user.dateReserveTime && labNum == user.labnum && seatChecker(k + 1, user.seatnum) && user.isAnonymous == false) {
+                                var studentLink = document.createElement('LI');
+                                studentLink.innerHTML = "<a href= '/user_profile?email=" + user.email + "'> " + user.username + " </a>";
+                                slotsTaken += 1;
 
-                            studentList.appendChild(studentLink);
-                        } else if (iterations === 0) {
-                            iterations = 1;
-                            slotList.innerHTML = slotList.innerHTML.concat(k + 1);
+                                if (studentList == null)
+                                    studentList = document.createElement('UL');
 
-                            if (k < 39)
-                                slotList.innerHTML = slotList.innerHTML.concat(", ");
+                                studentList.appendChild(studentLink);
+                            } else if (iterations === 0) {
+                                iterations = 1;
+                                slotList.innerHTML = slotList.innerHTML.concat(k + 1);
+
+                                if (k < 39)
+                                    slotList.innerHTML = slotList.innerHTML.concat(", ");
+                            }
                         }
                     }
                 }
+
+                slotsTakenString = document.createElement('p');
+                slotsTakenString.innerHTML = slotsTaken + " / 40 Slots Taken";
+
+                tableCell.append(viewSlotsButton);
+                slotList.style.display = 'none';
+                tableCell.append(slotList);
+
+                if (studentList != null) {
+                    var studentHeading = document.createElement('p');
+                    studentHeading.innerHTML = "<b> Students Reserved </b>";
+                    tableCell.append(studentHeading);
+                    tableCell.append(studentList);
+                }
+
+                tableCell.append(slotsTakenString);
             }
-
-            slotsTakenString = document.createElement('p');
-            slotsTakenString.innerHTML = slotsTaken + " / 40 Slots Taken";
-
-            tableCell.append(viewSlotsButton);
-            slotList.style.display = 'none';
-            tableCell.append(slotList);
-
-            if (studentList != null) {
-                var studentHeading = document.createElement('p');
-                studentHeading.innerHTML = "<b> Students Reserved </b>";
-                tableCell.append(studentHeading);
-                tableCell.append(studentList);
-            }
-
-            tableCell.append(slotsTakenString);
         }
     }
-}
 
-return table;
+    return table;
 }
 
 // Editable labs
@@ -220,39 +230,48 @@ if(labsavailable.length==0) {
 }
 
 $(document).ready(function() {
-    // Function to toggle calendar display and change button text
-    function toggleCalendar(calendar, button) {
-        if (calendar.style.display === "none") {
-            calendar.style.display = "table";
-            button.innerText = '-';
-        } else {
-            calendar.style.display = "none";
-            button.innerText = '+';
+    
+    $.get('/getSAReservations', {}, function(result) {
+
+        for(var i = 0; i < result.length; i++) {
+            reservations.push(result[i]);
         }
-    }
 
-    // Create calendars for each lab
-    for (var i = 1; i <= 3; i++) {
-        const labTable = document.getElementById(`lab-${i}`).appendChild(createCalendar(i));
-        $(labTable).addClass('calendar-table');
-        labTable.style.display = "none";
-    }
+        // Function to toggle calendar display and change button text
+        function toggleCalendar(calendar, button) {
+            if (calendar.style.display === "none") {
+                calendar.style.display = "table";
+                button.innerText = '-';
+            } else {
+                calendar.style.display = "none";
+                button.innerText = '+';
+            }
+        }
 
-    // Click event for lab buttons (using event delegation)
-    $('.lab-button').click(function() {
-        var labNumber = this.id.split('-')[2];
-        var calendar = $(`#lab-${labNumber} > .calendar-table`)[0];
-        toggleCalendar(calendar, this);
-        document.getElementById('datersv').value = getCurrentDateTime().toString().split('T')[0];
-        var defaultdatetime = document.getElementById('datersv').value + "T" + document.getElementById('timersv').value;
-        fetchseats(labNumber, defaultdatetime);
-    });
+        // Create calendars for each lab
+        for (var i = 1; i <= 3; i++) {
+            const labTable = document.getElementById(`lab-${i}`).appendChild(createCalendar(i));
+            $(labTable).addClass('calendar-table');
+            labTable.style.display = "none";
+        }
 
-    // Click event for view slots buttons
-    $(".view-slots-button").click(function() {
-        var slotList = $(this).parent().children('.slot-list');
-        slotList.toggle();
-        $(this).html(slotList.css('display') === 'none' ? "View Slots" : "Hide Slots");
+        // Click event for lab buttons (using event delegation)
+        $('.lab-button').click(function() {
+            var labNumber = this.id.split('-')[2];
+            var calendar = $(`#lab-${labNumber} > .calendar-table`)[0];
+            toggleCalendar(calendar, this);
+            document.getElementById('datersv').value = getCurrentDateTime().toString().split('T')[0];
+            var defaultdatetime = document.getElementById('datersv').value + "T" + document.getElementById('timersv').value;
+            fetchseats(labNumber, defaultdatetime);
+        });
+
+        // Click event for view slots buttons
+        $(".view-slots-button").click(function() {
+            var slotList = $(this).parent().children('.slot-list');
+            slotList.toggle();
+            $(this).html(slotList.css('display') === 'none' ? "View Slots" : "Hide Slots");
+        });
+
     });
 });
 

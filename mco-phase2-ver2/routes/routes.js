@@ -48,6 +48,8 @@ app.get('/seeReservations', reservationController.seeReservations);
 
 app.get('/searchSlots', reservationController.searchSlots);
 
+app.get('seeSAReservations', reservationController.getAllReserves);
+
 app.use(express.json());
 app.get('/slot_availability', urlencodedParser, reservationController.getSlotAvailability);
 app.post('/slot_availability/add_reserve', reservationController.postNewreserve);

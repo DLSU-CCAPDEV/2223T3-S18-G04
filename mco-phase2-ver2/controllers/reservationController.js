@@ -56,6 +56,13 @@ const reservationController = {
             res.send(result);
         },
 
+        getAllReserves: async function (req, res) {
+            var projection = ' _id email username labnum seatnum requestDateTime reserveDateTime isAnonymous'
+            var result = await db.findMany(Reservation, req.query, projection);
+            //console.log(result);
+            res.send(result);
+        },
+
         postEditreserve: async function (req, res) {
             var username = req.body.username;
             var seatnum = req.body.seatnum;
