@@ -17,12 +17,25 @@ function getReservations() {
     })
 }
 
+function writeSeats(seats) {
+    debugger;
+    var returnString = "";
+
+    for (i = 0; i < seats.length; i++) {
+        returnString = returnString.concat(seats[i]);
+        if (i < seats.length - 1)
+            returnString = returnString.concat(", ");
+    }
+
+    return returnString;
+}
+
 function displayReservations() {
     debugger;
     for (var i = 0; i < reservations.length; i++) {
         var reserveNum = "Reservation #".concat(i + 1);
         var lab = reservations[i].labnum;
-        var seat = reservations[i].seatnum;
+        var seats = reservations[i].seatnum;
         var reserveDT;
         var requestDT;
         var tempDate;
@@ -66,7 +79,7 @@ function displayReservations() {
                     text = document.createTextNode("Seat Number: ");
                     bold.appendChild(text);
                     tableCell.appendChild(bold);
-                    text = document.createTextNode(seat);
+                    text = document.createTextNode(writeSeats(seats));
                     tableCell.appendChild(text);
                     break;
                 case 2:

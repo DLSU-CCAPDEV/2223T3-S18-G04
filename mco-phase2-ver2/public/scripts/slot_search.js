@@ -31,9 +31,9 @@ var times = [
     "21:00"
 ]
 
-var labOneSlots = new Array();
-var labTwoSlots = new Array();
-var labThreeSlots = new Array();
+var labOneSlots;
+var labTwoSlots;
+var labThreeSlots;
 
 function searchUsers() {
     debugger;
@@ -100,6 +100,18 @@ function addToSlots(reservation) {
     lab.push(reservation);              
 }
 
+function slotChecker(targetSlot, slots) {
+    debugger;
+    var returnValue = 0;
+
+    for (i = 0; i < slots.length; i++) {
+        if (targetSlot == slots[i])
+            returnValue = 1;
+    }
+
+    return returnValue;
+}
+
 function showFreeSlots(labNum, dateTime) {
     debugger;
     var box = document.createElement('div');
@@ -128,12 +140,21 @@ function showFreeSlots(labNum, dateTime) {
             break;
     }
 
-    for (i = 0; i < 40; i++) {
-        for (j = 0; j < lab.length; j++) {
-            if (lab[j].seatnum != i + 1 || lab[j].reserveDateTime != dateTime) {
-                var seat = document.createElement('LI');
-                seat.innerHTML = i + 1;
-                list.appendChild(seat);
+    for (let i = 0; i < 40; i++) {
+        console.log(i);
+        if (lab.length == 0) {
+            var seat = document.createElement('LI');
+            seat.innerHTML = i + 1;
+            list.appendChild(seat);
+        }
+        else {
+            for (j = 0; j < lab.length; j++) {
+                console.log(i);
+                if (slotChecker(i + 1, lab[j].seatnum) != 1 || lab[j].reserveDateTime != dateTime) {
+                        var seat = document.createElement('LI');
+                        seat.innerHTML = i + 1;
+                        list.appendChild(seat);
+                }
             }
         }
     }
@@ -159,6 +180,11 @@ $(document).ready(function() {
 
             $.get('/searchSlots', {labnum: lab, reserveDateTime: dateTime}, function (result) {
                 debugger;
+
+                labOneSlots = new Array();
+                labTwoSlots = new Array();
+                labThreeSlots = new Array();
+
                 for(i = 0; i < result.length; i++) {
                     addToSlots(result[i]);
                 }
