@@ -4,6 +4,9 @@ const db = require('../models/db.js');
 // import module `User` from `../models/UserModel.js`
 const User = require('../models/user.js');
 
+// import module `Reservation` from `../models/reservation`
+const Reservation = require('../models/reservation.js');
+
 const fs = require('fs');
 
 if (typeof localStorage === "undefined" || localStorage === null) {
@@ -90,7 +93,9 @@ const profileController = {
         var conditions = {email: localStorage.getItem('email')};
 
         var result = await db.deleteOne(User, conditions);
+
         if(result != null) {
+            await db.deleteMany(Reservation, conditions);
             res.redirect('/login');
         } else {res.render('delete_account', {error: "Could not update the database."});}
     },
