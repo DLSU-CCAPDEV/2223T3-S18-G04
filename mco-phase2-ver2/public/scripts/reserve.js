@@ -239,13 +239,7 @@ $(document).ready(function() {
         debugger;
         reservations = new Array();
         for(var i = 0; i < result.length; i++) {
-                    for (var j = 0; j < result[i].seatnum.length; j++){
-                        if (result[i].seatnum[j].includes('seat')){
-                            result[i].seatnum[j] = result[i].seatnum[j].replace('seat', "");
-                        }
-                    }
-        
-                    reservations.push(result[i]);
+            reservations.push(result[i]);
         }
 
         // Create calendars for each lab
