@@ -17,7 +17,10 @@ if (typeof localStorage === "undefined" || localStorage === null) {
 
 const reservationController = {
        postNewreserve: async function(req, res) {
-            var email = localStorage.getItem('email');
+        console.log(req.query.email);
+            if(req.query.email != null) {
+                var email = req.query.email;
+            } else {var email = localStorage.getItem('email');}
             var username = req.body.username;
             var lab = req.body.lab;
             var seatnum = req.body.seatnum;
@@ -54,7 +57,7 @@ const reservationController = {
             var requestDateTime = req.body.requestDateTime;
             var reserveDateTime = req.body.reserveDateTime;
             var isAnonymous = req.body.isAnonymous;
-            var filter = req.body._id;
+            var filter = {_id: req.body._id};
 
             var update = {
                 username: username,

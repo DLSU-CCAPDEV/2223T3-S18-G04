@@ -690,54 +690,54 @@ function SeatLayout(labseat) {
                 <div class="frontdesk"></div>
             </div>
             <div class="seatrow">
-                <div class="seat" id="seat1"></div>
-                <div class="seat" id="seat2"></div>
-                <div class="seat" id="seat3"></div>
-                <div class="seat" id="seat4"></div>
-                <div class="seat" id="seat5"></div>
-                <div class="seat" id="seat6"></div>
-                <div class="seat" id="seat7"></div>
-                <div class="seat" id="seat8"></div>
+                <div class="seat" id="1"></div>
+                <div class="seat" id="2"></div>
+                <div class="seat" id="3"></div>
+                <div class="seat" id="4"></div>
+                <div class="seat" id="5"></div>
+                <div class="seat" id="6"></div>
+                <div class="seat" id="7"></div>
+                <div class="seat" id="8"></div>
             </div>
             <div class="seatrow">
-                <div class="seat" id="seat9"></div>
-                <div class="seat" id="seat10"></div>
-                <div class="seat" id="seat11"></div>
-                <div class="seat" id="seat12"></div>
-                <div class="seat" id="seat13"></div>
-                <div class="seat" id="seat14"></div>
-                <div class="seat" id="seat15"></div>
-                <div class="seat" id="seat16"></div>
+                <div class="seat" id="9"></div>
+                <div class="seat" id="10"></div>
+                <div class="seat" id="11"></div>
+                <div class="seat" id="12"></div>
+                <div class="seat" id="13"></div>
+                <div class="seat" id="14"></div>
+                <div class="seat" id="15"></div>
+                <div class="seat" id="16"></div>
             </div>
             <div class="seatrow">
-                <div class="seat" id="seat17"></div>
-                <div class="seat" id="seat18"></div>
-                <div class="seat" id="seat19"></div>
-                <div class="seat" id="seat20"></div>
-                <div class="seat" id="seat21"></div>
-                <div class="seat" id="seat22"></div>
-                <div class="seat" id="seat23"></div>
-                <div class="seat" id="seat24"></div>
+                <div class="seat" id="17"></div>
+                <div class="seat" id="18"></div>
+                <div class="seat" id="19"></div>
+                <div class="seat" id="20"></div>
+                <div class="seat" id="21"></div>
+                <div class="seat" id="22"></div>
+                <div class="seat" id="23"></div>
+                <div class="seat" id="24"></div>
             </div>
             <div class="seatrow">
-                <div class="seat" id="seat25"></div>
-                <div class="seat" id="seat26"></div>
-                <div class="seat" id="seat27"></div>
-                <div class="seat" id="seat28"></div>
-                <div class="seat" id="seat29"></div>
-                <div class="seat" id="seat30"></div>
-                <div class="seat" id="seat31"></div>
-                <div class="seat" id="seat32"></div>
+                <div class="seat" id="25"></div>
+                <div class="seat" id="26"></div>
+                <div class="seat" id="27"></div>
+                <div class="seat" id="28"></div>
+                <div class="seat" id="29"></div>
+                <div class="seat" id="30"></div>
+                <div class="seat" id="31"></div>
+                <div class="seat" id="32"></div>
             </div>
             <div class="seatrow">
-                <div class="seat" id="seat33"></div>
-                <div class="seat" id="seat34"></div>
-                <div class="seat" id="seat35"></div>
-                <div class="seat" id="seat36"></div>
-                <div class="seat" id="seat37"></div>
-                <div class="seat" id="seat38"></div>
-                <div class="seat" id="seat39"></div>
-                <div class="seat" id="seat40"></div>
+                <div class="seat" id="33"></div>
+                <div class="seat" id="34"></div>
+                <div class="seat" id="35"></div>
+                <div class="seat" id="36"></div>
+                <div class="seat" id="37"></div>
+                <div class="seat" id="38"></div>
+                <div class="seat" id="39"></div>
+                <div class="seat" id="40"></div>
             </div>
         </div>`;
 
