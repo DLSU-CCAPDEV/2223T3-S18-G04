@@ -171,14 +171,17 @@ function createCalendar(labNum) {
                                     studentList = document.createElement('UL');
 
                                 studentList.appendChild(studentLink);
-                            } else if (iterations === 0) {
                                 iterations = 1;
-                                slotList.innerHTML = slotList.innerHTML.concat(k + 1);
-
-                                if (k < 39)
-                                    slotList.innerHTML = slotList.innerHTML.concat(", ");
                             }
                         }
+                    }
+
+                    if (iterations == 0) {
+                        iterations = 1;
+                        slotList.innerHTML = slotList.innerHTML.concat(k + 1);
+
+                        if (k < 39)
+                            slotList.innerHTML = slotList.innerHTML.concat(", ");
                     }
                 }
 
