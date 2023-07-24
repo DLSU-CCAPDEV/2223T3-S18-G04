@@ -16,6 +16,14 @@ if (typeof localStorage === "undefined" || localStorage === null) {
   }
 
 const reservationController = {
+    getSlotSearch: async function(req, res) {
+        res.render('slot_search');
+    }, 
+
+    getSlotAvailability: async function(req, res) {
+        res.render('slot_availability');
+    }, 
+
        postNewreserve: async function(req, res) {
         console.log(req.query.email);
             if(req.query.email != null) {

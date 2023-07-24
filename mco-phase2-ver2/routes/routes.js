@@ -40,21 +40,16 @@ app.post('/edit_pfp', upload.single("pfp"), profileController.postEditPfp);
 app.get('/delete_account', profileController.getDeleteAccount);
 app.post('/delete_account', urlencodedParser, profileController.postDeleteAccount);
 
-app.get('/slot_search', function(req, res) {
-    res.render('slot_search');
-});
+app.get('/slot_search', reservationController.getSlotSearch);
 
 app.get('/getSearchUsers', profileController.getSearchAccount);
-
-app.get('/slot_availability', function(req, res) {
-    res.render('slot_availability');
-});
 
 app.get('/seeReservations', reservationController.seeReservations);
 
 app.get('/searchSlots', reservationController.searchSlots);
 
 app.use(express.json());
+app.get('/slot_availability', reservationController.getSlotAvailability);
 app.post('/slot_availability/add_reserve', urlencodedParser, reservationController.postNewreserve);
 app.get('/slot_availability/get_reservations', reservationController.getExistingreserve);
 app.post('/slot_availability/edit_reserve', reservationController.postEditreserve);
