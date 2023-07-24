@@ -444,6 +444,9 @@ $(document).ready(function() {
         var labNumber = this.id.split('-')[2];
         var calendar = $(`#lab-${labNumber} > .calendar-table`)[0];
         toggleCalendar(calendar, this);
+        document.getElementById('datersv').value = getCurrentDateTime().toString().split('T')[0];
+        var defaultdatetime = document.getElementById('datersv').value + "T" + document.getElementById('timersv').value;
+        fetchseats(labNumber, defaultdatetime);
     });
 
     // Click event for view slots buttons
@@ -517,6 +520,11 @@ const addreserve = document.querySelector("#addrsv");
 var listreserve = document.querySelector(".listreserve");
 var reserveinput = document.querySelector(".reserveinput");
 var editdeletereserve = document.querySelector(".editdeletereserve");
+const datechange = document.querySelector("#datersv");
+const timechange = document.querySelector("#timersv");
+
+const dateeditchange = document.querySelector("#datersvedit");
+const timeeditchange = document.querySelector("#timersvedit");
 
 function displayedreservation() {
     listreserve.classList.remove("active");
@@ -528,6 +536,34 @@ function gobacktolistreserve() {
     editdeletereserve.classList.remove("active");
 }
 
+dateeditchange.addEventListener("change", (e) => {
+    e.preventDefault();
+    var labchosen = parseInt(document.getElementById("labchosen").value);
+    var getchangedate = document.getElementById('datersvedit').value + "T" + document.getElementById('timersvedit').value;
+    fetchseats(labchosen, getchangedate);
+});
+
+timeeditchange.addEventListener("change", (e) => {
+    e.preventDefault();
+    var labchosen = parseInt(document.getElementById("labchosen").value);
+    var getchangedate = document.getElementById('datersvedit').value + "T" + document.getElementById('timersvedit').value;
+    fetchseats(labchosen, getchangedate);
+});
+
+datechange.addEventListener("change", (e) => {
+    e.preventDefault();
+    var labchosen = parseInt(document.getElementById("labchosen").value);
+    var getchangedate = document.getElementById('datersv').value + "T" + document.getElementById('timersv').value;
+    fetchseats(labchosen, getchangedate);
+});
+
+timechange.addEventListener("change", (e) => {
+    e.preventDefault();
+    var labchosen = parseInt(document.getElementById("labchosen").value);
+    var getchangedate = document.getElementById('datersv').value + "T" + document.getElementById('timersv').value;
+    fetchseats(labchosen, getchangedate);
+});
+
 showlistreserve.addEventListener("click", (e) => {
     e.preventDefault();
     displaylabs();
@@ -537,6 +573,9 @@ showlistreserve.addEventListener("click", (e) => {
 
 addreserve.addEventListener("click", (e) => {
     e.preventDefault();
+    var labchosen = parseInt(document.getElementById("labchosen").value);
+    var getchangedate = document.getElementById('datersv').value + "T" + document.getElementById('timersv').value;
+    fetchseats(labchosen, getchangedate);
     listreserve.classList.remove("active");
     reserveinput.classList.add("active");
 });
@@ -546,10 +585,7 @@ closereserve.addEventListener("click", (e) => {
     e.preventDefault();
     reservecont.classList.remove("show");
     seatcontainer.classList.remove("active");
-    setTimeout(() => {
-        resetinput();
-        resetSeats();
-    }, 1000);
+
 });
 
 // Get current time
@@ -603,13 +639,8 @@ document.getElementById("buttonrsv").onclick = function() {
         headers: {'Content-Type': 'application/json',},
         body: JSON.stringify(newreserve),
         }).catch(error => {console.error('Error:', error);});
-
     lockInSelectedSeats();
     displaylabs();
-
-    setTimeout(() => {
-        resetinput();
-    }, 1000);
 }
 
 //EDIT RESERVATION
@@ -629,6 +660,10 @@ function editmyreservation(ObjectID) {
         document.getElementById('datersvedit').value= date;
         document.getElementById('timersvedit').value= time;
         displayedreservation();
+
+        var labchosen = parseInt(document.getElementById("labchosenedit").value);
+        var getchangedate = document.getElementById('datersvedit').value + "T" + document.getElementById('timersvedit').value;
+        fetchseats(labchosen, getchangedate);
 
     // Update reservation information
     document.getElementById("editrsv").onclick = function() {
@@ -654,13 +689,6 @@ function editmyreservation(ObjectID) {
             body: JSON.stringify(updatereserve),
             }).catch(error => {console.error('Error:', error);});
 
-        // if (selectedseats.length !== 0) {
-        //     if (selectedseats.length !== 0) {
-        //         occupiedseats[labseat][reserverindex] = selectedseats;
-        //     }
-        //     selectedseats = [];
-        //     numberofselectedseats = 0;
-        // }
         displaylabs();
         gobacktolistreserve();
     }
@@ -669,7 +697,6 @@ function editmyreservation(ObjectID) {
         fetch(`/api/data/${ObjectID}`, {
             method: 'DELETE',
         }).catch(error => {console.error('Error:', error);});
-        // occupiedseats[labseat][reserverindex].splice
         displaylabs();
         gobacktolistreserve();
     }
@@ -683,84 +710,95 @@ function editmyreservation(ObjectID) {
 
 // Display Seats
 
-function SeatLayout(labseat) {
+var occupiedseats = [];
+var selectedseats = [];
+
+function fetchseats(labseat, datetime) {
+    var seatfetch = { labseat, datetime };
+    fetch('/slot_availability/seats_postget', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json',},
+        body: JSON.stringify(seatfetch),
+    })
+    .then(response => response.json())
+    .then(dataArray => {occupiedseats = [].concat(...dataArray.map(item => item.seatnum));})
+    .catch(error => {console.error('Error:', error);});
+}
+
+function SeatLayout() {
     document.getElementById("rootseats").innerHTML= `
         <div class="seatbox">
             <div class="frontdeskcontainer">
                 <div class="frontdesk"></div>
             </div>
             <div class="seatrow">
-                <div class="seat" id="1"></div>
-                <div class="seat" id="2"></div>
-                <div class="seat" id="3"></div>
-                <div class="seat" id="4"></div>
-                <div class="seat" id="5"></div>
-                <div class="seat" id="6"></div>
-                <div class="seat" id="7"></div>
-                <div class="seat" id="8"></div>
+                <div class="seat" id="seat1"></div>
+                <div class="seat" id="seat2"></div>
+                <div class="seat" id="seat3"></div>
+                <div class="seat" id="seat4"></div>
+                <div class="seat" id="seat5"></div>
+                <div class="seat" id="seat6"></div>
+                <div class="seat" id="seat7"></div>
+                <div class="seat" id="seat8"></div>
             </div>
             <div class="seatrow">
-                <div class="seat" id="9"></div>
-                <div class="seat" id="10"></div>
-                <div class="seat" id="11"></div>
-                <div class="seat" id="12"></div>
-                <div class="seat" id="13"></div>
-                <div class="seat" id="14"></div>
-                <div class="seat" id="15"></div>
-                <div class="seat" id="16"></div>
+                <div class="seat" id="seat9"></div>
+                <div class="seat" id="seat10"></div>
+                <div class="seat" id="seat11"></div>
+                <div class="seat" id="seat12"></div>
+                <div class="seat" id="seat13"></div>
+                <div class="seat" id="seat14"></div>
+                <div class="seat" id="seat15"></div>
+                <div class="seat" id="seat16"></div>
             </div>
             <div class="seatrow">
-                <div class="seat" id="17"></div>
-                <div class="seat" id="18"></div>
-                <div class="seat" id="19"></div>
-                <div class="seat" id="20"></div>
-                <div class="seat" id="21"></div>
-                <div class="seat" id="22"></div>
-                <div class="seat" id="23"></div>
-                <div class="seat" id="24"></div>
+                <div class="seat" id="seat17"></div>
+                <div class="seat" id="seat18"></div>
+                <div class="seat" id="seat19"></div>
+                <div class="seat" id="seat20"></div>
+                <div class="seat" id="seat21"></div>
+                <div class="seat" id="seat22"></div>
+                <div class="seat" id="seat23"></div>
+                <div class="seat" id="seat24"></div>
             </div>
             <div class="seatrow">
-                <div class="seat" id="25"></div>
-                <div class="seat" id="26"></div>
-                <div class="seat" id="27"></div>
-                <div class="seat" id="28"></div>
-                <div class="seat" id="29"></div>
-                <div class="seat" id="30"></div>
-                <div class="seat" id="31"></div>
-                <div class="seat" id="32"></div>
+                <div class="seat" id="seat25"></div>
+                <div class="seat" id="seat26"></div>
+                <div class="seat" id="seat27"></div>
+                <div class="seat" id="seat28"></div>
+                <div class="seat" id="seat29"></div>
+                <div class="seat" id="seat30"></div>
+                <div class="seat" id="seat31"></div>
+                <div class="seat" id="seat32"></div>
             </div>
             <div class="seatrow">
-                <div class="seat" id="33"></div>
-                <div class="seat" id="34"></div>
-                <div class="seat" id="35"></div>
-                <div class="seat" id="36"></div>
-                <div class="seat" id="37"></div>
-                <div class="seat" id="38"></div>
-                <div class="seat" id="39"></div>
-                <div class="seat" id="40"></div>
+                <div class="seat" id="seat33"></div>
+                <div class="seat" id="seat34"></div>
+                <div class="seat" id="seat35"></div>
+                <div class="seat" id="seat36"></div>
+                <div class="seat" id="seat37"></div>
+                <div class="seat" id="seat38"></div>
+                <div class="seat" id="seat39"></div>
+                <div class="seat" id="seat40"></div>
             </div>
-        </div>`;
+        </div>`;;
 
-    var array = [].concat(...occupiedseats[labseat]);
     for (const sseat of document.querySelectorAll('.seat:not(.occupied)')) {
-        if (array.includes(sseat.id)) {
-            console.log(sseat.id);
+        if (occupiedseats.includes(sseat.id)) {
+            // console.log(sseat.id);
             sseat.classList.add("occupied");
         }
         if (selectedseats.includes(sseat.id)) {
-            console.log(sseat.id);
+            // console.log(sseat.id);
             sseat.classList.add("selected");
         }
     }
+    console.log(occupiedseats);
+    seatsremaining = document.querySelectorAll('.seat:not(.occupied)').length - occupiedseats.length;
 }
 
-var occupiedseats = [];
-var selectedseats = [];
-for(var lab of labsavailable) {
-    occupiedseats.push([])
-}
 var numberofselectedseats = 0
-var seatsremaining = 40;
+var seatsremaining;
 var seatElements;
 const seatcontainer = document.querySelector(".seatcontainer");
 const displayseats = document.querySelectorAll(".inputtextseat");
@@ -775,11 +813,12 @@ for (const displayseat of displayseats) {
         if (reserveinput.classList.contains("active")) {
             active = true;
         }
-        labseat= parseInt(document.getElementById("labchosen").value)-1;
+        var labseat = parseInt(document.getElementById("labchosen").value);
+        console.log(labseat);
         if (active) {
             SeatLayout(labseat);
         } else {
-            SeatLayout(parseInt(document.getElementById('labchosenedit').value)-1)
+            SeatLayout(parseInt(document.getElementById('labchosenedit').value))
         }
         seatElements = document.querySelectorAll('.seat:not(.occupied)');
         document.getElementById('seatsremaining').value = seatsremaining;
@@ -795,7 +834,7 @@ for (const displayseat of displayseats) {
             seatElement.addEventListener('click', function(e) {
                 e.preventDefault();
                 var newseat = this.id;
-                SeatSelecting.call(this, newseat);
+                SeatSelecting.call(this, newseat, labseat);
             });
         }
     });
@@ -816,7 +855,7 @@ seatselectbutton.addEventListener('click', (e) => {
 
 
 function SeatSelecting(newseat) {
-    if (!occupiedseats[labseat].some(seatsArray => seatsArray.includes(newseat))) {
+    if (!occupiedseats.some(seatsArray => seatsArray.includes(newseat))) {
         if (selectedseats.includes(newseat)) {
             foundseat = selectedseats.indexOf(newseat);
             selectedseats.splice(foundseat, 1);
@@ -836,9 +875,6 @@ function SeatSelecting(newseat) {
 }
 
 function lockInSelectedSeats() {
-    if (selectedseats.length !== 0) {
-        occupiedseats[labseat].push(selectedseats);
-    }
     selectedseats = [];
     numberofselectedseats = 0;
 }
@@ -855,3 +891,4 @@ function resetSeats() {
     document.getElementById('seatsremaining').value = seatsremaining;
     document.getElementById('seatschosen').value = numberofselectedseats;
 }
+
