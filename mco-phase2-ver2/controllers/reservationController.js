@@ -24,37 +24,38 @@ const reservationController = {
         res.render('slot_availability');
     }, 
 
-        postNewreserve: async function(req, res) {
-            var email = localStorage.getItem('email');
-            var username = req.body.username;
-            var lab = req.body.lab;
-            var seatnum = req.body.seatnum;
-            var requestDateTime = req.body.requestDateTime;
-            var reserveDateTime = req.body.reserveDateTime;
-            var isAnonymous = req.body.isAnonymous;
+    postNewreserve: async function(req, res) {
+        var email = localStorage.getItem('email');
+        var username = req.body.username;
+        var lab = req.body.lab;
+        var seatnum = req.body.seatnum;
+        var requestDateTime = req.body.requestDateTime;
+        var reserveDateTime = req.body.reserveDateTime;
+        var isAnonymous = req.body.isAnonymous;
 
-            var newreserve = {
-                email: email,
-                username: username,
-                labnum: lab,
-                seatnum: seatnum,
-                requestDateTime: requestDateTime,
-                reserveDateTime: reserveDateTime,
-                isAnonymous: isAnonymous,
-            }
-            //console.log(newreserve);
-            var result = await db.insertOne(Reservation, newreserve);
-            //console.log(result);
-            res.send(result);
-        },
+        var newreserve = {
+            email: email,
+            username: username,
+            labnum: lab,
+            seatnum: seatnum,
+            requestDateTime: requestDateTime,
+            reserveDateTime: reserveDateTime,
+            isAnonymous: isAnonymous,
+        }
+        //console.log(newreserve);
+        var result = await db.insertOne(Reservation, newreserve);
+        //console.log(result);
+        res.send(result);
+    },
 
-        getExistingreserve: async function (req, res) {
-            var query = {email: localStorage.getItem('email')};
-            var projection = ' _id username labnum seatnum reserveDateTime'
-            var result = await db.findMany(Reservation, query, projection);
-            //console.log(result);
-            res.send(result);
-        },
+    getExistingreserve: async function (req, res) {
+        var query = {email: localStorage.getItem('email')};
+        var projection = ' _id username labnum seatnum reserveDateTime'
+        var result = await db.findMany(Reservation, query, projection);
+        //console.log(result);
+        res.send(result);
+    },
+
 
         getAllReserves: async function (req, res) {
             var projection = ' _id email username labnum seatnum requestDateTime reserveDateTime isAnonymous'
