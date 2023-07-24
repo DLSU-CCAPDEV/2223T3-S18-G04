@@ -1,0 +1,134 @@
+[{
+  "_id": {
+    "$oid": "64bdd884808c3eb5869fd924"
+  },
+  "email": "antonio_veloso@dlsu.edu.ph",
+  "username": "reserver1",
+  "labnum": 1,
+  "seatnum": [
+    "39",
+    "40"
+  ],
+  "requestDateTime": "2023-07-24T09:48",
+  "reserveDateTime": "2023-07-25T16:00",
+  "isAnonymous": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64bdd96bcdc3eb52dfb6ebb0"
+  },
+  "email": "antonio_veloso@dlsu.edu.ph",
+  "username": "reserver2",
+  "labnum": 1,
+  "seatnum": [
+    "37",
+    "38"
+  ],
+  "requestDateTime": "2023-07-24T09:52",
+  "reserveDateTime": "2023-07-25T16:00",
+  "isAnonymous": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64bdda1ab1cdf740b3ef216c"
+  },
+  "email": "antonio_veloso@dlsu.edu.ph",
+  "username": "reserver3",
+  "labnum": 1,
+  "seatnum": [
+    "39",
+    "40"
+  ],
+  "requestDateTime": "2023-07-24T09:55",
+  "reserveDateTime": "2023-07-25T16:30",
+  "isAnonymous": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64bddcc1f312779e13b447bf"
+  },
+  "email": "antonio_veloso@dlsu.edu.ph",
+  "username": "Antonio Luiz Veloso",
+  "labnum": 1,
+  "seatnum": [
+    "21"
+  ],
+  "requestDateTime": "2023-07-24T10:00",
+  "reserveDateTime": "2023-07-25T15:30",
+  "isAnonymous": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64bddcf3f312779e13b447c0"
+  },
+  "email": "karl_asares@dlsu.edu.ph",
+  "username": "Karl Asares",
+  "labnum": 1,
+  "seatnum": [
+    "8"
+  ],
+  "requestDateTime": "2023-07-23T08:30",
+  "reserveDateTime": "2023-07-25T13:30",
+  "isAnonymous": false
+},
+{
+  "_id": {
+    "$oid": "64bdde04f312779e13b447c1"
+  },
+  "email": "karl_asares@dlsu.edu.ph",
+  "username": "Karl Asares",
+  "labnum": 1,
+  "seatnum": [
+    "8"
+  ],
+  "requestDateTime": "2023-07-23T08:30",
+  "reserveDateTime": "2023-07-27T15:30",
+  "isAnonymous": false
+},
+{
+  "_id": {
+    "$oid": "64bdde22f312779e13b447c2"
+  },
+  "email": "antonio_veloso@dlsu.edu.ph",
+  "username": "Antonio Luiz Veloso",
+  "labnum": 1,
+  "seatnum": [
+    "20"
+  ],
+  "requestDateTime": "2023-07-24T10:05",
+  "reserveDateTime": "2023-07-25T15:30",
+  "isAnonymous": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64bddef4f312779e13b447c3"
+  },
+  "email": "sandeon_gavan@dlsu.edu.ph",
+  "username": "Sandeon Gavan",
+  "labnum": 1,
+  "seatnum": [
+    "9"
+  ],
+  "requestDateTime": "2023-07-23T08:30",
+  "reserveDateTime": "2023-07-25T15:30",
+  "isAnonymous": false
+},
+{
+  "_id": {
+    "$oid": "64bddf41f312779e13b447c4"
+  },
+  "email": "bien_magdamo@dlsu.edu.ph",
+  "username": "Bien Magdamo",
+  "labnum": 1,
+  "seatnum": [
+    "10"
+  ],
+  "requestDateTime": "2023-07-23T08:30",
+  "reserveDateTime": "2023-07-25T15:30",
+  "isAnonymous": false
+}]

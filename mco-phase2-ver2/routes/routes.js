@@ -55,7 +55,7 @@ app.get('/seeReservations', reservationController.seeReservations);
 app.get('/searchSlots', reservationController.searchSlots);
 
 app.use(express.json());
-app.post('/slot_availability/add_reserve', reservationController.postNewreserve);
+app.post('/slot_availability/add_reserve', urlencodedParser, reservationController.postNewreserve);
 app.get('/slot_availability/get_reservations', reservationController.getExistingreserve);
 app.post('/slot_availability/edit_reserve', reservationController.postEditreserve);
 app.delete('/slot_availability/:id', reservationController.deleteReserve);

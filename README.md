@@ -17,4 +17,7 @@ Instructions
         -npm install hbs
         -npm install mongodb
         -npm install node-localstorage
-- Then, enter node index.js and follow the link
+- Then, enter node index.js and, in the mongodb compass application, under the reservations collection under the mco database, click on the import data button and select mco.reservations.json from this folder.
+- Under the users collection under the mco database, click on the import data button and select mco.users.json from this folder.
+- Connect to localhost:3000 on your web browser.
+- Login if you have an account or register if you do not.
