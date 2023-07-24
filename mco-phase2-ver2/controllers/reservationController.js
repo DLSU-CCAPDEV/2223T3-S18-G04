@@ -33,29 +33,28 @@ const reservationController = {
         var reserveDateTime = req.body.reserveDateTime;
         var isAnonymous = req.body.isAnonymous;
 
-        var newreserve = {
-            email: email,
-            username: username,
-            labnum: lab,
-            seatnum: seatnum,
-            requestDateTime: requestDateTime,
-            reserveDateTime: reserveDateTime,
-            isAnonymous: isAnonymous,
-        }
-        //console.log(newreserve);
-        var result = await db.insertOne(Reservation, newreserve);
-        //console.log(result);
-        res.send(result);
-    },
+            var newreserve = {
+                email: email,
+                username: username,
+                labnum: lab,
+                seatnum: seatnum,
+                requestDateTime: requestDateTime,
+                reserveDateTime: reserveDateTime,
+                isAnonymous: isAnonymous,
+            }
+            //console.log(newreserve);
+            var result = await db.insertOne(Reservation, newreserve);
+            //console.log(result);
+            res.send(result);
+        },
 
-    getExistingreserve: async function (req, res) {
-        var query = {email: localStorage.getItem('email')};
-        var projection = ' _id username labnum seatnum reserveDateTime'
-        var result = await db.findMany(Reservation, query, projection);
-        //console.log(result);
-        res.send(result);
-    },
-
+        getExistingreserve: async function (req, res) {
+            var query = {email: localStorage.getItem('email')};
+            var projection = ' _id username labnum seatnum reserveDateTime'
+            var result = await db.findMany(Reservation, query, projection);
+            //console.log(result);
+            res.send(result);
+        },
 
         getAllReserves: async function (req, res) {
             var projection = ' _id email username labnum seatnum requestDateTime reserveDateTime isAnonymous'
@@ -71,7 +70,6 @@ const reservationController = {
             var reserveDateTime = req.body.reserveDateTime;
             var isAnonymous = req.body.isAnonymous;
             var filter = req.body._id;
-            filter = {_id : filter};
 
             var update = {
                 username: username,
@@ -87,9 +85,9 @@ const reservationController = {
 
         deleteReserve: async function (req, res) {
             const { id } = req.params;
-            const _id = new ObjectId(id);
+            const _id = ObjectId(id);
 
-            var result = await db.deleteOne(Reservation, { _id });
+            var result = await db.deleteOne(Reservation, _id);
             //console.log(result);
             res.send(result);
         },
@@ -104,10 +102,12 @@ const reservationController = {
             var projection = ' seatnum '
 
             var result = await db.findMany(Reservation, query, projection);
-            //console.log(result);
+            console.log("postgetSeats");
+
+            console.log(result);
             res.send(result);
         },
-    
+
         seeReservations: async function (req, res) {
             if(req.query.email != '') {
                 var query = {email: req.query.email};

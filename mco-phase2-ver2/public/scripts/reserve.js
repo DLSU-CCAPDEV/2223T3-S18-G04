@@ -305,32 +305,22 @@ var reserveClickHandler = (index) => {
 labsavailable.forEach(function(item, index) {
     var button = document.getElementById(item.btnId);
     button.addEventListener("click", reserveClickHandler(index));
-    document.getElementById('datersv').value = getCurrentDateTime().toString().split('T')[0];
-    var defaultdatetime = document.getElementById('datersv').value + "T" + document.getElementById('timersv').value;
-    fetchseats(index+1, defaultdatetime);
-    fetchlabs();
 });
 
 // Display the reservations
-
-function fetchlabs() {
+function displaylabs() {
     fetch('/slot_availability/get_reservations')
         .then(response => response.json())
-        .then(dataArray => {
-            labs = dataArray;
-            displaylabs(labs);
-        })
+        .then(dataArray => {labs = dataArray;})
         .catch(error => {console.error('Error:', error);});
-}
 
-function displaylabs(labs) {
     if (labs.length === 0) {
         document.getElementById('rootlab').innerHTML = "Reservation list is empty";
     } else {
         document.getElementById('rootlab').innerHTML = labs.map((reserveinfo) => {
-            var { _id, username, labnum, seatnum, reserveDateTime} = reserveinfo;
+            var { _id, labnum, username, seatnum, reserveDateTime} = reserveinfo;
             return (
-                `<a class="tablelist" href="javascript:editmyreservation('${_id}')">
+                `<a class="tablelist" href="javascript:editmyreservation(${_id.toString()})">
                     <div class="editablelab" id="labrsv${_id}">
                         <table>
                             <tr colspan="2">
@@ -349,7 +339,7 @@ function displaylabs(labs) {
                     </div>
                 </a>`
             )
-        }).join('');
+        }).join('')
     }
 }
 
@@ -405,7 +395,7 @@ timechange.addEventListener("change", (e) => {
 
 showlistreserve.addEventListener("click", (e) => {
     e.preventDefault();
-    displaylabs(labs);
+    displaylabs();
     listreserve.classList.add("active");
     reserveinput.classList.remove("active");
 });
@@ -422,9 +412,6 @@ addreserve.addEventListener("click", (e) => {
 // CLOSE RESERVATIONS
 closereserve.addEventListener("click", (e) => {
     e.preventDefault();
-    resetSeats();
-    resetinput()
-    occupiedseats = [];
     reservecont.classList.remove("show");
     seatcontainer.classList.remove("active");
 
@@ -453,7 +440,6 @@ function resetinput() {
 // ADD RESERVATION
 document.getElementById("buttonrsv").onclick = function() {
     reservecont.classList.remove("show");
-    fetchlabs();
     // Default value for name
 
     var reservername = document.getElementById("namersv").value;
@@ -483,39 +469,41 @@ document.getElementById("buttonrsv").onclick = function() {
         body: JSON.stringify(newreserve),
         }).catch(error => {console.error('Error:', error);});
     lockInSelectedSeats();
-    displaylabs(labs);
+    displaylabs();
 }
 
 //EDIT RESERVATION
-function editmyreservation(objectId) {
+function editmyreservation(ObjectID) {
+    console.log(ObjectID);
+
     // find index of JSON array
     var reserverindex = labs.findIndex(function(item, j){
-        return item._id.toString() === objectId.toString();
-    });
+        return item._id === ObjectID
+        });
 
     // display editing reservation tab
-    var [date, time] = labs[reserverindex].reserveDateTime.split('T');
-    document.getElementById('labchosenedit').value= labs[reserverindex].labnum;
-    document.getElementById('namersvedit').value= labs[reserverindex].username;
-    document.getElementById('seatsrsv').value= labs[reserverindex].seatnum.length;
-    document.getElementById('datersvedit').value= date;
-    document.getElementById('timersvedit').value= time;
-    displayedreservation();
+        var [date, time] = labs[reserverindex].reserveDateTime.split('T');
+        document.getElementById('labchosenedit').value= labs[reserverindex].labnum;
+        document.getElementById('namersvedit').value= labs[reserverindex].username;
+        document.getElementById('seatsrsv').value= labs[reserverindex].seatnum.length;
+        document.getElementById('datersvedit').value= date;
+        document.getElementById('timersvedit').value= time;
+        displayedreservation();
 
-    var labchosen = parseInt(document.getElementById("labchosenedit").value);
-    var getchangedate = document.getElementById('datersvedit').value + "T" + document.getElementById('timersvedit').value;
-    fetchseats(labchosen, getchangedate);
+        var labchosen = parseInt(document.getElementById("labchosenedit").value);
+        var getchangedate = document.getElementById('datersvedit').value + "T" + document.getElementById('timersvedit').value;
+        fetchseats(labchosen, getchangedate);
 
     // Update reservation information
     document.getElementById("editrsv").onclick = function() {
         if (document.getElementById('namersvedit').value !== '') {
             var reservername = document.getElementById('namersvedit').value;
-            Anonymous = false;
+            isAnonymous = false;
         }
         var reserveDateTime = document.getElementById('datersvedit').value + "T" + document.getElementById('timersvedit').value;
 
         updatereserve = {
-            _id: objectId,
+            _id: ObjectID,
             username: reservername,
             lab: labs[reserverindex].lab,
             seat: selectedseats,
@@ -528,28 +516,18 @@ function editmyreservation(objectId) {
             method: 'POST',
             headers: {'Content-Type': 'application/json',},
             body: JSON.stringify(updatereserve),
-            })
-            .catch(error => {console.error('Error:', error);});
-        fetchlabs();
-        displaylabs(labs);
+            }).catch(error => {console.error('Error:', error);});
+
+        displaylabs();
         gobacktolistreserve();
-        lockInSelectedSeats();
     }
 
     document.getElementById("deletersv").onclick = function() {
-        fetch(`/slot_availability/${objectId}`, {
+        fetch(`/api/data/${ObjectID}`, {
             method: 'DELETE',
-        })
-        .then(response => response.json())
-        .then(result => {
-            console.log(result);
-            fetchlabs();
-            displaylabs(labs);
-            gobacktolistreserve();
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+        }).catch(error => {console.error('Error:', error);});
+        displaylabs();
+        gobacktolistreserve();
     }
 
     document.getElementById("cancelbutton").onclick = function() {
@@ -560,6 +538,7 @@ function editmyreservation(objectId) {
 }
 
 // Display Seats
+
 var occupiedseats = [];
 var selectedseats = [];
 
@@ -631,23 +610,25 @@ function SeatLayout() {
                 <div class="seat" id="seat39"></div>
                 <div class="seat" id="seat40"></div>
             </div>
-        </div>`;
+        </div>`;;
 
+    console.log(document.querySelectorAll('.seat:not(.occupied)'));
     for (const sseat of document.querySelectorAll('.seat:not(.occupied)')) {
+        console.log(sseat.id);
         if (occupiedseats.includes(sseat.id)) {
-            // console.log(sseat.id);
+            console.log(sseat.id);
             sseat.classList.add("occupied");
         }
         if (selectedseats.includes(sseat.id)) {
-            // console.log(sseat.id);
+            console.log(sseat.id);
             sseat.classList.add("selected");
         }
     }
     console.log(occupiedseats);
-    seatsremaining = document.getElementsByClassName("seat").length - (occupiedseats.length + selectedseats.length);
+    seatsremaining = document.querySelectorAll('.seat').length - occupiedseats.length;
 }
 
-var numberofselectedseats = 0
+var numberofselectedseats = 0;
 var seatsremaining;
 var seatElements;
 const seatcontainer = document.querySelector(".seatcontainer");
@@ -663,7 +644,13 @@ for (const displayseat of displayseats) {
         if (reserveinput.classList.contains("active")) {
             active = true;
         }
-        SeatLayout();
+        var labseat = parseInt(document.getElementById("labchosen").value);
+        console.log(labseat);
+        if (active) {
+            SeatLayout(labseat);
+        } else {
+            SeatLayout(parseInt(document.getElementById('labchosenedit').value))
+        }
         seatElements = document.querySelectorAll('.seat:not(.occupied)');
         document.getElementById('seatsremaining').value = seatsremaining;
         document.getElementById('seatschosen').value = numberofselectedseats;
@@ -678,7 +665,7 @@ for (const displayseat of displayseats) {
             seatElement.addEventListener('click', function(e) {
                 e.preventDefault();
                 var newseat = this.id;
-                SeatSelecting.call(this, newseat);
+                SeatSelecting.call(this, newseat, labseat);
             });
         }
     });
@@ -724,9 +711,19 @@ function lockInSelectedSeats() {
 }
 
 function resetSeats() {
+    for (const seatElement of seatElements) {
+        if (selectedseats.includes(seatElement.id)) {
+            seatElement.classList.remove("selected");
+        }
+    }
     seatsremaining += numberofselectedseats;
     selectedseats = [];
     numberofselectedseats = 0;
     document.getElementById('seatsremaining').value = seatsremaining;
     document.getElementById('seatschosen').value = numberofselectedseats;
+<<<<<<< HEAD
 }
+=======
+}
+
+>>>>>>> 5ca5f91537771064fb078bd99bab247e7b9ca01c
