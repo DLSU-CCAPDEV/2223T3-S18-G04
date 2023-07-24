@@ -721,9 +721,4 @@ function resetSeats() {
     numberofselectedseats = 0;
     document.getElementById('seatsremaining').value = seatsremaining;
     document.getElementById('seatschosen').value = numberofselectedseats;
-<<<<<<< HEAD
 }
-=======
-}
-
->>>>>>> 5ca5f91537771064fb078bd99bab247e7b9ca01c
