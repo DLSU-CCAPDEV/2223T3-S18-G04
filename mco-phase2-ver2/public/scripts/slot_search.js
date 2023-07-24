@@ -148,13 +148,17 @@ function showFreeSlots(labNum, dateTime) {
             list.appendChild(seat);
         }
         else {
+            var slotTaken = 0;
             for (j = 0; j < lab.length; j++) {
                 console.log(i);
-                if (slotChecker(i + 1, lab[j].seatnum) != 1 || lab[j].reserveDateTime != dateTime) {
-                        var seat = document.createElement('LI');
-                        seat.innerHTML = i + 1;
-                        list.appendChild(seat);
-                }
+                if (slotChecker(i + 1, lab[j].seatnum) == 1 && lab[j].reserveDateTime == dateTime)
+                    slotTaken = 1;
+            }
+
+            if (slotTaken == 0) {
+                var seat = document.createElement('LI');
+                seat.innerHTML = i + 1;
+                list.appendChild(seat);
             }
         }
     }
