@@ -124,6 +124,7 @@ function createCalendar(labNum) {
     }
 
     for (var i = 0; i < 27; i++) {
+        debugger;
             const tableRow = table.insertRow();
         for (var j = 0; j < 8; j++) {
             const tableCell = tableRow.insertCell();
@@ -160,7 +161,8 @@ function createCalendar(labNum) {
                         for (var l = 0; l < reservations.length; l++) {
                             var user = reservations[l];
 
-                            if (dateTime == user.dateReserveTime && labNum == user.labnum && seatChecker(k + 1, user.seatnum) && user.isAnonymous == false) {
+                            if (dateTime == user.reserveDateTime && labNum == user.labnum && seatChecker(k + 1, user.seatnum) && user.isAnonymous == false) {
+                                debugger;
                                 var studentLink = document.createElement('LI');
                                 studentLink.innerHTML = "<a href= '/user_profile?email=" + user.email + "'> " + user.username + " </a>";
                                 slotsTaken += 1;
@@ -230,22 +232,11 @@ if(labsavailable.length==0) {
 }
 
 $(document).ready(function() {
-    
     $.get('/getSAReservations', {}, function(result) {
-
+        debugger;
+        reservations = new Array();
         for(var i = 0; i < result.length; i++) {
             reservations.push(result[i]);
-        }
-
-        // Function to toggle calendar display and change button text
-        function toggleCalendar(calendar, button) {
-            if (calendar.style.display === "none") {
-                calendar.style.display = "table";
-                button.innerText = '-';
-            } else {
-                calendar.style.display = "none";
-                button.innerText = '+';
-            }
         }
 
         // Create calendars for each lab
@@ -255,23 +246,34 @@ $(document).ready(function() {
             labTable.style.display = "none";
         }
 
-        // Click event for lab buttons (using event delegation)
-        $('.lab-button').click(function() {
-            var labNumber = this.id.split('-')[2];
-            var calendar = $(`#lab-${labNumber} > .calendar-table`)[0];
-            toggleCalendar(calendar, this);
-            document.getElementById('datersv').value = getCurrentDateTime().toString().split('T')[0];
-            var defaultdatetime = document.getElementById('datersv').value + "T" + document.getElementById('timersv').value;
-            fetchseats(labNumber, defaultdatetime);
-        });
-
-        // Click event for view slots buttons
-        $(".view-slots-button").click(function() {
+            // Click event for view slots buttons
+        $(".view-slots-button").on("click", function() {
             var slotList = $(this).parent().children('.slot-list');
             slotList.toggle();
             $(this).html(slotList.css('display') === 'none' ? "View Slots" : "Hide Slots");
         });
 
+    });
+
+    // Function to toggle calendar display and change button text
+    function toggleCalendar(calendar, button) {
+        if (calendar.style.display === "none") {
+            calendar.style.display = "table";
+            button.innerText = '-';
+        } else {
+            calendar.style.display = "none";
+            button.innerText = '+';
+        }
+    }
+
+    // Click event for lab buttons (using event delegation)
+    $('.lab-button').click(function() {
+        var labNumber = this.id.split('-')[2];
+        var calendar = $(`#lab-${labNumber} > .calendar-table`)[0];
+        toggleCalendar(calendar, this);
+        document.getElementById('datersv').value = getCurrentDateTime().toString().split('T')[0];
+        var defaultdatetime = document.getElementById('datersv').value + "T" + document.getElementById('timersv').value;
+        fetchseats(labNumber, defaultdatetime);
     });
 });
 
