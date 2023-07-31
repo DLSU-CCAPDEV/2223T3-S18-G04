@@ -63,6 +63,91 @@ var times = [
     "21:00"
 ]
 
+function labUpdate(labNum) {
+    debugger;
+    const labTable = document.getElementById(`lab-${labNum}`).lastChild;
+
+    for (var i = 0; i < 27; i++) {
+        var labRow = labTable.rows[i];
+
+        for (var j = 0; j < 8; j++) {
+            var labCell = labRow.cells[j];
+            labCell.innerHTML = "";
+
+            if (j == 0) {
+                labCell.style.textAlign = 'center';
+                labCell.style.fontWeight = 'bold';
+                labCell.append(document.createTextNode(reservationIntervals[i]));
+            }
+
+            else {
+                var slotList = document.createElement("p");
+                $(slotList).addClass('slot-list');
+
+                var slotsTaken = 0;
+                var slotsTakenString;
+
+                var time = $(times)[i];
+                var date = moment(dateOffset(new Date(), j - 1)).format();
+                date = date.substring(0, 10);
+                var dateTime = date.concat("T", time);
+                var studentList = null;
+
+                var viewSlotsButton = document.createElement('button');
+                $(viewSlotsButton).addClass('view-slots-button');
+                viewSlotsButton.innerText = "View Slots";
+
+                slotList.innerHTML = "Available: <br>";
+                for (var k = 0; k < 40; k++) {
+                    var iterations = 0;
+                    if (reservations.length > 0) {
+                        for (var l = 0; l < reservations.length; l++) {
+                            var user = reservations[l];
+
+                            if (dateTime == user.reserveDateTime && labNum == user.labnum && seatChecker(k + 1, user.seatnum) && user.isAnonymous == false) {
+                                debugger;
+                                var studentLink = document.createElement('LI');
+                                studentLink.innerHTML = "<a href= '/user_profile?email=" + user.email + "'> " + user.username + " </a>";
+                                slotsTaken += 1;
+
+                                if (studentList == null)
+                                    studentList = document.createElement('UL');
+
+                                studentList.appendChild(studentLink);
+                                iterations = 1;
+                            }
+                        }
+                    }
+
+                    if (iterations == 0) {
+                        iterations = 1;
+                        slotList.innerHTML = slotList.innerHTML.concat(k + 1);
+
+                        if (k < 39)
+                            slotList.innerHTML = slotList.innerHTML.concat(", ");
+                    }
+                }
+
+                slotsTakenString = document.createElement('p');
+                slotsTakenString.innerHTML = slotsTaken + " / 40 Slots Taken";
+
+                labCell.append(viewSlotsButton);
+                slotList.style.display = 'none';
+                labCell.append(slotList);
+
+                if (studentList != null) {
+                    var studentHeading = document.createElement('p');
+                    studentHeading.innerHTML = "<b> Students Reserved </b>";
+                    labCell.append(studentHeading);
+                    labCell.append(studentList);
+                }
+
+                labCell.append(slotsTakenString);
+            }
+        }
+    }
+}
+
 function seatChecker(targetSeat, seats) {
     debugger;
     var returnValue = 0;
@@ -75,6 +160,7 @@ function seatChecker(targetSeat, seats) {
 }
 
 function createCalendar(labNum) {
+    debugger;
     const table = document.createElement('table');
     table.style.border = '1px solid black';
 
@@ -124,7 +210,7 @@ function createCalendar(labNum) {
     }
 
     for (var i = 0; i < 27; i++) {
-        debugger;
+            debugger;
             const tableRow = table.insertRow();
         for (var j = 0; j < 8; j++) {
             const tableCell = tableRow.insertCell();
@@ -236,7 +322,6 @@ if(labsavailable.length==0) {
 
 $(document).ready(function() {
     $.get('/getSAReservations', {}, function(result) {
-        debugger;
         reservations = new Array();
         for(var i = 0; i < result.length; i++) {
             for (var j = 0; j < result[i].seatnum.length; j++){
@@ -264,6 +349,8 @@ $(document).ready(function() {
 
     });
 
+    debugger;
+
     // Function to toggle calendar display and change button text
     function toggleCalendar(calendar, button) {
         if (calendar.style.display === "none") {
@@ -281,6 +368,20 @@ $(document).ready(function() {
         var calendar = $(`#lab-${labNumber} > .calendar-table`)[0];
         toggleCalendar(calendar, this);
     });
+
+    window.setInterval(function () {
+        debugger;
+        for (var i = 1; i <= 3; i++) {
+            debugger;
+            labUpdate(i);
+
+            $(".view-slots-button").on("click", function() {
+                var slotList = $(this).parent().children('.slot-list');
+                slotList.toggle();
+                $(this).html(slotList.css('display') === 'none' ? "View Slots" : "Hide Slots");
+            });
+        }
+    }, 120000);
 });
 
 const reservecont = document.querySelector(".reserve_container");
