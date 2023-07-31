@@ -69,8 +69,8 @@ const reservationController = {
             var requestDateTime = req.body.requestDateTime;
             var reserveDateTime = req.body.reserveDateTime;
             var isAnonymous = req.body.isAnonymous;
-            const { editid } = req.body._id;
-            const _idedit = new ObjectId(editid);
+            var id = req.body._id;
+            var idtoupdate = new ObjectId(id);
 
             var update = {
                 username: username,
@@ -79,16 +79,17 @@ const reservationController = {
                 reserveDateTime: reserveDateTime,
                 isAnonymous: isAnonymous
             }
-            var result = await db.updateOne(Reservation, {_idedit}, update)
-            //console.log(result);
+            console.log(update);
+            var result = await db.updateOne(Reservation, { _id: idtoupdate }, update)
+            console.log(result);
             res.send(result);
         },
 
         deleteReserve: async function (req, res) {
-            const { iddelete } = req.params;
-            const _iddelete = new ObjectId(iddelete);
+            var id = req.params.id;
+            var idtodelete = new ObjectId(id);
 
-            var result = await db.deleteOne(Reservation, { _iddelete });
+            var result = await db.deleteOne(Reservation, { _id: idtodelete });
             //console.log(result);
             res.send(result);
         },
