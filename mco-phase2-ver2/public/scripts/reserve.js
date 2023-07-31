@@ -280,9 +280,6 @@ $(document).ready(function() {
         var labNumber = this.id.split('-')[2];
         var calendar = $(`#lab-${labNumber} > .calendar-table`)[0];
         toggleCalendar(calendar, this);
-        document.getElementById('datersv').value = getCurrentDateTime().toString().split('T')[0];
-        var defaultdatetime = document.getElementById('datersv').value + "T" + document.getElementById('timersv').value;
-        fetchseats(labNumber, defaultdatetime);
     });
 });
 
