@@ -40,7 +40,7 @@ span.user_profile, span.about, span.search_slots, span.lab_slots, span.logout {
     padding: 1rem;
 }
 
-span.user_profile:hover, span.about, span.search_slots:hover, span.lab_slots:hover, span.logout:hover {
+span.user_profile:hover, span.about:hover, span.search_slots:hover, span.lab_slots:hover, span.logout:hover {
     background-color:aquamarine;
     color: grey;
 }
