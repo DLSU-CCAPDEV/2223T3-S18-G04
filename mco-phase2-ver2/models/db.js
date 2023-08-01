@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 // MongoDB client
-const url = 'mongodb://127.0.0.1:27017/mco';
+const url = 'mongodb+srv://antonioveloso:Es6Usp26tiWp6@mcophase3.pl5fpqo.mongodb.net/?retryWrites=true&w=majority';
 
 // additional connection options
 const options = { 
