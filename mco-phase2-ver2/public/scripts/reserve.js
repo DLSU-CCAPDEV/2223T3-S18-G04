@@ -104,16 +104,20 @@ function labUpdate(labNum) {
                         for (var l = 0; l < reservations.length; l++) {
                             var user = reservations[l];
 
-                            if (dateTime == user.reserveDateTime && labNum == user.labnum && seatChecker(k + 1, user.seatnum) && user.isAnonymous == false) {
+                            if (dateTime == user.reserveDateTime && labNum == user.labnum && seatChecker(k + 1, user.seatnum)) {
                                 debugger;
-                                var studentLink = document.createElement('LI');
-                                studentLink.innerHTML = "<a href= '/user_profile?email=" + user.email + "'> " + user.username + " </a>";
                                 slotsTaken += 1;
 
-                                if (studentList == null)
-                                    studentList = document.createElement('UL');
+                                if (user.isAnonymous == false) {
+                                    var studentLink = document.createElement('LI');
+                                    studentLink.innerHTML = "<a href= '/user_profile?email=" + user.email + "'> " + user.username + " </a>";
+                                    
 
-                                studentList.appendChild(studentLink);
+                                    if (studentList == null)
+                                        studentList = document.createElement('UL');
+
+                                    studentList.appendChild(studentLink);
+                                }
                                 iterations = 1;
                             }
                         }
@@ -247,16 +251,20 @@ function createCalendar(labNum) {
                         for (var l = 0; l < reservations.length; l++) {
                             var user = reservations[l];
 
-                            if (dateTime == user.reserveDateTime && labNum == user.labnum && seatChecker(k + 1, user.seatnum) && user.isAnonymous == false) {
+                            if (dateTime == user.reserveDateTime && labNum == user.labnum && seatChecker(k + 1, user.seatnum)) {
                                 debugger;
-                                var studentLink = document.createElement('LI');
-                                studentLink.innerHTML = "<a href= '/user_profile?email=" + user.email + "'> " + user.username + " </a>";
                                 slotsTaken += 1;
 
-                                if (studentList == null)
-                                    studentList = document.createElement('UL');
+                                if (user.isAnonymous == false) {
+                                    var studentLink = document.createElement('LI');
+                                    studentLink.innerHTML = "<a href= '/user_profile?email=" + user.email + "'> " + user.username + " </a>";
+                                    
 
-                                studentList.appendChild(studentLink);
+                                    if (studentList == null)
+                                        studentList = document.createElement('UL');
+
+                                    studentList.appendChild(studentLink);
+                                }
                                 iterations = 1;
                             }
                         }
