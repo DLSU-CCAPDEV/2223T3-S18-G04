@@ -6,7 +6,7 @@
         <link rel="stylesheet" type="text/css" media="all" href="styles/navbar.css">
         <link rel="stylesheet" type="text/css" media="all" href="styles/account_editing_styles.css">
         <link rel="icon" type="image/x-icon" href="./images/microscope_round.ico">
-        <title>Edit Profile Picture</title>
+        <title>About</title>
 
     </head>
     <body>
@@ -21,14 +21,7 @@
             </span>
         </nav>
         <div class="container">
-            {{#if error}}
-                <div id="error">{{error}}</div>
-            {{else}}
-            <form method="POST" class="form" id="edit_pfp" enctype="multipart/form-data">
-                <input type="file" name="pfp" accept="image/*"><br>
-                <input type="submit" id="submit" value="Confirm Changes">
-            </form>
-            {{/if}}
+            
         </div>
     </body>
 </html>

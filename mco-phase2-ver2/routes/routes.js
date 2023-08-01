@@ -11,8 +11,9 @@ const storage = multer.diskStorage({
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname));
     }
-})
+});
 
+const controller = require('../controllers/controller.js');
 const securityController = require('../controllers/securityController.js');
 const profileController = require('../controllers/profileController.js');
 const reservationController = require('../controllers/reservationController.js');
@@ -57,5 +58,7 @@ app.get('/slot_availability/get_reservations', reservationController.getExisting
 app.post('/slot_availability/edit_reserve', reservationController.postEditreserve);
 app.delete('/slot_availability/:id', reservationController.deleteReserve);
 app.post('/slot_availability/seats_postget', reservationController.postgetSeats);
+
+app.get('/about', controller.getAbout);
 
 module.exports = app;
