@@ -56,7 +56,6 @@ const reservationController = {
         var requestDateTime = req.body.requestDateTime;
         var reserveDateTime = req.body.reserveDateTime;
         var isAnonymous = req.body.isAnonymous;
-        var markasDone = req.body.markasDone;
 
         var newreserve = {
             email: email,
@@ -66,7 +65,7 @@ const reservationController = {
             requestDateTime: requestDateTime,
             reserveDateTime: reserveDateTime,
             isAnonymous: isAnonymous,
-            markasDone: markasDone
+            markasDone: false
         }
         var result = await db.insertOne(Reservation, newreserve);
         res.send(result);
