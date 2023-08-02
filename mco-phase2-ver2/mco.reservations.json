@@ -12,6 +12,7 @@
   "requestDateTime": "2023-07-24T09:48",
   "reserveDateTime": "2023-07-25T16:00",
   "isAnonymous": true,
+  "markasDone": false,
   "__v": 0
 },
 {
@@ -28,6 +29,7 @@
   "requestDateTime": "2023-07-24T09:55",
   "reserveDateTime": "2023-07-25T16:30",
   "isAnonymous": true,
+  "markasDone": false,
   "__v": 0
 },
 {
@@ -43,6 +45,7 @@
   "requestDateTime": "2023-07-24T10:00",
   "reserveDateTime": "2023-07-25T15:30",
   "isAnonymous": true,
+  "markasDone": false,
   "__v": 0
 },
 {
@@ -57,7 +60,8 @@
   ],
   "requestDateTime": "2023-07-23T08:30",
   "reserveDateTime": "2023-07-25T13:30",
-  "isAnonymous": false
+  "isAnonymous": false,
+  "markasDone": false
 },
 {
   "_id": {
@@ -71,7 +75,8 @@
   ],
   "requestDateTime": "2023-07-23T08:30",
   "reserveDateTime": "2023-07-27T15:30",
-  "isAnonymous": false
+  "isAnonymous": false,
+  "markasDone": false,
 },
 {
   "_id": {
@@ -86,6 +91,7 @@
   "requestDateTime": "2023-07-24T10:05",
   "reserveDateTime": "2023-07-25T15:30",
   "isAnonymous": true,
+  "markasDone": false,
   "__v": 0
 },
 {
@@ -100,7 +106,8 @@
   ],
   "requestDateTime": "2023-07-23T08:30",
   "reserveDateTime": "2023-07-25T15:30",
-  "isAnonymous": false
+  "isAnonymous": false,
+  "markasDone": false
 },
 {
   "_id": {
@@ -114,7 +121,8 @@
   ],
   "requestDateTime": "2023-07-23T08:30",
   "reserveDateTime": "2023-07-25T15:30",
-  "isAnonymous": false
+  "isAnonymous": false,
+  "markasDone": false
 },
 {
   "_id": {
@@ -133,6 +141,7 @@
   "requestDateTime": "2023-07-24T11:01",
   "reserveDateTime": "2023-07-26T12:30",
   "isAnonymous": true,
+  "markasDone": false,
   "__v": 0
 },
 {
@@ -149,6 +158,7 @@
   "requestDateTime": "2023-07-24T11:11",
   "reserveDateTime": "2023-07-26T12:30",
   "isAnonymous": true,
+  "markasDone": false,
   "__v": 0
 },
 {
@@ -165,6 +175,7 @@
   "requestDateTime": "2023-07-24T11:13",
   "reserveDateTime": "2023-07-26T12:30",
   "isAnonymous": true,
+  "markasDone": false,
   "__v": 0
 },
 {
@@ -181,6 +192,7 @@
   "requestDateTime": "2023-07-24T11:57",
   "reserveDateTime": "2023-07-28T13:00",
   "isAnonymous": true,
+  "markasDone": false,
   "__v": 0
 },
 {
@@ -196,6 +208,7 @@
   "requestDateTime": "2023-07-24T12:04",
   "reserveDateTime": "2023-07-27T15:30",
   "isAnonymous": true,
+  "markasDone": false,
   "__v": 0
 },
 {
@@ -211,6 +224,7 @@
   "requestDateTime": "2023-07-24T12:05",
   "reserveDateTime": "2023-07-28T15:30",
   "isAnonymous": true,
+  "markasDone": false,
   "__v": 0
 },
 {
@@ -228,6 +242,7 @@
   "requestDateTime": "2023-07-24T12:05",
   "reserveDateTime": "2023-07-31T11:30",
   "isAnonymous": true,
+  "markasDone": false,
   "__v": 0
 },
 {
@@ -246,6 +261,7 @@
   "requestDateTime": "2023-07-24T12:06",
   "reserveDateTime": "2023-08-02T16:00",
   "isAnonymous": true,
+  "markasDone": false,
   "__v": 0
 },
 {
@@ -265,6 +281,7 @@
   "requestDateTime": "2023-07-24T12:06",
   "reserveDateTime": "2023-08-03T20:30",
   "isAnonymous": true,
+  "markasDone": false,
   "__v": 0
 },
 {
@@ -283,6 +300,7 @@
   "requestDateTime": "2023-07-24T12:07",
   "reserveDateTime": "2023-08-05T19:00",
   "isAnonymous": true,
+  "markasDone": false,
   "__v": 0
 },
 {
@@ -299,6 +317,7 @@
   "requestDateTime": "2023-07-24T13:54",
   "reserveDateTime": "2023-07-25T16:00",
   "isAnonymous": true,
+  "markasDone": false,
   "__v": 0
 },
 {
@@ -315,6 +334,7 @@
   "requestDateTime": "2023-07-24T13:54",
   "reserveDateTime": "2023-07-25T16:00",
   "isAnonymous": true,
+  "markasDone": false,
   "__v": 0
 },
 {
@@ -331,6 +351,7 @@
   "requestDateTime": "2023-07-24T13:59",
   "reserveDateTime": "2023-07-25T16:00",
   "isAnonymous": true,
+  "markasDone": false,
   "__v": 0
 },
 {
@@ -347,6 +368,7 @@
   "requestDateTime": "2023-07-24T14:00",
   "reserveDateTime": "2023-07-25T16:00",
   "isAnonymous": true,
+  "markasDone": false,
   "__v": 0
 },
 {
@@ -364,5 +386,6 @@
   "requestDateTime": "2023-07-24T15:19",
   "reserveDateTime": "2023-07-25T15:30",
   "isAnonymous": true,
+  "markasDone": false,
   "__v": 0
 }]
