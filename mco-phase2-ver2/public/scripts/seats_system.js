@@ -4,7 +4,8 @@ var selectedseats = [];
 var numberofselectedseats = 0;
 var seatsremaining;
 
-// FETCH SEATS OF SPECIFIC LAB AND DATETIME FROM DATABASE
+// ------------------------------------- FETCH SEATS OF SPECIFIC LAB AND DATETIME FROM DATABASE ------------------------------------- 
+
 function fetchseats(labseat, datetime) {
     var seatfetch = { labseat, datetime };
     fetch('/slot_availability/seats_postget', {
