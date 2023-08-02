@@ -62,8 +62,7 @@ document.getElementById("buttonrsv").onclick = function() {
             seatnum: selectedseats,
             requestDateTime: getCurrentDateTime(),
             reserveDateTime: datetime,
-            isAnonymous: Anonymous,
-            markasDone: false
+            isAnonymous: Anonymous
         };
         console.log("ADMIN ADDED NEWRESERVE: " + newreserve.email);
 
@@ -193,8 +192,7 @@ function editmyreservation(objectId) {
                 seatnum: selectedseats,
                 requestDateTime: getCurrentDateTime(),
                 reserveDateTime: reserveDateTime,
-                isAnonymous: Anonymous,
-                markasDone: false
+                isAnonymous: Anonymous
             };
 
             fetch('/slot_availability/edit_reserve', {
