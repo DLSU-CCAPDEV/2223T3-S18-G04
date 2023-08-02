@@ -392,53 +392,123 @@ $(document).ready(function() {
     }, 120000);
 });
 
-const reservecont = document.querySelector(".reserve_container");
-const closereserve = document.querySelector(".close");
+// ------------------------------------- OPENING A RESERVATION -------------------------------------
 
+const reservecont = document.querySelector(".reserve_container");
 var reserveClickHandler = (index) => {
     return () => {
+        AdminCheck().then(isAdmin => {isAdmin === true ? getemails() : null; console.log(isAdmin);});
         console.log("Button clicked. Index:", index);
         document.getElementById('labchosen').value= index+1;
         reservecont.classList.add("show");
         reserveinput.classList.add("active");
         listreserve.classList.remove("active");
         editdeletereserve.classList.remove("active");
-        displaylabs(labs);
+
+        document.getElementById('datersv').value = getCurrentDateTime().toString().split('T')[0];
+        document.getElementById('datersv').min = getCurrentDateTime().toString().split('T')[0];
+        document.getElementById('datersvedit').min = getCurrentDateTime().toString().split('T')[0];
+
+        var defaultdatetime = document.getElementById('datersv').value + "T" + document.getElementById('timersv').value;
+        fetchseats(index+1, defaultdatetime);
+        fetchlabs();
     };
 };
 
-// Assign the event listener to each button dynamically
+// BUTTONS ON LABS FOR OPENING A RESERVATION
 labsavailable.forEach(function(item, index) {
     var button = document.getElementById(item.btnId);
     button.addEventListener("click", reserveClickHandler(index));
-    document.getElementById('datersv').value = getCurrentDateTime().toString().split('T')[0];
-    var defaultdatetime = document.getElementById('datersv').value + "T" + document.getElementById('timersv').value;
-    fetchseats(index+1, defaultdatetime);
-    fetchlabs();
 });
 
-// Display the reservations
+// ------------------------------------- ADD RESERVATION -------------------------------------
 
+document.getElementById("buttonrsv").onclick = function() {
+    // GET VALUES
+    var reservername = document.getElementById("namersv").value;
+    var labnum = parseInt(document.getElementById("labchosen").value);
+    var datetime = document.getElementById("datersv").value + "T" + document.getElementById("timersv").value;
+
+    // DEFAULT IF NAME IS ANONYMOUS
+    var Anonymous = false;
+    if (reservername.length==0) {
+        var num = availablereservations.length + 1;
+        reservername = "reserver" + num;
+        Anonymous = true;
+    }
+
+    // GET STUDENT EMAIL IF ADMIN
+    AdminCheck().then(isAdmin => {
+        if (isAdmin) {
+            email = document.getElementById("labtechemail").value;
+            createNewReservation(email);
+            console.log("ADMIN ADDED EMAIL: " + email);
+        } else {
+            createNewReservation(null);
+        }
+    });
+
+    // ADD NEW RESERVATION
+    function createNewReservation(email) {
+        var newreserve = {
+            email: email,
+            username: reservername,
+            lab: labnum,
+            seatnum: selectedseats,
+            requestDateTime: getCurrentDateTime(),
+            reserveDateTime: datetime,
+            isAnonymous: Anonymous,
+            markasDone: false
+        };
+        console.log("ADMIN ADDED NEWRESERVE: " + newreserve.email);
+
+        // POST TO ROUTES.js --> RESERVATIONCONTROLLER.js
+        fetch('/slot_availability/add_reserve', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json',},
+            body: JSON.stringify(newreserve),
+        })
+        .then(result => {
+            console.log(result);
+            fetchlabs();
+        })
+        .catch(error => {console.error('Error:', error);});
+
+        resetSeats();
+        reservecont.classList.remove("show");
+        resetinput();
+    }
+}
+
+// ------------------------------------- EDIT RESERVATION -------------------------------------
+
+var availablereservations = [];
+
+// FETCH EXISTING RESERVATIONS FROM DATABASE
 function fetchlabs() {
     fetch('/slot_availability/get_reservations')
         .then(response => response.json())
         .then(dataArray => {
-            labs = dataArray;
-            displaylabs(labs);
+            availablereservations = dataArray;
+            showExistingReservations(availablereservations);
         })
         .catch(error => {console.error('Error:', error);});
 }
 
-function displaylabs(labs) {
-    if (labs.length === 0) {
+// DISPLAY EXISTING RESERVATION
+function showExistingReservations(availablereservations) {
+    if (availablereservations.length === 0) {
         document.getElementById('rootlab').innerHTML = "Reservation list is empty";
     } else {
-        document.getElementById('rootlab').innerHTML = labs.map((reserveinfo) => {
-            var { _id, username, labnum, seatnum, reserveDateTime} = reserveinfo;
+        document.getElementById('rootlab').innerHTML = availablereservations.map((reserveinfo) => {
+            var { _id, email, username, labnum, seatnum, reserveDateTime} = reserveinfo;
             return (
                 `<a class="tablelist" href="javascript:editmyreservation('${_id}')">
                     <div class="editablelab" id="labrsv${_id}">
                         <table>
+                            <tr colspan="2">
+                                <p>Email: <span id="email${email}">${email}</span></p>
+                            </tr>
                             <tr colspan="2">
                                 <p>Lab: <span id="labnum${labnum}">${labnum}</span></p>
                             </tr>
@@ -459,176 +529,40 @@ function displaylabs(labs) {
     }
 }
 
-// Switch between Adding and Editing reservations
-const showlistreserve = document.querySelector("#showlistrsv");
-const addreserve = document.querySelector("#addrsv");
-var listreserve = document.querySelector(".listreserve");
-var reserveinput = document.querySelector(".reserveinput");
-var editdeletereserve = document.querySelector(".editdeletereserve");
-
-const datechange = document.querySelector("#datersv");
-const timechange = document.querySelector("#timersv");
-
-const dateeditchange = document.querySelector("#datersvedit");
-const timeeditchange = document.querySelector("#timersvedit");
-
-function displayedreservation() {
-    listreserve.classList.remove("active");
-    editdeletereserve.classList.add("active");
-}
-
-function gobacktolistreserve() {
-    listreserve.classList.add("active");
-    editdeletereserve.classList.remove("active");
-}
-
-datechange.addEventListener("change", (e) => {
-    e.preventDefault();
-    resetSeats();
-    var labchosen = parseInt(document.getElementById("labchosen").value);
-    var getchangedate = document.getElementById('datersv').value + "T" + document.getElementById('timersv').value;
-    fetchseats(labchosen, getchangedate);
-
-});
-
-timechange.addEventListener("change", (e) => {
-    e.preventDefault();
-    resetSeats();
-    var labchosen = parseInt(document.getElementById("labchosen").value);
-    var getchangedate = document.getElementById('datersv').value + "T" + document.getElementById('timersv').value;
-    fetchseats(labchosen, getchangedate);
-});
-
-dateeditchange.addEventListener("change", (e) => {
-    e.preventDefault();
-    resetSeats();
-    var labchosen = parseInt(document.getElementById("labchosen").value);
-    var getchangedate = document.getElementById('datersvedit').value + "T" + document.getElementById('timersvedit').value;
-    fetchseats(labchosen, getchangedate);
-});
-
-timeeditchange.addEventListener("change", (e) => {
-    e.preventDefault();
-    resetSeats();
-    var labchosen = parseInt(document.getElementById("labchosen").value);
-    var getchangedate = document.getElementById('datersvedit').value + "T" + document.getElementById('timersvedit').value;
-    fetchseats(labchosen, getchangedate);
-});
-
-
-showlistreserve.addEventListener("click", (e) => {
-    e.preventDefault();
-    displaylabs(labs);
-    listreserve.classList.add("active");
-    reserveinput.classList.remove("active");
-});
-
-addreserve.addEventListener("click", (e) => {
-    e.preventDefault();
-    var labchosen = parseInt(document.getElementById("labchosen").value);
-    var getchangedate = document.getElementById('datersv').value + "T" + document.getElementById('timersv').value;
-    fetchseats(labchosen, getchangedate);
-    listreserve.classList.remove("active");
-    reserveinput.classList.add("active");
-});
-
-// CLOSE RESERVATIONS
-closereserve.addEventListener("click", (e) => {
-    e.preventDefault();
-    resetSeats();
-    resetinput();
-    occupiedseats = [];
-    reservecont.classList.remove("show");
-    seatcontainer.classList.remove("active");
-
-});
-
-// Get current time
-function getCurrentDateTime() {
-    const currentDate = new Date();
-    const year = String(currentDate.getFullYear()).padStart(4, '0');
-    const month = String(currentDate.getMonth()+1).padStart(2, '0');
-    const day = String(currentDate.getDate()).padStart(2, '0');
-    const hours = String(currentDate.getHours()).padStart(2, '0');
-    const minutes = String(currentDate.getMinutes()).padStart(2, '0');
-    const formattedDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
-    return formattedDateTime;
-}
-
-// Reset values to default
-function resetinput() {
-    document.getElementById("namersv").value = "";
-    document.getElementById("datersv").value = "";
-    document.getElementById("seatsrsv").value = "";
-    document.getElementById("timersv").selectedIndex = 0;
-}
-
-// ADD RESERVATION
-document.getElementById("buttonrsv").onclick = function() {
-    // Default value for name
-    var reservername = document.getElementById("namersv").value;
-    var Anonymous = false;
-    if (reservername.length==0) {
-        var num = labs.length + 1;
-        reservername = "reserver" + num;
-        Anonymous = true;
-    }
-    var labnum = parseInt(document.getElementById("labchosen").value);
-    var datetime = document.getElementById("datersv").value + "T" + document.getElementById("timersv").value;
-
-    // Add new reservation
-    var newreserve = {
-        username: reservername,
-        lab: labnum,
-        seatnum: selectedseats,
-        requestDateTime: getCurrentDateTime(),
-        reserveDateTime: datetime,
-        isAnonymous: Anonymous
-    };
-
-    //post newreserve as JSON from server
-    fetch('/slot_availability/add_reserve', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json',},
-        body: JSON.stringify(newreserve),
-    })
-    .then(result => {
-        console.log(result);
-        fetchlabs();
-        displaylabs(labs);
-    })
-    .catch(error => {console.error('Error:', error);});
-    lockInSelectedSeats();
-    reservecont.classList.remove("show");
-}
-
-//EDIT RESERVATION
+// EDITING SPECIFIC RESERVATION
 function editmyreservation(objectId) {
     // find index of JSON array
-    var reserverindex = labs.findIndex(function(item, j){
+    var reserverindex = availablereservations.findIndex(function(item, j){
         return item._id === objectId;
     });
 
     // display editing reservation tab
-    var [date, time] = labs[reserverindex].reserveDateTime.split('T');
-    document.getElementById('labchosenedit').value= labs[reserverindex].labnum;
-    document.getElementById('namersvedit').value= labs[reserverindex].username;
+    var [date, time] = availablereservations[reserverindex].reserveDateTime.split('T');
+    document.getElementById('labchosenedit').value= availablereservations[reserverindex].labnum;
+    document.getElementById('namersvedit').value= availablereservations[reserverindex].username;
     document.getElementById('datersvedit').value= date;
     document.getElementById('timersvedit').value= time;
-    document.getElementById('seatsrsvedit').value= labs[reserverindex].seatnum.length;
-    selectedseats = labs[reserverindex].seatnum;
+    document.getElementById('seatsrsvedit').value= availablereservations[reserverindex].seatnum.length;
+
+    selectedseats = availablereservations[reserverindex].seatnum;
     numberofselectedseats = selectedseats.length;
-    fetchseats(labs[reserverindex].labnum, labs[reserverindex].reserveDateTime);
+
+    fetchseats(availablereservations[reserverindex].labnum, availablereservations[reserverindex].reserveDateTime);
     displayedreservation();
 
-    // Update reservation information
+    // UPDATE RESERVATION
     document.getElementById("editrsv").onclick = function() {
-        if (document.getElementById('namersvedit').value !== '') {
-            var reservername = document.getElementById('namersvedit').value;
-            Anonymous = false;
-        }
-        var labchosen = parseInt(labs[reserverindex].labnum);
+        // GET VALUES
+        var reservername = document.getElementById('namersvedit').value;
+        var labchosen = parseInt(availablereservations[reserverindex].labnum);
         var reserveDateTime = document.getElementById('datersvedit').value + "T" + document.getElementById('timersvedit').value;
+
+        // DEFAULT IF NAME IS ANONYMOUS
+        var Anonymous = false;
+        if (reservername.length==0) {
+            reservername = availablereservations[reserverindex].username;
+            Anonymous = true;
+        }
 
         updatereserve = {
             _id: objectId,
@@ -637,7 +571,8 @@ function editmyreservation(objectId) {
             seatnum: selectedseats,
             requestDateTime: getCurrentDateTime(),
             reserveDateTime: reserveDateTime,
-            isAnonymous: Anonymous
+            isAnonymous: Anonymous,
+            markasDone: false
         };
 
         fetch('/slot_availability/edit_reserve', {
@@ -649,13 +584,13 @@ function editmyreservation(objectId) {
         .then(result => {
             console.log(result);
             fetchlabs();
-            displaylabs(labs);
+            resetSeats();
+            gobacktolistreserve();
         })
         .catch(error => {console.error('Error:', error);});
-        lockInSelectedSeats();
-        gobacktolistreserve();
     }
 
+    // DELETE CURRENT RESERVATION
     document.getElementById("deletersv").onclick = function() {
         fetch(`/slot_availability/${objectId}`, {
             method: 'DELETE',
@@ -664,189 +599,84 @@ function editmyreservation(objectId) {
         .then(result => {
             console.log(result);
             fetchlabs();
-            displaylabs(labs);
+            resetSeats();
+            gobacktolistreserve();
         })
         .catch(error => {console.error('Error:', error);});
-        gobacktolistreserve();
     }
 
+    // CANCEL EDITING
     document.getElementById("cancelbutton").onclick = function() {
-        gobacktolistreserve();
         resetSeats();
+        fetchlabs();
+        gobacktolistreserve();
         document.getElementById('seatsrsvedit').value = '';
     }
 }
 
-// Display Seats
-var occupiedseats = [];
-var selectedseats = [];
+// ------------------------------------- ADDITIONAL FUNCTIONS -------------------------------------
 
-function fetchseats(labseat, datetime) {
-    var seatfetch = { labseat, datetime };
-    fetch('/slot_availability/seats_postget', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json',},
-        body: JSON.stringify(seatfetch),
-    })
-    .then(response => response.json())
-    .then(dataArray => {occupiedseats = [].concat(...dataArray.map(item => item.seatnum));})
-    .catch(error => {console.error('Error:', error);});
-}
+const listreserve = document.querySelector(".listreserve");
+const reserveinput = document.querySelector(".reserveinput");
+const editdeletereserve = document.querySelector(".editdeletereserve");
 
-function SeatLayout() {
-    document.getElementById("rootseats").innerHTML= `
-        <div class="seatbox">
-            <div class="frontdeskcontainer">
-                <div class="frontdesk"></div>
-            </div>
-            <div class="seatrow">
-                <div class="seat" id="seat1"></div>
-                <div class="seat" id="seat2"></div>
-                <div class="seat" id="seat3"></div>
-                <div class="seat" id="seat4"></div>
-                <div class="seat" id="seat5"></div>
-                <div class="seat" id="seat6"></div>
-                <div class="seat" id="seat7"></div>
-                <div class="seat" id="seat8"></div>
-            </div>
-            <div class="seatrow">
-                <div class="seat" id="seat9"></div>
-                <div class="seat" id="seat10"></div>
-                <div class="seat" id="seat11"></div>
-                <div class="seat" id="seat12"></div>
-                <div class="seat" id="seat13"></div>
-                <div class="seat" id="seat14"></div>
-                <div class="seat" id="seat15"></div>
-                <div class="seat" id="seat16"></div>
-            </div>
-            <div class="seatrow">
-                <div class="seat" id="seat17"></div>
-                <div class="seat" id="seat18"></div>
-                <div class="seat" id="seat19"></div>
-                <div class="seat" id="seat20"></div>
-                <div class="seat" id="seat21"></div>
-                <div class="seat" id="seat22"></div>
-                <div class="seat" id="seat23"></div>
-                <div class="seat" id="seat24"></div>
-            </div>
-            <div class="seatrow">
-                <div class="seat" id="seat25"></div>
-                <div class="seat" id="seat26"></div>
-                <div class="seat" id="seat27"></div>
-                <div class="seat" id="seat28"></div>
-                <div class="seat" id="seat29"></div>
-                <div class="seat" id="seat30"></div>
-                <div class="seat" id="seat31"></div>
-                <div class="seat" id="seat32"></div>
-            </div>
-            <div class="seatrow">
-                <div class="seat" id="seat33"></div>
-                <div class="seat" id="seat34"></div>
-                <div class="seat" id="seat35"></div>
-                <div class="seat" id="seat36"></div>
-                <div class="seat" id="seat37"></div>
-                <div class="seat" id="seat38"></div>
-                <div class="seat" id="seat39"></div>
-                <div class="seat" id="seat40"></div>
-            </div>
-        </div>`;
-
-    for (const sseat of document.querySelectorAll('.seat:not(.occupied)')) {
-        if (!active) {
-            occupiedseats = occupiedseats.filter((element) => !selectedseats.includes(element));
-        }
-        if (occupiedseats.includes(sseat.id)) {
-            // console.log(sseat.id);
-            sseat.classList.add("occupied");
-        }
-        if (selectedseats.includes(sseat.id)) {
-            // console.log(sseat.id);
-            sseat.classList.add("selected");
-        }
-    }
-    // console.log(occupiedseats);
-    seatsremaining = document.getElementsByClassName("seat").length - (occupiedseats.length + selectedseats.length);
-}
-
-var numberofselectedseats = 0
-var seatsremaining;
-const seatcontainer = document.querySelector(".seatcontainer");
-const displayseats = document.querySelectorAll(".inputtextseat");
-const seatselectbutton = document.querySelector("#seatselectbutton");
-
-for (const displayseat of displayseats) {
-    displayseat.addEventListener("click", (e) => {
-        e.preventDefault();
-        active = false;
-        if (reserveinput.classList.contains("active")) {
-            active = true;
-        }
-        SeatLayout();
-        const seatElements = document.querySelectorAll('.seat:not(.occupied)');
-        document.getElementById('seatsremaining').value = seatsremaining;
-        document.getElementById('seatschosen').value = numberofselectedseats;
-
-        editdeletereserve.classList.remove("active");
-        reserveinput.classList.remove("active");
-        seatcontainer.classList.add("active");
-
-        // Assign the click handler function to each seat element
-        for (let i = 0; i < seatElements.length; i++) {
-            const seatElement = seatElements[i];
-            seatElement.addEventListener('click', function(e) {
-                e.preventDefault();
-                var newseat = this.id;
-                SeatSelecting.call(this, newseat);
-            });
-        }
-    });
-}
-
-// lock in the seats to be selected
-seatselectbutton.addEventListener('click', (e) => {
+// SWITCH FROM ADDING RESERVATION TO EDITING RESERVATION
+const showlistreserve = document.querySelector("#showlistrsv");
+showlistreserve.addEventListener("click", (e) => {
     e.preventDefault();
-    if (active) {
-        document.getElementById('seatsrsv').value = numberofselectedseats;
-        reserveinput.classList.add("active");
-    } else {
-        document.getElementById('seatsrsvedit').value = numberofselectedseats;
-        editdeletereserve.classList.add("active");
-    }
+    fetchlabs();
+    listreserve.classList.add("active");
+    reserveinput.classList.remove("active");
+});
+
+// SWITCH FROM EDITING RESERVATION TO ADDING RESERVATION
+const addreserve = document.querySelector("#addrsv");
+addreserve.addEventListener("click", (e) => {
+    e.preventDefault();
+    var labchosen = parseInt(document.getElementById("labchosen").value);
+    var getchangedate = document.getElementById('datersv').value + "T" + document.getElementById('timersv').value;
+    fetchseats(labchosen, getchangedate);
+    listreserve.classList.remove("active");
+    reserveinput.classList.add("active");
+});
+
+// SWITCH FROM EDITING INDIVIDUAL LAB TO DISPLAYING LAB LIST
+function displayedreservation() {
+    listreserve.classList.remove("active");
+    editdeletereserve.classList.add("active");
+}
+
+// SWITCH FROM DISPLAYING LAB LIST TO EDITING INDIVIDUAL LAB
+function gobacktolistreserve() {
+    listreserve.classList.add("active");
+    editdeletereserve.classList.remove("active");
+}
+
+// CLOSE RESERVATIONS TAB
+const closereserve = document.querySelector(".close");
+closereserve.addEventListener("click", (e) => {
+    e.preventDefault();
+    resetSeats();
+    resetinput();
+    reservecont.classList.remove("show");
     seatcontainer.classList.remove("active");
 });
 
-
-function SeatSelecting(newseat) {
-    if (!occupiedseats.some(seatsArray => seatsArray.includes(newseat))) {
-        if (selectedseats.includes(newseat)) {
-            foundseat = selectedseats.indexOf(newseat);
-            selectedseats.splice(foundseat, 1);
-            console.log("spliced");
-            this.classList.remove("selected");
-            numberofselectedseats -= 1;
-            seatsremaining += 1;
-        } else {
-            selectedseats.push(newseat);
-            this.classList.add("selected");
-            numberofselectedseats += 1;
-            seatsremaining -= 1;
-        }
-        document.getElementById('seatschosen').value = numberofselectedseats;
-        document.getElementById('seatsremaining').value = seatsremaining;
-    }
+// GET CURRENT TIME
+function getCurrentDateTime() {
+    const currentDate = new Date();
+    const year = String(currentDate.getFullYear()).padStart(4, '0');
+    const month = String(currentDate.getMonth()+1).padStart(2, '0');
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const hours = String(currentDate.getHours()).padStart(2, '0');
+    const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
 }
 
-function lockInSelectedSeats() {
-    selectedseats = [];
-    numberofselectedseats = 0;
-}
-
-function resetSeats() {
-    seatsremaining += numberofselectedseats;
-    selectedseats = [];
-    numberofselectedseats = 0;
-    document.getElementById('seatsremaining').value = seatsremaining;
-    document.getElementById('seatschosen').value = numberofselectedseats;
-    document.getElementById('seatsrsv').value= '';
-    document.getElementById('seatsrsvedit').value= '';
+// RESET INPUT VALUES
+function resetinput() {
+    document.getElementById("namersv").value = "";
+    document.getElementById("datersv").value = "";
+    document.getElementById("seatsrsv").value = "";
+    document.getElementById("timersv").selectedIndex = 0;
 }
