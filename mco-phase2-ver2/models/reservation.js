@@ -37,6 +37,11 @@ const registerSchema = new Schema({
     isAnonymous: {
         type: Boolean,
         required: [true, "anonymity setting is required"]
+    },
+
+    markasDone: {
+        type: Boolean,
+        required: [true, "Marking of completion is required"]
     }
 });
 
