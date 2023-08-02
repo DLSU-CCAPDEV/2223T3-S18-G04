@@ -69,7 +69,6 @@ const reservationController = {
             markasDone: markasDone
         }
         var result = await db.insertOne(Reservation, newreserve);
-        //console.log(result);
         res.send(result);
     },
 
@@ -78,14 +77,9 @@ const reservationController = {
         var adminemail = await db.findMany(User, {account_type: 'tech'}, ' email ');
 
         if (adminemail.some(admin => admin.email === currentemail)) {
-            var query = {
-                //markasDone: false
-            };
+            var query = {markasDone: false};
         } else {
-            var query = {
-                email: currentemail
-                //markasDone: false
-            };
+            var query = {email: currentemail, markasDone: false};
         }
 
         var projection = ' _id email username labnum seatnum reserveDateTime '
