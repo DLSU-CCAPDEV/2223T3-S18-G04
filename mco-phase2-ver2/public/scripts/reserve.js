@@ -301,8 +301,7 @@ function createCalendar(labNum) {
     return table;
 }
 
-// Editable labs
-var labs = [];
+// ------------------------------------- CREATING LABS -------------------------------------
 
 var labsavailable = [
     {lab: "Lab 1", id: "lab-1", btnId: "mainrsvbtn1"},
