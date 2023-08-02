@@ -27,35 +27,30 @@
 		</nav>
 
 		<!-- Lab Timeslot Calendar -->
-
 		<div class="container">
 			<div id="roottimeslot"></div>
 		</div>
 
-
-		<!-- Reserve Seat -->
+		<!-- RESERVATION PROPER -->
 		<section class="reserve_container">
 			<img src="images/complab.png" class="labimage" alt="computer lab">
 			<div class="uil uil-times-circle close"></div>
 
-			<!-- Reserve slot -->
+			<!-- ADDING A NEW RESERVATION -->
 			<div class="reserveinput">
 				<form>
 					<h2>Reserve a seat</h2>
+					<div id="labtechemailroot"></div>
 					<div class="textbox">
-						<input type="text" id="labchosen" name="labchosen" class="inputtext" readonly>
+						<input type="text" class="inputtext" name="labchosen" id="labchosen" readonly >
 						<i class="uil uil-desktop"></i>
 					</div>
 					<div class="textbox">
-						<!-- <select class="inputtext" name="datersv" id="datersv" size="1">
-							<option value="#">date</option>
-						</select> -->
-						<input type="date" id="datersv" name="datersv" class="inputtext" required>
+						<input type="date"  name="datersv" id="datersv" class="inputtext" value="" min="" required>
 						<i class="uil uil-calendar-alt" title="Add Date"></i>
 					</div>
 					<div class="textbox">
 						<select class="inputtext" name="timersv" id="timersv" size="1" placeholder="">
-							<option value="" disabled selected> Select reservation time</option>
 							<option value="07:30"> 07:30AM - 08:00AM </option>
 							<option value="08:00"> 08:00AM - 08:30AM </option>
 							<option value="08:30"> 08:30AM - 09:00AM </option>
@@ -91,17 +86,17 @@
 						<i class="uil uil-ticket" title="Add a name for seat reservation."></i>
 					</div>
 					<div class="textbox">
-						<input class= "inputtextseat" name="seatsrsv" id="seatsrsv" type="number" placeholder="Select Seats" readonly>
+						<input class= "inputtext inputtextseat" name="seatsrsv" id="seatsrsv" type="number" placeholder="Select Seats" readonly>
 						<i class="uil uil-users-alt" title="Specify how many seats will be reserved."></i>
 					</div>
 					<button type="button" class="reservebtn" id="buttonrsv" name="buttonrsv">Add Reservation</button>
 				</form>
-
 				<form action="#">
 					<p class="editrsrv"> Already have a reservation? <span><a href="#" id="showlistrsv">Edit Reservation</a></span></p>
 				</form>
 			</div>
 
+			<!-- LISTS EXISTING RESERVATION -->
 			<div class="listreserve">
 				<h2>My Reservations</h2>
 				<div id="rootlab"></div>
@@ -110,6 +105,7 @@
 				</form>
 			</div>
 
+			<!-- SHOWS SEATS -->
 			<div class="seatcontainer">
 				<h2>Select a seat</h2>
 				<div id="rootseats"></div>
@@ -132,14 +128,13 @@
 				</form>
 			</div> -->
 
+			<!-- EDITING A RESERVATION -->
 			<div class="editdeletereserve">
 				<form action="#">
 					<h2>Edit Reservation</h2>
-					<!-- Lab # -->
-					<!-- Available Seats: -->
-					<!-- Date / Time:  -->
+					<div id="labtechemailroot"></div>
 					<div class="textbox">
-						<input type="text" id="labchosenedit" name="labchosen" class="inputtext" readonly>
+						<input type="text" id="labchosenedit" name="labchosenedit" class="inputtext" readonly>
 						<i class="uil uil-desktop"></i>
 					</div>
 					<div class="textbox">
@@ -179,11 +174,11 @@
 						<i class="uil uil-clock" title="Add Timeslot"></i>
 					</div>
 					<div class="textbox">
-						<input class= "inputtext" name="namersv" id="namersvedit" type="text" placeholder="Reservation Name (Optional)">
+						<input class= "inputtext" name="namersvedit" id="namersvedit" type="text" placeholder="Reservation Name (Optional)">
 						<i class="uil uil-ticket" title="Add a name for seat reservation."></i>
 					</div>
 					<div class="textbox">
-						<input class="inputtextseat" name="seatsrsvedit" id="seatsrsvedit" type="number" placeholder="Number of Seats" readonly>
+						<input class="inputtext inputtextseat" name="seatsrsvedit" id="seatsrsvedit" type="number" placeholder="Select new seats" readonly>
 						<i class="uil uil-users-alt" title="Specify how many seats will be reserved."></i>
 					</div>
 					<button type="button" class="reservebtn" id="editrsv" name="editrsv">Edit Reservation</button>
