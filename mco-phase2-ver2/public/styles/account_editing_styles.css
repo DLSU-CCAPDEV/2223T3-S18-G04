@@ -34,3 +34,14 @@ button {
     margin: 1rem;
     border-radius: 10px;
 }
+
+#submit:hover,
+button:hover {
+    filter: brightness(90%);
+    cursor: pointer;
+}
+
+#submit:active,
+button:active {
+    transform: scale(0.98);
+}
