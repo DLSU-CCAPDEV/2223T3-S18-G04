@@ -319,7 +319,6 @@ function Validattioncheck(condition, type) {
             document.getElementById('errormessageedit').textContent = condition ? 'ERROR: Seat reservation is empty' : ''
         }
     }
-    console.log(type)
 }
 
 // ------------------------------------- ADDITIONAL FUNCTIONS -------------------------------------
@@ -368,6 +367,8 @@ closereserve.addEventListener("click", (e) => {
     resetinput();
     reservecont.classList.remove("show");
     seatcontainer.classList.remove("active");
+    document.getElementById('errormessageadd').textContent = '';
+    document.getElementById('errormessageedit').textContent = '';
     document.getElementById('overlay').style.display = 'none';
 });
 
