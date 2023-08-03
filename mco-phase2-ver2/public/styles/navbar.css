@@ -36,13 +36,15 @@ span.site_nav {
     color: white;
 }
 
-span.user_profile, span.about, span.search_slots, span.lab_slots, span.logout {
+span.user_profile, span.search_slots, span.lab_slots, span.logout {
     padding: 1rem;
+    cursor: pointer;
 }
 
-span.user_profile:hover, span.about:hover, span.search_slots:hover, span.lab_slots:hover, span.logout:hover {
-    background-color:aquamarine;
-    color: grey;
+span.user_profile:hover, span.search_slots:hover, span.lab_slots:hover, span.logout:hover {
+    background-color:rgb(24, 190, 107);
+    color: rgb(36, 36, 36);
+    border-radius: 5px;
 }
 
 #error {
