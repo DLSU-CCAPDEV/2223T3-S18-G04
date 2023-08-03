@@ -86,6 +86,7 @@ document.getElementById("addrsvbutton").onclick = function() {
             autoMarkasDone();
             fetchlabs();
             labUpdate(labnum);
+            document.getElementById('overlay').style.display = 'none';
         })
         .catch(error => {console.error('Error:', error);});
 
