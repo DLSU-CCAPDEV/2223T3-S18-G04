@@ -14,6 +14,7 @@
     flex-direction: column;
     width: 80%;
     margin: 8px;
+    margin-bottom: 10px;
     padding: 10px;
     background-color: #eeeeee;
     border: 1px solid black;
@@ -21,6 +22,8 @@
     position: relative;
     left:50%;
     transform: translate(-50%, 0);
+    outline: 1px solid;
+    outline-color: green;
 }
 
 .lab-dropdown-row {
@@ -37,9 +40,13 @@
 .calendar-table {
     table-layout: fixed;
     width: 100%;
+    border-radius: 5px;
+    outline: 1px solid;
+    outline-color: green;
 }
 
 .lab-button {
+    background-color: #eeeeee;
     margin-right: 30px;
     float: right;
     outline: none;
@@ -48,33 +55,42 @@
     margin-top: 10px;
     margin-bottom: 10px;
     font-size: 40px;
+    cursor: pointer;
+}
+
+.lab-button:active {
+    transform: scale(0.90);
 }
 
 .view-slots-button {
     font-family: 'Cairo', sans-serif;
     border-radius: 8px;
+    cursor: pointer;
 }
 
 /* Lab Button */
 
 .Reservebuttonmain {
+    font-size: 200;
     position: relative;
-    height: 30%;
-    width: 7%;
-    top: 35px;
-    left: 39%;
+    height: 25px;
+    min-width: 100px;
+    max-width: 100px;
+    top: 45px;
+    left: 40%;
     margin-right: 10px;
     color: #eeeeee;
-    font-size: 200;
     background-color: green;
     border-radius: 5px;
+    cursor: pointer;
 }
 
+.view-slots-button:hover,
 .Reservebuttonmain:hover {
     filter: brightness(90%);
 }
 
+.view-slots-button:active,
 .Reservebuttonmain:active {
     transform: scale(0.99);
-    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.1);
 }
