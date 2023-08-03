@@ -14,7 +14,7 @@ var reserveClickHandler = (index) => {
         var defaultdatetime = document.getElementById('datersv').value + "T" + document.getElementById('timersv').value;
         fetchseats(index+1, defaultdatetime);
         fetchlabs();
-
+        document.getElementById('overlay').style.display = 'block';
         reservecont.classList.add("show");
         reserveinput.classList.add("active");
         listreserve.classList.remove("active");
@@ -30,7 +30,7 @@ labsavailable.forEach(function(item, index) {
 
 // ------------------------------------- ADD RESERVATION -------------------------------------
 
-document.getElementById("buttonrsv").onclick = function() {
+document.getElementById("addrsvbutton").onclick = function() {
     // GET VALUES
     var reservername = document.getElementById("namersv").value;
     var labnum = parseInt(document.getElementById("labchosen").value);
@@ -43,16 +43,25 @@ document.getElementById("buttonrsv").onclick = function() {
         reservername = "reserver" + num;
         Anonymous = true;
     }
+    var isPastDate = isDatePast(new Date(getCurrentDateTime()), new Date(datetime));
 
-    // GET STUDENT EMAIL IF ADMIN
-    AdminCheck().then(isAdmin => {
-        if (isAdmin) {
-            var email = document.getElementById("labtechemail").value;
-            createNewReservation(email);
-        } else {
-            createNewReservation(null);
-        }
-    });
+    // CHECK IF DATE IS PROPER
+
+    if (isPastDate) {
+        Validattioncheck(isPastDate, "date_error");
+    } else if (selectedseats.length === 0) {
+        Validattioncheck(selectedseats.length === 0, "seat_error");
+    } else {
+        // GET STUDENT EMAIL IF ADMIN
+        AdminCheck().then(isAdmin => {
+            if (isAdmin) {
+                var email = document.getElementById("labtechemail").value;
+                createNewReservation(email);
+            } else {
+                createNewReservation(null);
+            }
+        });
+    }
 
     // ADD NEW RESERVATION
     function createNewReservation(email) {
@@ -65,7 +74,6 @@ document.getElementById("buttonrsv").onclick = function() {
             reserveDateTime: datetime,
             isAnonymous: Anonymous
         };
-        console.log("ADMIN ADDED NEWRESERVE: " + newreserve.email);
 
         // POST TO ROUTES.js --> RESERVATIONCONTROLLER.js
         fetch('/slot_availability/add_reserve', {
@@ -182,14 +190,22 @@ function editmyreservation(objectId) {
             Anonymous = true;
         }
 
-        AdminCheck().then(isAdmin => {
-            if (isAdmin) {
-                var email = document.getElementById("labtechemail").value;
-                updateReservation(email);
-            } else {
-                updateReservation(null);
-            }
-        });
+        var isPastDate = isDatePast(new Date(getCurrentDateTime()), new Date(reserveDateTime));
+
+        if (isPastDate) {
+            Validattioncheck(isPastDate, "date_error");
+        } else if (selectedseats.length === 0) {
+            Validattioncheck(selectedseats.length === 0, "seat_error");
+        } else {
+            AdminCheck().then(isAdmin => {
+                if (isAdmin) {
+                    var email = document.getElementById("labtechemail").value;
+                    updateReservation(email);
+                } else {
+                    updateReservation(null);
+                }
+            });
+        }
 
         function updateReservation(email){
             updatereserve = {
@@ -268,15 +284,13 @@ function autoMarkasDone() {
                 expiredDates.push(datestopush);
             }
         }
-        console.log(expiredDates);
+        // console.log(expiredDates);
         return fetch('/slot_availability/post_Donedates', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(expiredDates),
         });
     })
-    .then(response => response.json())
-    .then(responseData => {console.log('Response from server:', responseData);})
     .catch(error => {console.error('Error:', error);});
 }
 
@@ -285,6 +299,26 @@ function isDatePast(currentDate, targetDate) {
     currentDate.setSeconds(0);
     targetDate.setSeconds(0);
     return currentDate > targetDate;
+}
+
+
+// ------------------------------------- VALID DATETIME & SEATS FUNCTIONS -------------------------------------
+
+function Validattioncheck(condition, type) {
+    if (type === "date_error") {
+        if (reserveinput.classList.contains("active")) {
+            document.getElementById('errormessageadd').textContent = condition ? 'ERROR: Cannot reserve for past dates' : ''
+        } else if (editdeletereserve.classList.contains("active")) {
+            document.getElementById('errormessageedit').textContent = condition ? 'ERROR: Cannot reserve for past dates' : ''
+        }
+    } else if (type === "seat_error") {
+        if (reserveinput.classList.contains("active")) {
+            document.getElementById('errormessageadd').textContent = condition ? 'ERROR: Seat reservation is empty' : ''
+        } else if (editdeletereserve.classList.contains("active")) {
+            document.getElementById('errormessageedit').textContent = condition ? 'ERROR: Seat reservation is empty' : ''
+        }
+    }
+    console.log(type)
 }
 
 // ------------------------------------- ADDITIONAL FUNCTIONS -------------------------------------
@@ -333,6 +367,7 @@ closereserve.addEventListener("click", (e) => {
     resetinput();
     reservecont.classList.remove("show");
     seatcontainer.classList.remove("active");
+    document.getElementById('overlay').style.display = 'none';
 });
 
 // GET CURRENT TIME
