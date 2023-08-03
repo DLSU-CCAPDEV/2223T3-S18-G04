@@ -75,6 +75,9 @@ app.get('/slot_availability/get_emails', reservationController.getEmails);
 
 app.get('/slot_availability/checkadmin', reservationController.checkAdmin);
 
+app.get('/slot_availability/get_not_Donedates', reservationController.not_MarkasDone);
+app.post('/slot_availability/post_Donedates', reservationController.markasDone);
+
 // ------------------------------------- OTHER CONTROLLERS -------------------------------------
 
 app.get('/about', controller.getAbout);
