@@ -4,8 +4,7 @@ var selectedseats = [];
 var numberofselectedseats = 0;
 var seatsremaining;
 
-// ------------------------------------- FETCH SEATS OF SPECIFIC LAB AND DATETIME FROM DATABASE ------------------------------------- 
-
+// FETCH SEATS OF SPECIFIC LAB AND DATETIME FROM DATABASE
 function fetchseats(labseat, datetime) {
     var seatfetch = { labseat, datetime };
     fetch('/slot_availability/seats_postget', {
@@ -78,7 +77,7 @@ function SeatLayout() {
         </div>`;
 
     for (const sseat of document.querySelectorAll('.seat:not(.occupied)')) {
-        if (!active) {
+        if (!reserveinput.classList.contains("active")) {
             occupiedseats = occupiedseats.filter((element) => !selectedseats.includes(element));
         }
         if (occupiedseats.includes(sseat.id)) {
@@ -154,30 +153,37 @@ const timeeditchange = document.querySelector("#timersvedit");
 
 datechange.addEventListener("change", (e) => {
     e.preventDefault();
-    seatschangedate(active);
+    seatschangedate(reserveinput.classList.contains("active"));
 });
 
 timechange.addEventListener("change", (e) => {
     e.preventDefault();
-    seatschangedate(active);
+    seatschangedate(reserveinput.classList.contains("active"));
 });
 
 dateeditchange.addEventListener("change", (e) => {
     e.preventDefault();
-    seatschangedate(active);
+    seatschangedate(reserveinput.classList.contains("active"));
 });
 
 timeeditchange.addEventListener("change", (e) => {
     e.preventDefault();
-    seatschangedate(active);
+    seatschangedate(reserveinput.classList.contains("active"));
 });
 
 function seatschangedate(active) {
     resetSeats();
+    var getchangedate;
     if (active) {
-        var getchangedate = document.getElementById('datersv').value + "T" + document.getElementById('timersv').value;
+        getchangedate = document.getElementById('datersv').value + "T" + document.getElementById('timersv').value;
+        if (!isDatePast(new Date(getCurrentDateTime()), new Date(getchangedate))) {
+            document.getElementById('errormessageadd').textContent = '';
+        }
     } else {
-        var getchangedate = document.getElementById('datersvedit').value + "T" + document.getElementById('timersvedit').value;
+        getchangedate = document.getElementById('datersvedit').value + "T" + document.getElementById('timersvedit').value;
+        if (!isDatePast(new Date(getCurrentDateTime()), new Date(getchangedate))) {
+            document.getElementById('errormessageedit').textContent = '';
+        }
     }
     var labchosen = parseInt(document.getElementById("labchosen").value);
     fetchseats(labchosen, getchangedate);
@@ -197,6 +203,7 @@ seatselectbutton.addEventListener('click', (e) => {
         document.getElementById('seatsrsvedit').value = numberofselectedseats;
         editdeletereserve.classList.add("active");
     }
+    Validattioncheck(selectedseats.length === 0, "seat_error");
 });
 
 // RESET SEATS
