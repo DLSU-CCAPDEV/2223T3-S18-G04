@@ -3,14 +3,10 @@
 const reservecont = document.querySelector(".reserve_container");
 var reserveClickHandler = (index) => {
     return () => {
+        autoMarkasDone();
         AdminCheck().then(isAdmin => {isAdmin === true ? getemails() : null;});
-        console.log("Button clicked. Index:", index);
-        document.getElementById('labchosen').value= index+1;
-        reservecont.classList.add("show");
-        reserveinput.classList.add("active");
-        listreserve.classList.remove("active");
-        editdeletereserve.classList.remove("active");
 
+        document.getElementById('labchosen').value= index+1;
         document.getElementById('datersv').value = getCurrentDateTime().toString().split('T')[0];
         document.getElementById('datersv').min = getCurrentDateTime().toString().split('T')[0];
         document.getElementById('datersvedit').min = getCurrentDateTime().toString().split('T')[0];
@@ -18,6 +14,11 @@ var reserveClickHandler = (index) => {
         var defaultdatetime = document.getElementById('datersv').value + "T" + document.getElementById('timersv').value;
         fetchseats(index+1, defaultdatetime);
         fetchlabs();
+
+        reservecont.classList.add("show");
+        reserveinput.classList.add("active");
+        listreserve.classList.remove("active");
+        editdeletereserve.classList.remove("active");
     };
 };
 
@@ -74,7 +75,9 @@ document.getElementById("buttonrsv").onclick = function() {
         })
         .then(result => {
             console.log(result);
+            autoMarkasDone();
             fetchlabs();
+            labUpdate(labnum);
         })
         .catch(error => {console.error('Error:', error);});
 
@@ -90,7 +93,10 @@ var availablereservations = [];
 
 // FETCH EXISTING RESERVATIONS FROM DATABASE
 function fetchlabs() {
-    fetch('/slot_availability/get_reservations')
+    fetch('/slot_availability/get_reservations', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        })
         .then(response => response.json())
         .then(dataArray => {
             availablereservations = dataArray;
@@ -136,6 +142,7 @@ function showExistingReservations(availablereservations) {
 // EDITING SPECIFIC RESERVATION
 function editmyreservation(objectId) {
     // find index of JSON array
+    autoMarkasDone();
     var reserverindex = availablereservations.findIndex(function(item, j){
         return item._id === objectId;
     });
@@ -147,6 +154,7 @@ function editmyreservation(objectId) {
     document.getElementById('datersvedit').value= date;
     document.getElementById('timersvedit').value= time;
     document.getElementById('seatsrsvedit').value= availablereservations[reserverindex].seatnum.length;
+
     AdminCheck().then(isAdmin => {
         if (isAdmin) {
             document.getElementById('labtechemailedit').value = availablereservations[reserverindex].email;
@@ -203,9 +211,11 @@ function editmyreservation(objectId) {
             .then(response => response.json())
             .then(result => {
                 console.log(result);
+                autoMarkasDone();
                 fetchlabs();
                 resetSeats();
                 gobacktolistreserve();
+                labUpdate(labchosen);
             })
             .catch(error => {console.error('Error:', error);});
         }
@@ -219,9 +229,11 @@ function editmyreservation(objectId) {
         .then(response => response.json())
         .then(result => {
             console.log(result);
+            autoMarkasDone();
             fetchlabs();
             resetSeats();
             gobacktolistreserve();
+            labUpdate(labchosen);
         })
         .catch(error => {console.error('Error:', error);});
     }
@@ -233,6 +245,46 @@ function editmyreservation(objectId) {
         gobacktolistreserve();
         document.getElementById('seatsrsvedit').value = '';
     }
+}
+
+// ------------------------------------- AUTO COMPLETE PAST DATES -------------------------------------
+
+function autoMarkasDone() {
+    fetch('/slot_availability/get_not_Donedates', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+    })
+    .then(response => response.json())
+    .then(notmarkasDonedates => {
+        var expiredDates = [];
+        for (const date of notmarkasDonedates) {
+            const currentDate = new Date(getCurrentDateTime());
+            const targetDate = new Date(date.reserveDateTime);
+
+            if (isDatePast(currentDate, targetDate)) {
+                var datestopush = {
+                    id: date._id,
+                };
+                expiredDates.push(datestopush);
+            }
+        }
+        console.log(expiredDates);
+        return fetch('/slot_availability/post_Donedates', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(expiredDates),
+        });
+    })
+    .then(response => response.json())
+    .then(responseData => {console.log('Response from server:', responseData);})
+    .catch(error => {console.error('Error:', error);});
+}
+
+// CHECK IF CURRENTDATE HAS PASSED THE TARGET DATE
+function isDatePast(currentDate, targetDate) {
+    currentDate.setSeconds(0);
+    targetDate.setSeconds(0);
+    return currentDate > targetDate;
 }
 
 // ------------------------------------- ADDITIONAL FUNCTIONS -------------------------------------
@@ -301,10 +353,3 @@ function resetinput() {
     document.getElementById("seatsrsv").value = "";
     document.getElementById("timersv").selectedIndex = 0;
 }
-
-// Todo:
-// validate seats
-// make a notification function
-// update reservations with currentdate to mark as done
-// polish edit reservation with admin privileges
-// set some buttons to turn mouse into cursors
