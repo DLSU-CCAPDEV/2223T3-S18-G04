@@ -35,6 +35,7 @@
 		</div>
 
 		<!-- RESERVATION PROPER -->
+		<div id="overlay"></div>
 		<section class="reserve_container">
 			<img src="images/complab.png" class="labimage" alt="computer lab">
 			<div class="uil uil-times-circle close"></div>
@@ -49,7 +50,7 @@
 						<i class="uil uil-desktop"></i>
 					</div>
 					<div class="textbox">
-						<input type="date"  name="datersv" id="datersv" class="inputtext" value="" min="" required>
+						<input type="date"  name="datersv" id="datersv" class="inputtext" value="" min="">
 						<i class="uil uil-calendar-alt" title="Add Date"></i>
 					</div>
 					<div class="textbox">
@@ -92,7 +93,8 @@
 						<input class= "inputtext inputtextseat" name="seatsrsv" id="seatsrsv" type="number" placeholder="Select Seats" readonly>
 						<i class="uil uil-users-alt" title="Specify how many seats will be reserved."></i>
 					</div>
-					<button type="button" class="reservebtn" id="buttonrsv" name="buttonrsv">Add Reservation</button>
+					<p class="errormessage" id="errormessageadd"></p>
+					<button type="button" class="reservebtn" id="addrsvbutton" name="addrsvbutton">Add Reservation</button>
 				</form>
 				<form action="#">
 					<p class="editrsrv"> Already have a reservation? <span><a href="#" id="showlistrsv">Edit Reservation</a></span></p>
@@ -135,7 +137,7 @@
 			<div class="editdeletereserve">
 				<form action="#">
 					<h2>Edit Reservation</h2>
-					<div id="labtechemailroot"></div>
+					<div id="labtechemaileditroot"></div>
 					<div class="textbox">
 						<input type="text" id="labchosenedit" name="labchosenedit" class="inputtext" readonly>
 						<i class="uil uil-desktop"></i>
@@ -184,6 +186,8 @@
 						<input class="inputtext inputtextseat" name="seatsrsvedit" id="seatsrsvedit" type="number" placeholder="Select new seats" readonly>
 						<i class="uil uil-users-alt" title="Specify how many seats will be reserved."></i>
 					</div>
+
+					<p class="errormessage" id="errormessageedit"></p>
 					<button type="button" class="reservebtn" id="editrsv" name="editrsv">Edit Reservation</button>
 					<button type="button" class="editdeletebtn" id="deletersv" name="deletersv">Delete Reservation</button>
 					<button type="button" class="editdeletebtn" id="cancelbutton" name="cancelbutton">Cancel</button>
