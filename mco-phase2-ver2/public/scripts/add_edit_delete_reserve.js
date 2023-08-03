@@ -85,7 +85,9 @@ document.getElementById("addrsvbutton").onclick = function() {
             console.log(result);
             autoMarkasDone();
             fetchlabs();
-            labUpdate(labnum);
+            for (var i = 1; i <= labsavailable.length; i++) {
+                labUpdate(i);
+            }
             document.getElementById('overlay').style.display = 'none';
         })
         .catch(error => {console.error('Error:', error);});
@@ -232,7 +234,9 @@ function editmyreservation(objectId) {
                 fetchlabs();
                 resetSeats();
                 gobacktolistreserve();
-                labUpdate(labchosen);
+                for (var i = 1; i <= labsavailable.length; i++) {
+                   labUpdate(i);
+                }
             })
             .catch(error => {console.error('Error:', error);});
         }
@@ -250,7 +254,9 @@ function editmyreservation(objectId) {
             fetchlabs();
             resetSeats();
             gobacktolistreserve();
-            labUpdate(labchosen);
+            for (var i = 1; i <= labsavailable.length; i++) {
+                labUpdate(i);
+            }
         })
         .catch(error => {console.error('Error:', error);});
     }
