@@ -45,7 +45,7 @@ const reservationController = {
         res.send(result);
     },
 
-    postNewreserve: async function(req, res) {
+   postNewreserve: async function(req, res) {
         var email = req.body.email;
         if (email == null) {
             email = localStorage.getItem('email');
@@ -68,6 +68,7 @@ const reservationController = {
             markasDone: false
         }
         var result = await db.insertOne(Reservation, newreserve);
+        //console.log(result);
         res.send(result);
     },
 
@@ -110,9 +111,7 @@ const reservationController = {
             reserveDateTime: reserveDateTime,
             isAnonymous: isAnonymous
         }
-        console.log(update);
         var result = await db.updateOne(Reservation, { _id: idtoupdate }, update)
-        console.log(result);
         res.send(result);
     },
 
@@ -142,7 +141,7 @@ const reservationController = {
         var projection = ' email ';
 
         var result = await db.findMany(User, query, projection);
-        console.log(result);
+        //console.log(result);
         res.send(result);
     },
 
@@ -154,6 +153,26 @@ const reservationController = {
         } else {
             res.send(false);
         }
+    },
+
+    not_MarkasDone: async function (req, res) {
+        var query = {markasDone: false};
+        var projection = ' reserveDateTime ';
+
+        var result = await db.findMany(Reservation, query, projection);
+        //console.log(result);
+        res.send(result);
+    },
+
+    markasDone: async function (req, res) {
+        var ids = req.body;
+        var MarkasDoneIds = ids.map(id => new ObjectId(id));
+
+        var filter = {_id: { $in: MarkasDoneIds }};
+        var update = {markasDone: true};
+
+        var result = await db.updateMany(Reservation, filter, update);
+        res.send(result);
     }
 }
 
