@@ -77,7 +77,7 @@ function SeatLayout() {
         </div>`;
 
     for (const sseat of document.querySelectorAll('.seat:not(.occupied)')) {
-        if (!reserveinput.classList.contains("active")) {
+        if (!active) {
             occupiedseats = occupiedseats.filter((element) => !selectedseats.includes(element));
         }
         if (occupiedseats.includes(sseat.id)) {
@@ -187,6 +187,7 @@ function seatschangedate(active) {
     }
     var labchosen = parseInt(document.getElementById("labchosen").value);
     fetchseats(labchosen, getchangedate);
+    Validattioncheck(isDatePast(new Date(getCurrentDateTime()), new Date(getchangedate)), "date_error");
 }
 
 // ------------------------------------- ADDITIONAL FUNCTIONS -------------------------------------
