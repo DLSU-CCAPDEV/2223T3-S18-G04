@@ -129,7 +129,7 @@ function SeatSelecting(newseat) {
         if (selectedseats.includes(newseat)) {
             foundseat = selectedseats.indexOf(newseat);
             selectedseats.splice(foundseat, 1);
-            console.log("spliced");
+            //console.log("spliced");
             this.classList.remove("selected");
             numberofselectedseats -= 1;
             seatsremaining += 1;

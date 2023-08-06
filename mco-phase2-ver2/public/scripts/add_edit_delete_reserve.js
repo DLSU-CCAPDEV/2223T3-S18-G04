@@ -82,7 +82,7 @@ document.getElementById("addrsvbutton").onclick = function() {
             body: JSON.stringify(newreserve),
         })
         .then(result => {
-            console.log(result);
+            //console.log(result);
             autoMarkasDone();
             fetchlabs();
             for (var i = 1; i <= labsavailable.length; i++) {
@@ -169,7 +169,7 @@ function editmyreservation(objectId) {
     AdminCheck().then(isAdmin => {
         if (isAdmin) {
             document.getElementById('labtechemailedit').value = availablereservations[reserverindex].email;
-            console.log(availablereservations[reserverindex].email);
+            //console.log(availablereservations[reserverindex].email);
         }
     });
 
@@ -229,7 +229,7 @@ function editmyreservation(objectId) {
             })
             .then(response => response.json())
             .then(result => {
-                console.log(result);
+                //console.log(result);
                 autoMarkasDone();
                 fetchlabs();
                 resetSeats();
@@ -249,7 +249,7 @@ function editmyreservation(objectId) {
         })
         .then(response => response.json())
         .then(result => {
-            console.log(result);
+            //console.log(result);
             autoMarkasDone();
             fetchlabs();
             resetSeats();
@@ -259,6 +259,7 @@ function editmyreservation(objectId) {
             }
         })
         .catch(error => {console.error('Error:', error);});
+        document.getElementById('errormessageedit').textContent = '';
     }
 
     // CANCEL EDITING
@@ -267,6 +268,7 @@ function editmyreservation(objectId) {
         fetchlabs();
         gobacktolistreserve();
         document.getElementById('seatsrsvedit').value = '';
+        document.getElementById('errormessageedit').textContent = '';
     }
 }
 

@@ -141,7 +141,7 @@ function showFreeSlots(labNum, dateTime) {
     }
 
     for (let i = 0; i < 40; i++) {
-        console.log(i);
+        //console.log(i);
         if (lab.length == 0) {
             var seat = document.createElement('LI');
             seat.innerHTML = i + 1;
@@ -150,7 +150,7 @@ function showFreeSlots(labNum, dateTime) {
         else {
             var slotTaken = 0;
             for (j = 0; j < lab.length; j++) {
-                console.log(i);
+                //console.log(i);
                 if (slotChecker(i + 1, lab[j].seatnum) == 1 && lab[j].reserveDateTime == dateTime)
                     slotTaken = 1;
             }
