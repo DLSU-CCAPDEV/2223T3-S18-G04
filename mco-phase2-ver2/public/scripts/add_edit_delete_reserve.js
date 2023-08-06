@@ -87,6 +87,12 @@ document.getElementById("addrsvbutton").onclick = function() {
             fetchlabs();
             for (var i = 1; i <= labsavailable.length; i++) {
                 labUpdate(i);
+
+                $(".view-slots-button").on("click", function() {
+                    var slotList = $(this).parent().children('.slot-list');
+                    slotList.toggle();
+                    $(this).html(slotList.css('display') === 'none' ? "View Slots" : "Hide Slots");
+                });
             }
             document.getElementById('overlay').style.display = 'none';
         })
