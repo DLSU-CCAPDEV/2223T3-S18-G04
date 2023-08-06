@@ -259,6 +259,7 @@ function editmyreservation(objectId) {
             }
         })
         .catch(error => {console.error('Error:', error);});
+        document.getElementById('errormessageedit').textContent = '';
     }
 
     // CANCEL EDITING
@@ -267,6 +268,7 @@ function editmyreservation(objectId) {
         fetchlabs();
         gobacktolistreserve();
         document.getElementById('seatsrsvedit').value = '';
+        document.getElementById('errormessageedit').textContent = '';
     }
 }
 
