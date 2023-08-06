@@ -44,7 +44,12 @@ const reservationController = {
         }else{
         if(req.query.email != '') {
             var query = {email: req.query.email};
-        } else {var query = {email: localStorage.getItem('email')};}
+        } else {
+            var query = {
+                email: localStorage.getItem('email'),
+                markasDone: false
+            };
+        }
         //console.log(query);
         var projection = 'labnum seatnum requestDateTime reserveDateTime'
 
