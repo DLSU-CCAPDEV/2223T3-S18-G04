@@ -17,14 +17,31 @@ if (typeof localStorage === "undefined" || localStorage === null) {
 
 const reservationController = {
     getSlotSearch: async function(req, res) {
+        
+        if(!req.session.email){
+            res.redirect('login');
+            console.log('User not logged in. Redirected')
+        }else{
         res.render('slot_search');
+        }
     }, 
 
     getSlotAvailability: async function(req, res) {
+        
+        if(!req.session.email){
+            res.redirect('login');
+            console.log('User not logged in. Redirected')
+        }else{
         res.render('slot_availability');
+        }
     }, 
 
     seeReservations: async function (req, res) {
+        
+        if(!req.session.email){
+            res.redirect('login');
+            console.log('User not logged in. Redirected')
+        }else{
         if(req.query.email != '') {
             var query = {email: req.query.email};
         } else {var query = {email: localStorage.getItem('email')};}
@@ -34,15 +51,22 @@ const reservationController = {
         var result = await db.findMany(Reservation, query, projection);
         //console.log(result);
         res.send(result);
+        }
     },
 
     searchSlots: async function (req, res) {
+        
+        if(!req.session.email){
+            res.redirect('login');
+            console.log('User not logged in. Redirected')
+        }else{
         var labnum = req.query.labnum;
         var reserveDateTime = req.query.reserveDateTime;
         var projection = 'labnum seatnum reserveDateTime';
 
         var result = await db.findMany(Reservation, {labnum: labnum, reserveDateTime: reserveDateTime}, projection);
         res.send(result);
+        }
     },
 
    postNewreserve: async function(req, res) {

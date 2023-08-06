@@ -15,36 +15,48 @@ if (typeof localStorage === "undefined" || localStorage === null) {
   }
 
 const profileController = {
+    
     getProfile: async function (req, res) {
 
-        if(req.session.email){
-            var query = {email: req.session.email}
+        if(!req.session.email){
+            res.redirect('login');
+            console.log('User not logged in. Redirected')
         }else{
-            var query = {email: localStorage.getItem('email')};
-        }
-
-        if(req.query.email != null) {
-            var query = {email: req.query.email};
-        } else {var query = {email: localStorage.getItem('email')};}
-
-        var projection = 'email username description account_type profile_pic';
-
-        var result = await db.findOne(User, query, projection);
-
-        if(result != null) {
-            var details = {
-                email: result.email,
-                username: result.username,
-                description: result.description,
-                account_type: result.account_type,
-                profile_pic: result.profile_pic
+            if(req.session.email){
+                var query = {email: req.session.email}
+            }else{
+                var query = {email: localStorage.getItem('email')};
             }
-
-            res.render('user_profile', details);
-        } else {res.render('user_profile', {error: "Could not find user in database."});}
+    
+            if(req.query.email != null) {
+                var query = {email: req.query.email};
+            } else {var query = {email: localStorage.getItem('email')};}
+    
+            var projection = 'email username description account_type profile_pic';
+    
+            var result = await db.findOne(User, query, projection);
+    
+            if(result != null) {
+                var details = {
+                    email: result.email,
+                    username: result.username,
+                    description: result.description,
+                    account_type: result.account_type,
+                    profile_pic: result.profile_pic
+                }
+    
+                res.render('user_profile', details);
+            } else {res.render('user_profile', {error: "Could not find user in database."});}
+        }
+        
     },
 
     getEditAccount: async function (req, res) {
+        
+        if(!req.session.email){
+            res.redirect('login');
+            console.log('User not logged in. Redirected')
+        }else{
         var query = {email: localStorage.getItem('email')};
         var projection = 'username description';
 
@@ -58,6 +70,7 @@ const profileController = {
 
             res.render('edit_account', details);
         } else {res.render('edit_account', {error: "Could not find user in database."});}
+        }
     },
 
     postEditAccount: async function (req, res) {
@@ -72,7 +85,13 @@ const profileController = {
     },
 
     getEditPfp: async function (req, res) {
+        
+        if(!req.session.email){
+            res.redirect('login');
+            console.log('User not logged in. Redirected')
+        }else{
         res.render('edit_pfp');
+        }
     },
 
     postEditPfp: async function (req, res) { 
@@ -93,7 +112,13 @@ const profileController = {
     },
 
     getDeleteAccount: async function (req, res) {
+        
+        if(!req.session.email){
+            res.redirect('login');
+            console.log('User not logged in. Redirected')
+        }else{
         res.render('delete_account');
+        }
     },
 
     postDeleteAccount: async function (req, res) {
@@ -108,21 +133,32 @@ const profileController = {
     },
 
     getSearchAccount: async function (req, res) {
-        debugger;
+        
+        if(!req.session.email){
+            res.redirect('login');
+            console.log('User not logged in. Redirected')
+        }else{
         var query = {username: req.query.username};
         var projection = 'username email'
 
         var result = await db.findMany(User, query, projection);
         res.send(result);
+        }
     },
 
     getLogOut: async function(req, res){
+        
+        if(!req.session.email){
+            res.redirect('login');
+            console.log('User not logged in. Redirected')
+        }else{
         req.session.destroy(function(err){
             if(err) throw err;
             console.log('session has been terminated');
             res.redirect('/login');
             
         })
+        }
     }
 }
 
