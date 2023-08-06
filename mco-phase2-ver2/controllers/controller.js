@@ -1,4 +1,5 @@
 const controller = {
+    
     getAbout: function (req, res) {
         if(!req.session.email){
             res.redirect('login');
