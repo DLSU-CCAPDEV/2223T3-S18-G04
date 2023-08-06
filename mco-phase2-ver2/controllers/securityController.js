@@ -18,7 +18,7 @@ const securityController = {
         localStorage.clear();
         if(req.session.email){
             localStorage.setItem('email', req.session.email);
-            res.render('user_profile');
+            res.redirect('user_profile');
             console.log('User is in a session');
         }else{
             //we don't have an error view
@@ -44,6 +44,10 @@ const securityController = {
                 if(equal){
                     req.session.email = email;
                     req.session.password = dbPass;
+                    req.session.description = req.body.description;
+                    req.session.username = req.body.username;
+                    req.session.account_type = req.body.account_type;
+                    req.session.profile_pic = req.body.profile_pic;
                     localStorage.setItem('email', req.body.email);
                     res.redirect('/user_profile');
                     //console.log('Password is valid and user is logged in.');
