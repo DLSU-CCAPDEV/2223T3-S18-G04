@@ -16,7 +16,16 @@ if (typeof localStorage === "undefined" || localStorage === null) {
 const securityController = {
     getLogin: function (req, res) {
         localStorage.clear();
-        res.render('login');
+        if(req.session.email){
+            localStorage.setItem('email', req.session.email);
+            res.render('user_profile');
+            console.log('User is in a session');
+        }else{
+            //we don't have an error view
+            console.log('User is not in a session');
+            res.render('login');
+        }
+        
     },
 
     postLogin: async function (req, res) {
@@ -33,6 +42,8 @@ const securityController = {
         if(response != null) {
             bcrypt.compare(pw, dbPass.password, function(error, equal){
                 if(equal){
+                    req.session.email = email;
+                    req.session.password = dbPass;
                     localStorage.setItem('email', req.body.email);
                     res.redirect('/user_profile');
                     console.log('Password is valid and user is logged in.');
@@ -49,10 +60,19 @@ const securityController = {
     
     getRegister: function (req, res) {
         localStorage.clear();
-        res.render('register');
+        if(req.session.email){
+            res.render('register');
+            console.log('user is in a session');
+        }else{
+            res.render('register');
+            console.log('user is not in a session');
+        }
+        
     },
 
     postRegister: async function (req, res) {
+       
+       if(req.session.email){
         var email = req.body.email;
         var pw = req.body.password;
         var name = req.body.username;
@@ -82,6 +102,7 @@ const securityController = {
                 res.redirect('/user_profile');
             } else {res.render('register', {error: "Could not insert email into database."});}
         } else {res.render('register', {error: "Email already exists."});}
+       }
     }
 }
 

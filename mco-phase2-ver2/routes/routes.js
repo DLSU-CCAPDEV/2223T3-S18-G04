@@ -29,6 +29,9 @@ const upload = multer({storage: storage});
 app.get(['/', '/login'], securityController.getLogin);
 app.post(['/', '/login'], urlencodedParser, securityController.postLogin);
 
+app.get('/logout', profileController.getLogOut);
+
+
 app.get('/register', securityController.getRegister);
 app.post('/register', urlencodedParser, securityController.postRegister);
 

@@ -16,6 +16,13 @@ if (typeof localStorage === "undefined" || localStorage === null) {
 
 const profileController = {
     getProfile: async function (req, res) {
+
+        if(req.session.email){
+            var query = {email: req.session.email}
+        }else{
+            var query = {email: localStorage.getItem('email')};
+        }
+
         if(req.query.email != null) {
             var query = {email: req.query.email};
         } else {var query = {email: localStorage.getItem('email')};}
@@ -107,6 +114,15 @@ const profileController = {
 
         var result = await db.findMany(User, query, projection);
         res.send(result);
+    },
+
+    getLogOut: async function(req, res){
+        req.session.destroy(function(err){
+            if(err) throw err;
+            console.log('session has been terminated');
+            res.redirect('/login');
+            
+        })
     }
 }
 
