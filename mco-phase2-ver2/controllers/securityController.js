@@ -35,10 +35,10 @@ const securityController = {
                 if(equal){
                     localStorage.setItem('email', req.body.email);
                     res.redirect('/user_profile');
-                    console.log('Password is valid and user is logged in.');
+                    //console.log('Password is valid and user is logged in.');
                 }else{
                     res.render('login', {error: "Email does not exist or password does not match."});
-                    console.log('bcrypt.compare() returned false. Password is not valid and user is not logged in.');
+                    //console.log('bcrypt.compare() returned false. Password is not valid and user is not logged in.');
                 }
             })
             

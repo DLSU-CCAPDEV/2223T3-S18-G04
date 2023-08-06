@@ -28,11 +28,11 @@ const reservationController = {
         if(req.query.email != '') {
             var query = {email: req.query.email};
         } else {var query = {email: localStorage.getItem('email')};}
-        console.log(query);
+        //console.log(query);
         var projection = 'labnum seatnum requestDateTime reserveDateTime'
 
         var result = await db.findMany(Reservation, query, projection);
-        console.log(result);
+        //console.log(result);
         res.send(result);
     },
 

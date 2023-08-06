@@ -33,12 +33,12 @@ const UserSchema = new Schema({
 
 UserSchema.pre('insertOne', async function(req, res){
     try {
-        console.log('Hashing User Password');
+        //console.log('Hashing User Password');
         const salt = await bcrypt.genSalt(10);
         const hashPw = await bcrypt.hash(this.password, salt);
         this.password = hashPw;
     } catch (error) {
-        console.log("Password was not able to be hashed. Invalid user details.");
+        //console.log("Password was not able to be hashed. Invalid user details.");
     }
 })
 

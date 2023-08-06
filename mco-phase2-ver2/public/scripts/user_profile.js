@@ -17,7 +17,7 @@ function getReservations() {
             reservations.push(result[i]);
         }
 
-        console.log(reservations);
+        //console.log(reservations);
         displayReservations();
     })
 }
