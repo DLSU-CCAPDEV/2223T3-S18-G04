@@ -76,7 +76,6 @@ const securityController = {
 
     postRegister: async function (req, res) {
        
-       if(req.session.email){
         var email = req.body.email;
         var pw = req.body.password;
         var name = req.body.username;
@@ -102,11 +101,13 @@ const securityController = {
         if(duplicate == null) {
             var response = await db.insertOne(User, user);
             if(response != null) {
+                req.session.email = email;
+                req.session.password = hashPass;
                 localStorage.setItem('email', req.body.email);
                 res.redirect('/user_profile');
             } else {res.render('register', {error: "Could not insert email into database."});}
         } else {res.render('register', {error: "Email already exists."});}
-       }
+       
     }
 }
 
